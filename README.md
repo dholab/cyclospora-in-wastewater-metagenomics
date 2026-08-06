@@ -1,7 +1,17 @@
 # Putative *Cyclospora cayetanensis* detection in wastewater metagenomic datasets
 
+Nicholas R. Minor<sup>1</sup>, William G. Gardner<sup>1</sup>, Marc C. Johnson<sup>2,3</sup>, Shelby L. O'Connor<sup>1,4</sup>, David H. O'Connor<sup>1,4*</sup>
+
+<sup>1</sup> Department of Pathology and Laboratory Medicine, University of Wisconsin School of Medicine and Public Health, Madison, WI 53711, USA
+<sup>2</sup> Department of Molecular Microbiology and Immunology, University of Missouri School of Medicine, Columbia, MO 65211, USA
+<sup>3</sup> Christopher S. Bond Life Sciences Center, University of Missouri, Columbia, MO 65211, USA
+<sup>4</sup> Wisconsin National Primate Research Center, University of Wisconsin-Madison, Madison, WI 53715, USA
+<sup>*</sup> Corresponding author: Dave O'Connor • <dhoconno@wisc.edu>
+
+<!-- repo-only -->
 **The preferred way to read this manuscript is the [interactive version](https://dholab.github.io/cyclospora-in-wastewater-metagenomics/), where Figure 1 reports the read counts, sequencing depth, and contributing runs behind every cell on hover.**
 
+<!-- repo-only -->
 *Note that supporting evidence for assertions is recorded in [CITATION_SOURCE_LOCATIONS.md](CITATION_SOURCE_LOCATIONS.md). I've found this sort of explicit cross-validation useful when performing LLM-assisted background research. - DHO*
 
 ## Introduction
@@ -14,7 +24,7 @@ Cyclosporiasis is an intestinal illness caused by infection with *Cyclospora cay
 
 Detecting *C. cayetanensis* in wastewater has seldom been attempted, and the few studies that have done so rely on a targeted, single-marker approach that identifies the parasite either by oocyst morphology or by amplifying one molecular locus. The first report examined wastewater for the parasite, detecting oocysts microscopically and confirming their identity by molecular techniques ([Sturbaum et al., 1998](https://doi.org/10.1128/AEM.64.6.2284-2286.1998)). Later work relied on qPCR applied to bulk sample DNA. A year-long survey of two Arizona treatment plants concentrated water by electronegative filtration and screened the extract with a newly developed quantitative PCR assay ([Kitajima et al., 2014](https://doi.org/10.1016/j.scitotenv.2014.03.036)). A two-year study of a southeastern Georgia growing region applied the FDA's validated 18S rRNA gene qPCR ([Durigan et al., 2020](https://doi.org/10.1128/AEM.01595-20), published as [BAM Chapter 19c](https://www.fda.gov/food/laboratory-methods-food/bam-19c-dead-end-ultrafiltration-detection-cyclospora-cayetanensis-agricultural-water)) to total DNA extracted from municipal wastewater sludge ([Kahler et al., 2024](https://doi.org/10.1016/j.jfp.2024.100309)).
 
-This 18S qPCR assay, however, lacks specificity in environmental samples. In the Georgia field study, 26 municipal wastewater sludge samples were flagged by the qPCR assay but only 7 (9% of the 76 sludge samples tested) were confirmed as *C. cayetanensis*, where confirmation required a separate multi-marker genotyping panel of eight nuclear and mitochondrial targets, deep-sequenced and matched against clinical reference haplotypes rather than reading back the short diagnostic amplicon ([Kahler et al., 2024](https://doi.org/10.1016/j.jfp.2024.100309)). The problem was especially start in irrigation water: of 65 pond samples flagged by the 18S qPCR, none yielded sequences that clustered with *C. cayetanensis*, the reads instead matching coccidia shed by birds, fish, reptiles, amphibians, and rodents ([Hofstetter et al., 2024](https://doi.org/10.1128/spectrum.00906-24)).
+This 18S qPCR assay, however, lacks specificity in environmental samples. In the Georgia field study, 26 municipal wastewater sludge samples were flagged by the qPCR assay but only 7 (9% of the 76 sludge samples tested) were confirmed as *C. cayetanensis*, where confirmation required a separate multi-marker genotyping panel of eight nuclear and mitochondrial targets, deep-sequenced and matched against clinical reference haplotypes rather than reading back the short diagnostic amplicon ([Kahler et al., 2024](https://doi.org/10.1016/j.jfp.2024.100309)). The problem was especially stark in irrigation water: of 65 pond samples flagged by the 18S qPCR, none yielded sequences that clustered with *C. cayetanensis*, the reads instead matching coccidia shed by birds, fish, reptiles, amphibians, and rodents ([Hofstetter et al., 2024](https://doi.org/10.1128/spectrum.00906-24)).
 
 Motivated by the multistate outbreak underway as of July 2026 ([Brown, 2026](https://doi.org/10.1136/bmj-2026-100317)), we reasoned that *C. cayetanensis* could instead be detected directly in existing wastewater metagenomic datasets by requiring exact matches to *C. cayetanensis*-specific 31-mers, drawn from across all rRNA loci.
 
@@ -123,16 +133,6 @@ All sequencing analyzed here is public in NCBI SRA under BioProject [PRJNA124787
 | Threshold calibration evidence, from the 205-run SRA `-a 1` screen | [`02-screen-wastewater-metagenomes/results/calibration/`](02-screen-wastewater-metagenomes/results/calibration/) |
 | The bait sets | [`01-identify-cyclospora-specific-kmers/baits/`](01-identify-cyclospora-specific-kmers/baits/) |
 | Bait design and core-nt validation evidence | [`01-identify-cyclospora-specific-kmers/results/`](01-identify-cyclospora-specific-kmers/results/) |
-
-## Authors and affiliations
-
-Nicholas R. Minor<sup>1</sup>, William G. Gardner<sup>1</sup>, Marc C. Johnson<sup>2,3</sup>, Shelby L. O'Connor<sup>1,4</sup>, David H. O'Connor<sup>1,4*</sup>
-
-<sup>1</sup> Department of Pathology and Laboratory Medicine, University of Wisconsin School of Medicine and Public Health, Madison, WI 53711, USA
-<sup>2</sup> Department of Molecular Microbiology and Immunology, University of Missouri School of Medicine, Columbia, MO 65211, USA
-<sup>3</sup> Christopher S. Bond Life Sciences Center, University of Missouri, Columbia, MO 65211, USA
-<sup>4</sup> Wisconsin National Primate Research Center, University of Wisconsin-Madison, Madison, WI 53715, USA
-<sup>*</sup> Corresponding author: Dave O'Connor • <dhoconno@wisc.edu>
 
 ## Acknowledgements
 

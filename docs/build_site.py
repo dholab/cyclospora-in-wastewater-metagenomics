@@ -8,8 +8,9 @@ The README is the single source of the manuscript text. This script renders it t
    the Vega-Lite specification behind it, rendered in place with vega-embed, so
    read counts, sequencing depth, and contributing runs appear on hover. The SVG
    stays as the fallback if the chart cannot load.
-2. **Authors move under the title**, where a reader expects them, rather than
-   sitting in a section near the end.
+2. **Front matter becomes the masthead.** Everything above the first `##` is the
+   title, byline, and affiliations, which the README already carries in that
+   order; paragraphs marked `<!-- repo-only -->` are left out.
 3. **Display items are set off** from the text by rules, and every "Table 1",
    "Table 2", or "Figure 1" in the prose becomes a link that jumps to them.
 4. **Repository links resolve.** Pages serves only `docs/`, so links to files in
@@ -41,6 +42,9 @@ SPEC = FIGURES / "cyclospora_heatmap.vl.json"
 SVG = FIGURES / "cyclospora_heatmap.svg"
 READS = ROOT / "02-screen-wastewater-metagenomes/results/reads"
 COMPLEMENT = str.maketrans("ACGTNacgtn", "TGCANtgcan")
+
+# Front-matter paragraphs carrying this marker are for repository readers only.
+REPO_ONLY = "<!-- repo-only -->"
 
 # The README line that places the static figure, replaced by the live chart.
 FIGURE_IMAGE = re.compile(
@@ -113,22 +117,35 @@ def collect_reads() -> dict[str, dict]:
     return payload
 
 
-def split_out_authors(text: str) -> tuple[str, str]:
-    """Lift the authors and affiliations out of the body for the masthead."""
-    match = re.search(
-        r"^## Authors and affiliations\n\n(.+?)\n\n(.+?)\n\n(?=^## )", text, re.S | re.M
-    )
-    if not match:
-        raise SystemExit("the Authors and affiliations section was not found")
+def split_front_matter(text: str) -> tuple[str, str, str]:
+    """Split the README into its title, its masthead, and the body.
+
+    Everything above the first `##` heading is front matter: the title, then the
+    byline and affiliations, then any paragraph marked `<!-- repo-only -->`, which
+    is written for readers of the repository and is left out here. Because the
+    README already carries these in the order a manuscript wants them, this build
+    only has to style them, not move them.
+    """
+    front, separator, rest = text.partition("\n## ")
+    if not separator:
+        raise SystemExit("the README has no '## ' section to end the front matter")
+
+    lines = front.strip().split("\n")
+    if not lines[0].startswith("# "):
+        raise SystemExit("the README does not open with an H1 title")
+    title = lines[0][2:].strip()
+
+    blocks = [b.strip() for b in "\n".join(lines[1:]).split("\n\n") if b.strip()]
+    keep = [b for b in blocks if not b.startswith(REPO_ONLY)]
+
     inline = markdown.Markdown(extensions=["nl2br"])
-    byline = inline.convert(match.group(1)).removeprefix("<p>").removesuffix("</p>")
-    inline.reset()
-    affiliations = inline.convert(match.group(2)).removeprefix("<p>").removesuffix("</p>")
-    block = (
-        f'<p class="byline">{byline}</p>\n'
-        f'  <p class="affiliations">{affiliations}</p>'
-    )
-    return text[: match.start()] + text[match.end():], block
+    masthead = []
+    for index, block in enumerate(keep):
+        inline.reset()
+        html_block = inline.convert(block).removeprefix("<p>").removesuffix("</p>")
+        css = "byline" if index == 0 else "affiliations"
+        masthead.append(f'<p class="{css}">{html_block}</p>')
+    return title, "\n  ".join(masthead), separator.lstrip("\n") + rest
 
 
 def wrap_display_items(body: str) -> str:
@@ -224,18 +241,7 @@ def rewrite_links(body: str) -> str:
 
 def build() -> None:
     text = (ROOT / "README.md").read_text()
-
-    # Strip the two lead-ins written for repository readers. One points here, which
-    # is redundant on this page; the other is restated in the header below the title.
-    text = re.sub(r"^\*\*The preferred way to read this manuscript.*?\*\*\n\n", "", text, flags=re.S | re.M)
-    text = re.sub(r"^\*Note that supporting evidence.*?- DHO\*\n\n", "", text, flags=re.S | re.M)
-
-    # The H1 becomes the page header rather than part of the flowing text.
-    title_match = re.match(r"# (.+)\n", text)
-    title_md = title_match.group(1) if title_match else "Manuscript"
-    text = text[title_match.end():] if title_match else text
-
-    text, authors = split_out_authors(text)
+    title_md, authors, text = split_front_matter(text)
 
     converter = markdown.Markdown(
         extensions=["tables", "fenced_code", "attr_list", "sane_lists", "nl2br"]
