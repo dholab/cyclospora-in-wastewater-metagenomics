@@ -22,6 +22,7 @@ whenever the README changes.
 
 from __future__ import annotations
 
+import gzip
 import html
 import json
 import re
@@ -38,6 +39,7 @@ BRANCH = "main"
 FIGURES = ROOT / "02-screen-wastewater-metagenomes/results/figures"
 SPEC = FIGURES / "cyclospora_heatmap.vl.json"
 SVG = FIGURES / "cyclospora_heatmap.svg"
+READS = ROOT / "02-screen-wastewater-metagenomes/results/reads"
 
 # The README line that places the static figure, replaced by the live chart.
 FIGURE_IMAGE = re.compile(
@@ -48,7 +50,54 @@ CHART = """<div class="chart-frame">
     <div id="figure-1-chart" role="img"
          aria-label="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight"></div>
   </div>
-  <p class="chart-hint">Hover any cell for its read count, sequencing depth, and contributing runs</p>"""
+  <p class="chart-hint">Hover any cell for its counts · click a cell with detections for its reads</p>
+  <div id="reads-panel" hidden>
+    <div class="reads-head">
+      <div>
+        <span class="reads-title" id="reads-title"></span>
+        <span class="reads-sub" id="reads-sub"></span>
+      </div>
+      <div class="reads-acts">
+        <button type="button" id="reads-copy">Copy FASTA</button>
+        <button type="button" id="reads-save">Download</button>
+        <button type="button" id="reads-close" aria-label="Close reads">Close</button>
+      </div>
+    </div>
+    <pre id="reads-body"></pre>
+  </div>"""
+
+
+def collect_reads() -> dict[str, dict]:
+    """Load the committed diagnostic reads, keyed by the sample id the chart uses.
+
+    Every file here is one public SRA run, so the payload the page ships carries
+    nothing that is not already in the repository and in the BioProject.
+    """
+    payload: dict[str, dict] = {}
+    for path in sorted(READS.glob("*.diagnostic_reads.fasta.gz")):
+        sample, _, run = path.name.split(".", 1)[0].partition("__")
+        records: list[dict] = []
+        header = None
+        for line in gzip.open(path, "rt"):
+            line = line.strip()
+            if line.startswith(">"):
+                header = line[1:]
+            elif line and header is not None:
+                name, _, rest = header.partition(" ")
+                kmers = re.search(r"diagnostic_kmers=(\d+)", rest)
+                records.append(
+                    {"id": name, "k": int(kmers.group(1)) if kmers else None, "s": line}
+                )
+                header = None
+        if records:
+            # A collection date can be deposited as more than one run, so the
+            # entry accumulates rather than replacing what an earlier file left.
+            entry = payload.setdefault(sample, {"runs": [], "reads": []})
+            entry["runs"].append(run)
+            entry["reads"].extend(records)
+    if not payload:
+        raise SystemExit(f"no diagnostic read files found under {READS}")
+    return payload
 
 
 def split_out_authors(text: str) -> tuple[str, str]:
@@ -70,7 +119,7 @@ def split_out_authors(text: str) -> tuple[str, str]:
 
 
 def wrap_display_items(body: str) -> str:
-    """Set tables and the figure in their own rules, with labelled captions."""
+    """Set tables and the figure in their own rules, with labeled captions."""
 
     def caption(text: str, kind: str, number: str) -> str:
         # "<strong>Table 1. What each filter removed.</strong> Each row counts…"
@@ -195,6 +244,11 @@ def build() -> None:
     spec = json.loads(SPEC.read_text())
     spec.pop("title", None)  # the figure caption in the text carries the title
     (DOCS / "assets/cyclospora_heatmap.vl.json").write_text(json.dumps(spec, separators=(",", ":")))
+    reads = collect_reads()
+    (DOCS / "assets/diagnostic_reads.json").write_text(json.dumps(reads, separators=(",", ":")))
+    total = sum(len(entry["reads"]) for entry in reads.values())
+    runs = sum(len(entry["runs"]) for entry in reads.values())
+    print(f"  {total:,} diagnostic reads from {runs} runs available on click")
 
     template = (DOCS / "template.html").read_text()
     page = (

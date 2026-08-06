@@ -80,7 +80,7 @@ verifies those identities before use and fails rather than proceeding on a chang
 method, attrition at every stage, and rebuild instructions are in the
 [main README](../../REPRODUCING.md).
 
-## Citation and licence
+## Citation and license
 
 If you use these baits, please cite this repository and the *Cyclospora* reference sequences the
 baits were derived from, which are listed in

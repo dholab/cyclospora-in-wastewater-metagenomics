@@ -21,7 +21,7 @@ reference.
    stood. Where the missing word is unambiguous from context it is restored in square brackets, for
    example `[*Cyclospora*] oocysts are hardy`. Nothing else has been altered, and no gap has been
    filled where the missing word was not certain.
-2. **Verification level.** Not every source could be read in full. Each reference below is labelled
+2. **Verification level.** Not every source could be read in full. Each reference below is labeled
    with what was actually consulted — full text, abstract, or bibliographic metadata alone. Claims
    are only made in the README to the depth the corresponding source was verified.
 
@@ -70,7 +70,7 @@ Cyclosporiasis surveillance — United States, 2011–2015. *MMWR Surveill Summ*
 | Oocysts are hardy; routine chemical disinfection or sanitizing is unlikely to kill the parasite | Introduction, ¶1, sentence 4 | "[*Cyclospora*] oocysts are hardy; treatment of food or water with routine chemical disinfection or sanitizing methods is unlikely to kill the parasite." |
 | Asymptomatic infection is thought to be most common where the parasite is endemic | Introduction, ¶2, sentence 1 | "[*Cyclospora*] infection can be asymptomatic or symptomatic, although asymptomatic infection is thought to be most common in settings where [*Cyclospora*] is endemic." |
 | Incubation averages 1 week (range 2 to >14 days) | Introduction, ¶2, sentence 2 | "Among persons who develop symptomatic [*Cyclospora*] infection, the incubation period averages 1 week (range: 2 to >14 days)." |
-| Symptoms: watery diarrhoea (most common), loss of appetite, weight loss, abdominal cramping, bloating, nausea, fatigue, vomiting, low-grade fever | Introduction, ¶2, sentence 3 | "Symptoms of cyclosporiasis can include watery diarrhea (most common), loss of appetite, weight loss, abdominal cramping, bloating, increased intestinal gas, nausea, fatigue, vomiting, and low-grade fever." |
+| Symptoms: watery diarrhea (most common), loss of appetite, weight loss, abdominal cramping, bloating, nausea, fatigue, vomiting, low-grade fever | Introduction, ¶2, sentence 3 | "Symptoms of cyclosporiasis can include watery diarrhea (most common), loss of appetite, weight loss, abdominal cramping, bloating, increased intestinal gas, nausea, fatigue, vomiting, and low-grade fever." |
 | TMP-SMX is the recommended treatment; no highly effective alternative identified | Introduction, ¶2, sentence 4 | "The recommended treatment for cyclosporiasis is trimethoprim-sulfamethoxazole; no highly effective alternative treatments have been identified." |
 | Untreated illness is prolonged and remitting-relapsing for weeks to months but ultimately self-limiting | Introduction, ¶2, sentence 5 | "If untreated, the illness can be prolonged, with remitting-relapsing symptoms for weeks to months, but ultimately self-limiting." |
 
@@ -145,7 +145,7 @@ PMID 534451 · **not consulted; no abstract is indexed in PubMed**
 
 | Claim | Location | Source text |
 |---|---|---|
-| Organisms had been reported as "cyanobacterium-like bodies" in patients with diarrhoea | Abstract, sentence 1 | "Organisms referred to as \"cyanobacterium-like bodies\" have now been identified worldwide in the feces of both immunocompetent and immunocompromised patients with diarrhea." |
+| Organisms had been reported as "cyanobacterium-like bodies" in patients with diarrhea | Abstract, sentence 1 | "Organisms referred to as \"cyanobacterium-like bodies\" have now been identified worldwide in the feces of both immunocompetent and immunocompromised patients with diarrhea." |
 | Material came from Peruvian patients and two patients in the United States, and was assigned to the genus *Cyclospora* | Abstract, Results, sentence 1 | "Organisms isolated from the feces of Peruvian patients and two patients from the United States were identified as belonging to the coccidian genus cyclospora, after sporulation and excystation of the oocysts according to standard techniques." |
 | Two sporozoites were liberated from each of the two sporocysts per oocyst | Abstract, Results, sentence 3 | "Complete excystation resulted in the liberation of two sporozoites from the two sporocysts within each oocyst (cryptosporidia have four naked sporozoites within each oocyst)." |
 | Wording quoted by Barratt et al. about "immunocompetent visitors to developing countries" and "*Cryptosporidium muris*-like oocysts" | Not in the abstract | Neither phrase appears in the PubMed abstract; both are presumably in the full text, which was not consulted. The README therefore does not use either phrase. |

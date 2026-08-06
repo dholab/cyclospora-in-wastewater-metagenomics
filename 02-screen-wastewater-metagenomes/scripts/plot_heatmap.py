@@ -52,7 +52,7 @@ STAGE_ROOT = Path(__file__).resolve().parent.parent
 # window: a cell always holds the same two calendar weeks.
 FORTNIGHT_EPOCH = dt.date(1970, 1, 5)
 
-# Faint to dark blue. White is a screened zero, grey is an unscreened cell.
+# Faint to dark blue. White is a screened zero, gray is an unscreened cell.
 BINS = [(2.0, "0 to 2", "#cde2fb"), (5.0, "2 to 5", "#9ec5f4"),
         (10.0, "5 to 10", "#6da7ec"), (20.0, "10 to 20", "#3987e5"),
         (40.0, "20 to 40", "#1c5cab"), (float("inf"), "40 or more", "#0d366b")]
@@ -219,7 +219,7 @@ Cyclospora cayetanensis in public wastewater sequencing, by sewershed and fortni
                     "by sewershed and fortnight",
             "subtitle": [
                 "Distinct diagnostic reads per billion reads sequenced. White is "
-                "screened with nothing found; grey is no sample that fortnight.",
+                "screened with nothing found; gray is no sample that fortnight.",
                 "Columns are SRA codes, west to east; sewersheds sampled at "
                 f"{args.min_timepoints} or more timepoints in SRA.",
             ],

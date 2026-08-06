@@ -150,6 +150,56 @@ figure.display > figcaption:last-child { margin-top: 1.1rem; }
   text-transform: uppercase;
   color: var(--accent);
 }
+/* click-to-read panel for the diagnostic reads behind a cell */
+#reads-panel {
+  margin-top: 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+}
+#reads-panel[hidden] { display: none; }
+.reads-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid var(--rule);
+}
+.reads-title { font: 700 12.5px/1.4 var(--sans); color: var(--ink); }
+.reads-sub {
+  display: block;
+  font: 400 10.5px/1.4 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.reads-acts { display: flex; gap: 0.4rem; }
+.reads-acts button {
+  font: 700 10.5px/1 var(--sans);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  padding: 0.42rem 0.6rem;
+  cursor: pointer;
+}
+.reads-acts button:hover { border-color: var(--accent); color: var(--accent); }
+#reads-body {
+  margin: 0;
+  padding: 0.8rem 0.85rem;
+  max-height: 22rem;
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+  background: var(--surface);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  white-space: pre;
+}
 .table-scroll { overflow-x: auto; background: var(--surface); border-radius: 4px; }
 table { border-collapse: collapse; width: 100%; font: 400 13px/1.45 var(--sans); }
 th, td { padding: 0.52rem 0.7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
@@ -205,6 +255,80 @@ footer.colophon {
 </footer>
 </div>
 <script>
+/* Clicking a cell with detections opens the diagnostic reads behind it as FASTA.
+   The reads are the committed per-run FASTAs, every one from a public SRA run. */
+(function () {
+  var byId = function (id) { return document.getElementById(id); };
+  var panel = byId("reads-panel"), body = byId("reads-body");
+  var titleEl = byId("reads-title"), subEl = byId("reads-sub");
+  var reads = null, fastaText = "", fastaName = "diagnostic_reads.fasta";
+
+  fetch("assets/diagnostic_reads.json")
+    .then(function (r) { return r.json(); })
+    .then(function (d) { reads = d; })
+    .catch(function (e) { console.error("reads unavailable", e); });
+
+  function wrap(seq) {
+    var out = [];
+    for (var i = 0; i < seq.length; i += 60) out.push(seq.slice(i, i + 60));
+    return out.join("\n");
+  }
+
+  function open(datum) {
+    if (!reads) return;
+    /* A collection sequenced twice is listed once per run, so take each id once. */
+    var seen = {}, ids = (datum.sample_ids || "").split(",").map(function (s) {
+      return s.trim();
+    }).filter(function (id) {
+      if (!id || seen[id]) return false;
+      seen[id] = true;
+      return true;
+    });
+    var lines = [], count = 0, runs = [], seqs = {};
+    ids.forEach(function (id) {
+      var entry = reads[id];
+      if (!entry) return;
+      runs = runs.concat(entry.runs);
+      entry.reads.forEach(function (rec) {
+        count += 1;
+        seqs[rec.s] = true;
+        lines.push(">" + rec.id + (rec.k == null ? "" : " diagnostic_kmers=" + rec.k));
+        lines.push(wrap(rec.s));
+      });
+    });
+    if (!count) return;
+    fastaText = lines.join("\n") + "\n";
+    fastaName = datum.site + "_" + datum.fortnight + ".diagnostic_reads.fasta";
+    titleEl.textContent = datum.site + " · fortnight beginning " + datum.fortnight;
+    subEl.textContent =
+      count + " read" + (count === 1 ? "" : "s") + " · " +
+      Object.keys(seqs).length + " distinct · " +
+      runs.length + " run" + (runs.length === 1 ? "" : "s") + " · " + runs.join(", ");
+    body.textContent = fastaText;
+    panel.hidden = false;
+    panel.scrollIntoView({block: "nearest", behavior: "smooth"});
+  }
+
+  byId("reads-close").addEventListener("click", function () { panel.hidden = true; });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") panel.hidden = true;
+  });
+  byId("reads-copy").addEventListener("click", function (e) {
+    var button = e.currentTarget;
+    navigator.clipboard.writeText(fastaText).then(function () {
+      button.textContent = "Copied";
+      setTimeout(function () { button.textContent = "Copy FASTA"; }, 1800);
+    });
+  });
+  byId("reads-save").addEventListener("click", function () {
+    var url = URL.createObjectURL(new Blob([fastaText], {type: "text/plain"}));
+    var a = document.createElement("a");
+    a.href = url; a.download = fastaName; a.click();
+    URL.revokeObjectURL(url);
+  });
+  window.__openReadsFor = open;
+})();
+
   vegaEmbed("#figure-1-chart", "assets/cyclospora_heatmap.vl.json", {
     actions: {export: true, source: false, compiled: false, editor: false},
     renderer: "svg",
@@ -213,8 +337,15 @@ footer.colophon {
       font: "Arial, Helvetica, sans-serif",
       axis: {labelColor: "#163139", titleColor: "#163139", domainColor: "rgba(22,49,57,0.32)", tickColor: "rgba(22,49,57,0.32)"},
       legend: {labelColor: "#163139", titleColor: "#163139"},
-      title: {color: "#163139"}
+      title: {color: "#163139"},
+      mark: {cursor: "pointer"}
     }
+  }).then(function (result) {
+    result.view.addEventListener("click", function (event, item) {
+      if (item && item.datum && item.datum.reads > 0 && window.__openReadsFor) {
+        window.__openReadsFor(item.datum);
+      }
+    });
   }).catch(function (err) {
     document.getElementById("figure-1-chart").innerHTML =
       '<img src="assets/cyclospora_heatmap.svg" alt="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight">';

@@ -150,6 +150,56 @@ figure.display > figcaption:last-child { margin-top: 1.1rem; }
   text-transform: uppercase;
   color: var(--accent);
 }
+/* click-to-read panel for the diagnostic reads behind a cell */
+#reads-panel {
+  margin-top: 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+}
+#reads-panel[hidden] { display: none; }
+.reads-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid var(--rule);
+}
+.reads-title { font: 700 12.5px/1.4 var(--sans); color: var(--ink); }
+.reads-sub {
+  display: block;
+  font: 400 10.5px/1.4 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.reads-acts { display: flex; gap: 0.4rem; }
+.reads-acts button {
+  font: 700 10.5px/1 var(--sans);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  padding: 0.42rem 0.6rem;
+  cursor: pointer;
+}
+.reads-acts button:hover { border-color: var(--accent); color: var(--accent); }
+#reads-body {
+  margin: 0;
+  padding: 0.8rem 0.85rem;
+  max-height: 22rem;
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+  background: var(--surface);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  white-space: pre;
+}
 .table-scroll { overflow-x: auto; background: var(--surface); border-radius: 4px; }
 table { border-collapse: collapse; width: 100%; font: 400 13px/1.45 var(--sans); }
 th, td { padding: 0.52rem 0.7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
@@ -202,7 +252,7 @@ footer.colophon {
 </header>
 <main>
 <h2>Introduction</h2>
-<p>Cyclosporiasis is an intestinal illness caused by infection with <em>Cyclospora cayetanensis</em>, a single-celled coccidian parasite with no known host other than humans (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). It is acquired by swallowing food or water contaminated with faeces. Direct spread from one person to another is unlikely because the oocysts shed in stool are not infectious when they leave the body. Oocysts mature in the environment, a process thought to require at least one to two weeks under favourable conditions. Oocysts are hardy and difficult to destroy. Treating food or water with routine chemical disinfection or sanitizing is unlikely to kill the parasite (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). After ingestion, the parasite settles inside the lining of the small intestine (<a href="https://doi.org/10.1128/asmcr.00062-25">Ambrose et al., 2025</a>). Many infections produce no symptoms and silent infection is thought to be common in regions where the parasite is endemic. In people who do fall ill, symptoms appear about a week after exposure, with a range of 2 to more than 14 days. Watery diarrhoea is frequently accompanied by loss of appetite, weight loss, abdominal cramping, bloating, nausea, fatigue, vomiting, and low-grade fever (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). Left untreated, the illness can persist for weeks or months in a remitting and relapsing pattern before resolving on its own. Trimethoprim-sulfamethoxazole is the recommended treatment (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). Cyclosporiasis can become chronic and cause nutrient malabsorption and weight loss in people who are immunocompromised (<a href="https://doi.org/10.1128/asmcr.00062-25">Ambrose et al., 2025</a> and <a href="https://doi.org/10.3390/microorganisms13092209">Banasik et al., 2025</a>). Recent genetic analyses have proposed subdividing <em>Cyclospora cayetanensis</em> into at least three species (<em>Cyclospora cayetanensis</em>, <em>Cyclospora ashfordi</em>, and <em>Cyclospora henanensis</em>) (<a href="https://doi.org/10.1017/S003118202200172X">Barratt et al., 2023</a>).</p>
+<p>Cyclosporiasis is an intestinal illness caused by infection with <em>Cyclospora cayetanensis</em>, a single-celled coccidian parasite with no known host other than humans (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). It is acquired by swallowing food or water contaminated with feces. Direct spread from one person to another is unlikely because the oocysts shed in stool are not infectious when they leave the body. Oocysts mature in the environment, a process thought to require at least one to two weeks under favorable conditions. Oocysts are hardy and difficult to destroy. Treating food or water with routine chemical disinfection or sanitizing is unlikely to kill the parasite (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). After ingestion, the parasite settles inside the lining of the small intestine (<a href="https://doi.org/10.1128/asmcr.00062-25">Ambrose et al., 2025</a>). Many infections produce no symptoms and silent infection is thought to be common in regions where the parasite is endemic. In people who do fall ill, symptoms appear about a week after exposure, with a range of 2 to more than 14 days. Watery diarrhea is frequently accompanied by loss of appetite, weight loss, abdominal cramping, bloating, nausea, fatigue, vomiting, and low-grade fever (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). Left untreated, the illness can persist for weeks or months in a remitting and relapsing pattern before resolving on its own. Trimethoprim-sulfamethoxazole is the recommended treatment (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). Cyclosporiasis can become chronic and cause nutrient malabsorption and weight loss in people who are immunocompromised (<a href="https://doi.org/10.1128/asmcr.00062-25">Ambrose et al., 2025</a> and <a href="https://doi.org/10.3390/microorganisms13092209">Banasik et al., 2025</a>). Recent genetic analyses have proposed subdividing <em>Cyclospora cayetanensis</em> into at least three species (<em>Cyclospora cayetanensis</em>, <em>Cyclospora ashfordi</em>, and <em>Cyclospora henanensis</em>) (<a href="https://doi.org/10.1017/S003118202200172X">Barratt et al., 2023</a>).</p>
 <p><em>Cyclospora cayetanensis</em> was named in 1994 (<a href="https://pubmed.ncbi.nlm.nih.gov/8064531/">Ortega et al., 1994</a>), though it was originally described in 1979 (<a href="https://doi.org/10.1080/00034983.1979.11687291">Ashford, 1979</a>) and assigned to the coccidian genus <em>Cyclospora</em> in 1993 (<a href="https://doi.org/10.1056/NEJM199305063281804">Ortega et al., 1993</a>). It emerged as a foodborne threat in the United States during the mid-1990s, and after large multistate outbreaks in 1996 and 1997 cyclosporiasis became a nationally notifiable disease in January 1999 (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). From 2011 to 2015, 2,207 cases were reported, of which 1,384 (62.7%) were acquired within the country and 415 (18.8%) followed international travel (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). Eight states accounted for 1,188 (85.8%) of the domestically acquired cases, with Texas alone reporting 684. All ten outbreaks investigated during that period had illness onsets between May and August, with most symptoms appearing in June or July (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). Travel-associated cases also peak in the same summer months (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>).</p>
 <p><em>Cyclospora</em> is thought to be endemic in many tropical and semi-tropical regions. Within the United States, contaminated fresh produce drives transmission. Many different products have been implicated including imported basil, raspberries, and snow peas, along with a berry salad, and a prepackaged salad mix. Cilantro may be especially vulnerable to contamination since it was implicated in at least three of the ten outbreaks investigated between 2011 and 2015 (<a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>). Green onions were the likely source of a 2017 cluster tied to a restaurant chain in the Houston metropolitan area (<a href="https://doi.org/10.4315/0362-028X.JFP-19-254">Hall et al., 2020</a>). Cilantro surfaced again in 2023 at a restaurant in Limestone County, Alabama, where 47 people fell ill and illness tracked strongly with cilantro consumption (odds ratio 40.9, 95% confidence interval 6.4 to 808.6) (<a href="https://doi.org/10.15585/mmwr.mm7413a1">Goetzman et al., 2025</a>). Since 2018, outbreaks have been traced to produce grown inside the United States (<a href="https://doi.org/10.1111/1541-4337.70327">McCaughan and Kniel, 2026</a>). Genotyping by CDC of isolates collected from 2018 to 2021 suggested that there are repeated introductions of the parasite into the food supply rather than an endemic parasite that has settled into a domestic reservoir (<a href="https://doi.org/10.3201/eid3102.240399">Shen et al., 2025</a>).</p>
 <p>Detecting <em>C. cayetanensis</em> in wastewater has seldom been attempted, and the few studies that have done so rely on a targeted, single-marker approach that identifies the parasite either by oocyst morphology or by amplifying one molecular locus. The first report examined wastewater for the parasite, detecting oocysts microscopically and confirming their identity by molecular techniques (<a href="https://doi.org/10.1128/AEM.64.6.2284-2286.1998">Sturbaum et al., 1998</a>). Later work relied on qPCR applied to bulk sample DNA. A year-long survey of two Arizona treatment plants concentrated water by electronegative filtration and screened the extract with a newly developed quantitative PCR assay (<a href="https://doi.org/10.1016/j.scitotenv.2014.03.036">Kitajima et al., 2014</a>). A two-year study of a southeastern Georgia growing region applied the FDA's validated 18S rRNA gene qPCR (<a href="https://doi.org/10.1128/AEM.01595-20">Durigan et al., 2020</a>, published as <a href="https://www.fda.gov/food/laboratory-methods-food/bam-19c-dead-end-ultrafiltration-detection-cyclospora-cayetanensis-agricultural-water">BAM Chapter 19c</a>) to total DNA extracted from municipal wastewater sludge (<a href="https://doi.org/10.1016/j.jfp.2024.100309">Kahler et al., 2024</a>).</p>
@@ -210,7 +260,7 @@ footer.colophon {
 <p>Motivated by the multistate outbreak underway as of July 2026 (<a href="https://doi.org/10.1136/bmj-2026-100317">Brown, 2026</a>), we reasoned that <em>C. cayetanensis</em> could instead be detected directly in existing wastewater metagenomic datasets by requiring exact matches to <em>C. cayetanensis</em>-specific 31-mers, drawn from across all rRNA loci. Specificity comes from the k-mers themselves, which are absent from the cross-reacting coccidia, while drawing them from the full rRNA operon rather than a single short locus recovers sensitivity.</p>
 <h2>Results</h2>
 <p>Software versions, pinned input identities, and the commands needed to repeat each step on a single machine are collected under <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/REPRODUCING.md">REPRODUCING.md</a>.</p>
-<h3>Ribosomal RNA is a favourable target in PEG-precipitated wastewater</h3>
+<h3>Ribosomal RNA is a favorable target in PEG-precipitated wastewater</h3>
 <p>The <a href="https://securebio.org/casper/">CASPER collaborative</a> collects and performs ultradeep metagenomic sequencing on weekly wastewater samples from sites around the United States (<a href="https://doi.org/10.64898/2026.03.05.26345726">Justen et al., 2026</a>). After filtration to remove solids, particles are concentrated from raw wastewater by polyethylene glycol precipitation, then extracted and sequenced (<a href="https://doi.org/10.1101/2025.10.27.25338874">Rushford et al., 2025</a>). The step was designed to recover virus particles, but polyethylene glycol precipitation is not selective for virions and also brings down particles of similar size and density, ribosomes among them. Ribosomal RNA is also recovered in addition to viral RNA, which we have previously leveraged to determine the <a href="https://dholab.github.io/public_viz/005-12s-species/">vertebrate species contributions</a> to wastewater datasets.</p>
 <h3>A subtractive design yields 1,388 ribosomal RNA 31-mers absent from all other rRNA</h3>
 <p>We wanted to identify sequences 31 nucleotides in length (i.e. 31-mers), that occur in <em>C. cayetanensis</em> ribosomal RNA and in no other ribosomal RNA. Ribosomes carry mature rRNA, without the spacers and flanking sequence that surround the genes in the rDNA repeat, so mature rRNA sequences are the target for this analysis.</p>
@@ -372,10 +422,24 @@ footer.colophon {
     <div id="figure-1-chart" role="img"
          aria-label="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight"></div>
   </div>
-  <p class="chart-hint">Hover any cell for its read count, sequencing depth, and contributing runs</p>
-  <figcaption><span class="fig-label">Figure 1</span><span class="fig-title"><em>Cyclospora cayetanensis</em> in public wastewater sequencing data, by sewershed and fortnight.</span> An interactive version, which reports the underlying read counts, sequencing depth, and contributing runs for every cell on hover, is published as a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.vl.json">Vega-Lite specification</a> with a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.html">ready-to-open wrapper</a>. Color shows distinct <em>C. cayetanensis</em> reads per billion reads sequenced, where distinct is the count of unique read sequences per run, so PCR and optical copies are collapsed; however, the denominator is the total number of reads in the SRA dataset. Each column is a separate sewershed, geographically ordered west to east. Grey marks a fortnight with no sample and white a run screened with no <em>C. cayetanensis</em> reads found. The figure, the specification, and the matrix behind them regenerate with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/scripts/plot_heatmap.py"><code>scripts/plot_heatmap.py</code></a>.</figcaption>
+  <p class="chart-hint">Hover any cell for its counts · click a cell with detections for its reads</p>
+  <div id="reads-panel" hidden>
+    <div class="reads-head">
+      <div>
+        <span class="reads-title" id="reads-title"></span>
+        <span class="reads-sub" id="reads-sub"></span>
+      </div>
+      <div class="reads-acts">
+        <button type="button" id="reads-copy">Copy FASTA</button>
+        <button type="button" id="reads-save">Download</button>
+        <button type="button" id="reads-close" aria-label="Close reads">Close</button>
+      </div>
+    </div>
+    <pre id="reads-body"></pre>
+  </div>
+  <figcaption><span class="fig-label">Figure 1</span><span class="fig-title"><em>Cyclospora cayetanensis</em> in public wastewater sequencing data, by sewershed and fortnight.</span> In the <a href="https://dholab.github.io/cyclospora-in-wastewater-metagenomics/#figure-1">interactive version</a>, hovering a cell reports its read count, sequencing depth, and contributing runs, and clicking a cell with detections opens the diagnostic reads behind it as FASTA, to read, copy, or download. Those reads are the committed per-run files in <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/tree/main/02-screen-wastewater-metagenomes/results/reads"><code>results/reads/</code></a>, each from a public SRA run. The figure is also published as a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.vl.json">Vega-Lite specification</a> with a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.html">ready-to-open wrapper</a>. Color shows distinct <em>C. cayetanensis</em> reads per billion reads sequenced, where distinct is the count of unique read sequences per run, so PCR and optical copies are collapsed; however, the denominator is the total number of reads in the SRA dataset. Each column is a separate sewershed, geographically ordered west to east. Gray marks a fortnight with no sample and white a run screened with no <em>C. cayetanensis</em> reads found. The figure, the specification, and the matrix behind them regenerate with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/scripts/plot_heatmap.py"><code>scripts/plot_heatmap.py</code></a>.</figcaption>
 </figure>
-<p>As expected from the seasonal epidemiology of cyclosporiasis <a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>, the detections in wastewater are strongly seasonal. The public record spans two cyclosporiasis seasons and <em>C. cayetanensis</em> rises in both: detection climbs from near zero in spring to roughly one run in nine across June, July and August of 2025, falls back to near zero through the winter, and rises again in the early summer of 2026. That the same seasonal pattern appears in two independent summers is strong evidence that these detections track community infection rather than sequencing artefacts.</p>
+<p>As expected from the seasonal epidemiology of cyclosporiasis <a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>, the detections in wastewater are strongly seasonal. The public record spans two cyclosporiasis seasons and <em>C. cayetanensis</em> rises in both: detection climbs from near zero in spring to roughly one run in nine across June, July and August of 2025, falls back to near zero through the winter, and rises again in the early summer of 2026. That the same seasonal pattern appears in two independent summers is strong evidence that these detections track community infection rather than sequencing artifacts.</p>
 <h2>Discussion</h2>
 <p>Here we demonstrate that wastewater metagenomic sequencing can identify samples with rRNA reads that are more similar to <em>C. cayetanensis</em> than any other taxa in NCBI core-nt. The most parsimonious explanation is that these reads are, in fact, from <em>C. cayetanensis</em> parasites shed into wastewater. However, we cannot formally exclude the possibility that some of these detections are associated with as yet undiscovered <em>Cyclospora</em> species that are not represented in core-nt or other databases. Nevertheless, it is reasonable to cautiously assert that this approach may be useful for monitoring Cyclospora outbreaks.</p>
 <p>In the summer of 2026 the United States experienced a cyclosporiasis season large enough to command national attention. By the middle of July the general medical press was describing an outbreak of "explosive diarrhoea" sweeping the country (<a href="https://doi.org/10.1136/bmj-2026-100317">Brown, 2026</a>), followed within days by coverage asking whether people should avoid fruit and vegetables (<a href="https://doi.org/10.1136/bmj-2026-100324">Wise, 2026</a>) and by a clinical primer for patients in <em>JAMA</em> (<a href="https://doi.org/10.1001/jama.2026.14866">Linder and Malani, 2026</a>). A nationwide <a href="https://www.cbsnews.com/news/cyclospora-outbreak-fda-opinion-poll">CBS News survey</a> conducted from July 22-24 found that approximately 40% of Americans are buying or eating less produce in response to this outbreak. We have analyzed more recent wastewater metagenomic data from the summer of 2026 (i.e., data not yet in SRA) that we are not including in this analysis. This data has been shared with public health stakeholders in the jurisdictions where we collect wastewater for the CASPER project. As of this writing we are not including Cyclospora detection data on our public dashboard wastewater metagenomic dashboard, consistent with our approach to other high-consequence pathogens (e.g, Measles virus, MPXV). </p>
@@ -384,7 +448,7 @@ footer.colophon {
 <h2>Reproducing this analysis</h2>
 <p>Software versions, pinned input identities, and the commands needed to repeat every step on a single machine are in <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/REPRODUCING.md">REPRODUCING.md</a>.</p>
 <h2>Data availability</h2>
-<p>All sequencing analysed here is public in NCBI SRA under BioProject <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874">PRJNA1247874</a>. Each run is identified below by its <code>public_code_CASPER_SRA</code> and its SRA run accession.</p>
+<p>All sequencing analyzed here is public in NCBI SRA under BioProject <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874">PRJNA1247874</a>. Each run is identified below by its <code>public_code_CASPER_SRA</code> and its SRA run accession.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -463,6 +527,80 @@ footer.colophon {
 </footer>
 </div>
 <script>
+/* Clicking a cell with detections opens the diagnostic reads behind it as FASTA.
+   The reads are the committed per-run FASTAs, every one from a public SRA run. */
+(function () {
+  var byId = function (id) { return document.getElementById(id); };
+  var panel = byId("reads-panel"), body = byId("reads-body");
+  var titleEl = byId("reads-title"), subEl = byId("reads-sub");
+  var reads = null, fastaText = "", fastaName = "diagnostic_reads.fasta";
+
+  fetch("assets/diagnostic_reads.json")
+    .then(function (r) { return r.json(); })
+    .then(function (d) { reads = d; })
+    .catch(function (e) { console.error("reads unavailable", e); });
+
+  function wrap(seq) {
+    var out = [];
+    for (var i = 0; i < seq.length; i += 60) out.push(seq.slice(i, i + 60));
+    return out.join("\n");
+  }
+
+  function open(datum) {
+    if (!reads) return;
+    /* A collection sequenced twice is listed once per run, so take each id once. */
+    var seen = {}, ids = (datum.sample_ids || "").split(",").map(function (s) {
+      return s.trim();
+    }).filter(function (id) {
+      if (!id || seen[id]) return false;
+      seen[id] = true;
+      return true;
+    });
+    var lines = [], count = 0, runs = [], seqs = {};
+    ids.forEach(function (id) {
+      var entry = reads[id];
+      if (!entry) return;
+      runs = runs.concat(entry.runs);
+      entry.reads.forEach(function (rec) {
+        count += 1;
+        seqs[rec.s] = true;
+        lines.push(">" + rec.id + (rec.k == null ? "" : " diagnostic_kmers=" + rec.k));
+        lines.push(wrap(rec.s));
+      });
+    });
+    if (!count) return;
+    fastaText = lines.join("\n") + "\n";
+    fastaName = datum.site + "_" + datum.fortnight + ".diagnostic_reads.fasta";
+    titleEl.textContent = datum.site + " · fortnight beginning " + datum.fortnight;
+    subEl.textContent =
+      count + " read" + (count === 1 ? "" : "s") + " · " +
+      Object.keys(seqs).length + " distinct · " +
+      runs.length + " run" + (runs.length === 1 ? "" : "s") + " · " + runs.join(", ");
+    body.textContent = fastaText;
+    panel.hidden = false;
+    panel.scrollIntoView({block: "nearest", behavior: "smooth"});
+  }
+
+  byId("reads-close").addEventListener("click", function () { panel.hidden = true; });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") panel.hidden = true;
+  });
+  byId("reads-copy").addEventListener("click", function (e) {
+    var button = e.currentTarget;
+    navigator.clipboard.writeText(fastaText).then(function () {
+      button.textContent = "Copied";
+      setTimeout(function () { button.textContent = "Copy FASTA"; }, 1800);
+    });
+  });
+  byId("reads-save").addEventListener("click", function () {
+    var url = URL.createObjectURL(new Blob([fastaText], {type: "text/plain"}));
+    var a = document.createElement("a");
+    a.href = url; a.download = fastaName; a.click();
+    URL.revokeObjectURL(url);
+  });
+  window.__openReadsFor = open;
+})();
+
   vegaEmbed("#figure-1-chart", "assets/cyclospora_heatmap.vl.json", {
     actions: {export: true, source: false, compiled: false, editor: false},
     renderer: "svg",
@@ -471,8 +609,15 @@ footer.colophon {
       font: "Arial, Helvetica, sans-serif",
       axis: {labelColor: "#163139", titleColor: "#163139", domainColor: "rgba(22,49,57,0.32)", tickColor: "rgba(22,49,57,0.32)"},
       legend: {labelColor: "#163139", titleColor: "#163139"},
-      title: {color: "#163139"}
+      title: {color: "#163139"},
+      mark: {cursor: "pointer"}
     }
+  }).then(function (result) {
+    result.view.addEventListener("click", function (event, item) {
+      if (item && item.datum && item.datum.reads > 0 && window.__openReadsFor) {
+        window.__openReadsFor(item.datum);
+      }
+    });
   }).catch(function (err) {
     document.getElementById("figure-1-chart").innerHTML =
       '<img src="assets/cyclospora_heatmap.svg" alt="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight">';
