@@ -200,7 +200,7 @@ figure.display > figcaption:last-child { margin-top: 1.1rem; }
   line-height: 1.45;
   white-space: pre;
 }
-.table-scroll { overflow-x: auto; background: var(--surface); border-radius: 4px; }
+.table-scroll { overflow-x: auto; background: transparent; border-radius: 4px; }
 table { border-collapse: collapse; width: 100%; font: 400 13px/1.45 var(--sans); }
 th, td { padding: 0.52rem 0.7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
 th {
@@ -215,7 +215,7 @@ tbody tr:last-child td { border-bottom: none; }
 td code { font-size: 0.92em; }
 
 /* Data-availability and reference tables sit inline, not as display items. */
-main > .table-scroll { margin: 1.6rem 0 2rem; border: 1px solid var(--rule); }
+main > .table-scroll { margin: 1.6rem 0 2rem; border: 1px solid var(--rule); background: transparent; }
 
 footer.colophon {
   margin-top: 4.5rem;
@@ -437,7 +437,7 @@ footer.colophon {
     </div>
     <pre id="reads-body"></pre>
   </div>
-  <figcaption><span class="fig-label">Figure 1</span><span class="fig-title"><em>Cyclospora cayetanensis</em> in public wastewater sequencing data, by sewershed and fortnight.</span> In the <a href="https://dholab.github.io/cyclospora-in-wastewater-metagenomics/#figure-1">interactive version</a>, hovering a cell reports its read count, sequencing depth, and contributing runs, and clicking a cell with detections opens the diagnostic reads behind it as FASTA, to read, copy, or download. Those reads are the committed per-run files in <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/tree/main/02-screen-wastewater-metagenomes/results/reads"><code>results/reads/</code></a>, each from a public SRA run. The figure is also published as a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.vl.json">Vega-Lite specification</a> with a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.html">ready-to-open wrapper</a>. Color shows distinct <em>C. cayetanensis</em> reads per billion reads sequenced, where distinct is the count of unique read sequences per run, so PCR and optical copies are collapsed; however, the denominator is the total number of reads in the SRA dataset. Each column is a separate sewershed, geographically ordered west to east. Gray marks a fortnight with no sample and white a run screened with no <em>C. cayetanensis</em> reads found. The figure, the specification, and the matrix behind them regenerate with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/scripts/plot_heatmap.py"><code>scripts/plot_heatmap.py</code></a>.</figcaption>
+  <figcaption><span class="fig-label">Figure 1</span><span class="fig-title"><em>Cyclospora cayetanensis</em> in public wastewater sequencing data, by sewershed and fortnight.</span> In the <a href="https://dholab.github.io/cyclospora-in-wastewater-metagenomics/#figure-1">interactive version</a>, hovering a cell reports its read count, sequencing depth, and contributing runs, and clicking a cell with detections opens the distinct diagnostic reads behind it as FASTA, to read, copy, or download. The panel carries one record per distinct read, matching the count the cell plots, with <code>copies=</code> reporting how many times that sequence was retained in its run. Reads are counted as distinct when they differ in sequence, with a read and its reverse complement treated as one molecule. They come from the committed per-run files in <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/tree/main/02-screen-wastewater-metagenomes/results/reads"><code>results/reads/</code></a>, which hold every retained read, each file from a public SRA run. The figure is also published as a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.vl.json">Vega-Lite specification</a> with a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.html">ready-to-open wrapper</a>. Color shows distinct <em>C. cayetanensis</em> reads per billion reads sequenced, where distinct is the count of unique read sequences per run, so PCR and optical copies are collapsed; however, the denominator is the total number of reads in the SRA dataset. Each column is a separate sewershed, geographically ordered west to east. Gray marks a fortnight with no sample and white a run screened with no <em>C. cayetanensis</em> reads found. The figure, the specification, and the matrix behind them regenerate with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/scripts/plot_heatmap.py"><code>scripts/plot_heatmap.py</code></a>.</figcaption>
 </figure>
 <p>As expected from the seasonal epidemiology of cyclosporiasis <a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>, the detections in wastewater are strongly seasonal. The public record spans two cyclosporiasis seasons and <em>C. cayetanensis</em> rises in both: detection climbs from near zero in spring to roughly one run in nine across June, July and August of 2025, falls back to near zero through the winter, and rises again in the early summer of 2026. That the same seasonal pattern appears in two independent summers is strong evidence that these detections track community infection rather than sequencing artifacts.</p>
 <h2>Discussion</h2>
@@ -556,25 +556,31 @@ footer.colophon {
       seen[id] = true;
       return true;
     });
-    var lines = [], count = 0, runs = [], seqs = {};
+    /* One record per distinct sequence per run, which is what the cell plots.
+       copies= reports how many times that sequence was retained in its run. */
+    var lines = [], distinct = 0, observed = 0, runs = [];
     ids.forEach(function (id) {
       var entry = reads[id];
       if (!entry) return;
       runs = runs.concat(entry.runs);
       entry.reads.forEach(function (rec) {
-        count += 1;
-        seqs[rec.s] = true;
-        lines.push(">" + rec.id + (rec.k == null ? "" : " diagnostic_kmers=" + rec.k));
+        distinct += 1;
+        observed += rec.n;
+        lines.push(
+          ">" + rec.id +
+          (rec.k == null ? "" : " diagnostic_kmers=" + rec.k) +
+          " copies=" + rec.n
+        );
         lines.push(wrap(rec.s));
       });
     });
-    if (!count) return;
+    if (!distinct) return;
     fastaText = lines.join("\n") + "\n";
-    fastaName = datum.site + "_" + datum.fortnight + ".diagnostic_reads.fasta";
+    fastaName = datum.site + "_" + datum.fortnight + ".distinct_diagnostic_reads.fasta";
     titleEl.textContent = datum.site + " · fortnight beginning " + datum.fortnight;
     subEl.textContent =
-      count + " read" + (count === 1 ? "" : "s") + " · " +
-      Object.keys(seqs).length + " distinct · " +
+      distinct + " distinct read" + (distinct === 1 ? "" : "s") + " · " +
+      observed + " retained · " +
       runs.length + " run" + (runs.length === 1 ? "" : "s") + " · " + runs.join(", ");
     body.textContent = fastaText;
     panel.hidden = false;

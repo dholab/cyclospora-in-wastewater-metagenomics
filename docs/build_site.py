@@ -40,6 +40,7 @@ FIGURES = ROOT / "02-screen-wastewater-metagenomes/results/figures"
 SPEC = FIGURES / "cyclospora_heatmap.vl.json"
 SVG = FIGURES / "cyclospora_heatmap.svg"
 READS = ROOT / "02-screen-wastewater-metagenomes/results/reads"
+COMPLEMENT = str.maketrans("ACGTNacgtn", "TGCANtgcan")
 
 # The README line that places the static figure, replaced by the live chart.
 FIGURE_IMAGE = re.compile(
@@ -70,13 +71,18 @@ CHART = """<div class="chart-frame">
 def collect_reads() -> dict[str, dict]:
     """Load the committed diagnostic reads, keyed by the sample id the chart uses.
 
+    Reads are collapsed to distinct sequences within a run, which is the count the
+    heatmap plots, with the number of observations kept alongside each one. The
+    committed FASTAs hold every retained read, copies included; a cell that plots
+    two distinct reads would otherwise open as sixteen near-identical records.
+
     Every file here is one public SRA run, so the payload the page ships carries
     nothing that is not already in the repository and in the BioProject.
     """
     payload: dict[str, dict] = {}
     for path in sorted(READS.glob("*.diagnostic_reads.fasta.gz")):
         sample, _, run = path.name.split(".", 1)[0].partition("__")
-        records: list[dict] = []
+        distinct: dict[str, dict] = {}
         header = None
         for line in gzip.open(path, "rt"):
             line = line.strip()
@@ -85,10 +91,21 @@ def collect_reads() -> dict[str, dict]:
             elif line and header is not None:
                 name, _, rest = header.partition(" ")
                 kmers = re.search(r"diagnostic_kmers=(\d+)", rest)
-                records.append(
-                    {"id": name, "k": int(kmers.group(1)) if kmers else None, "s": line}
-                )
+                # A read and its reverse complement are one molecule, and that is
+                # how the screen counts distinct reads, so collapse canonically.
+                key = min(line, line.translate(COMPLEMENT)[::-1])
+                seen = distinct.get(key)
+                if seen is None:
+                    distinct[key] = {
+                        "id": name,
+                        "k": int(kmers.group(1)) if kmers else None,
+                        "s": line,
+                        "n": 1,
+                    }
+                else:
+                    seen["n"] += 1
                 header = None
+        records = list(distinct.values())
         if records:
             # A collection date can be deposited as more than one run, so the
             # entry accumulates rather than replacing what an earlier file left.
@@ -246,9 +263,13 @@ def build() -> None:
     (DOCS / "assets/cyclospora_heatmap.vl.json").write_text(json.dumps(spec, separators=(",", ":")))
     reads = collect_reads()
     (DOCS / "assets/diagnostic_reads.json").write_text(json.dumps(reads, separators=(",", ":")))
-    total = sum(len(entry["reads"]) for entry in reads.values())
+    distinct = sum(len(entry["reads"]) for entry in reads.values())
+    observed = sum(r["n"] for entry in reads.values() for r in entry["reads"])
     runs = sum(len(entry["runs"]) for entry in reads.values())
-    print(f"  {total:,} diagnostic reads from {runs} runs available on click")
+    print(
+        f"  {distinct:,} distinct diagnostic reads ({observed:,} observations) "
+        f"from {runs} runs available on click"
+    )
 
     template = (DOCS / "template.html").read_text()
     page = (
