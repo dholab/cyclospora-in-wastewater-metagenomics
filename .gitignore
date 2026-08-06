@@ -1,0 +1,24 @@
+# Pixi environments
+.pixi/
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Downloaded reference data (pinned in config/sources.tsv, re-fetched by the build)
+01-identify-cyclospora-specific-kmers/silva/
+01-identify-cyclospora-specific-kmers/pos/
+01-identify-cyclospora-specific-kmers/background/
+
+# Build outputs. The committed copies of what these produced live in
+# 01-identify-cyclospora-specific-kmers/{results,curated,baits}/
+01-identify-cyclospora-specific-kmers/kmers/
+01-identify-cyclospora-specific-kmers/reports/
+01-identify-cyclospora-specific-kmers/provenance/
+01-identify-cyclospora-specific-kmers/work/
+01-identify-cyclospora-specific-kmers/logs/
+01-identify-cyclospora-specific-kmers/*.idx
+
+# Shareable render of the README (regenerate as needed)
+README.pdf

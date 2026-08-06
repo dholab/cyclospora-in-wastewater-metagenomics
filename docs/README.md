@@ -1,0 +1,26 @@
+# The reading version of the manuscript
+
+This directory is the source of the GitHub Pages site at
+<https://dholab.github.io/cyclospora-in-wastewater-metagenomics/>, the preferred way to read this
+work. It is the same manuscript as the [repository README](../README.md), with Figure 1 rendered as
+an interactive chart and every method, script, and data file linked to its place in the repository.
+
+| File | What it is |
+|---|---|
+| [`build_site.py`](build_site.py) | Generates `index.html` from `../README.md`. Rewrites repository-relative links to GitHub URLs and swaps the static figure for the Vega-Lite chart. |
+| [`template.html`](template.html) | The page shell: typography, light and dark themes, and the vega-embed call. |
+| `index.html` | The generated page. Committed so Pages serves it without a build step. |
+| `assets/` | The Vega-Lite specification and the static SVG fallback, copied from [`02-screen-wastewater-metagenomes/results/figures/`](../02-screen-wastewater-metagenomes/results/figures/) at build time. |
+| `pixi.toml`, `pixi.lock` | Python 3.12 and Python-Markdown, pinned. |
+| `.nojekyll` | Serves the generated HTML as it is, without Jekyll processing. |
+
+The README is the single source of the manuscript text. After editing it, rebuild and commit
+`index.html`:
+
+```bash
+cd docs
+pixi run build
+```
+
+The chart needs `vega`, `vega-lite`, and `vega-embed` from jsDelivr. Without network access, or with
+JavaScript disabled, the page falls back to the static SVG.

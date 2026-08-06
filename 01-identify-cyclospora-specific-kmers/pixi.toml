@@ -1,0 +1,39 @@
+[workspace]
+authors = ["DHO-CHTC <dhoconno@wisc.edu>"]
+channels = ["conda-forge", "bioconda"]
+name = "32434-rrna-bait"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+# Download the pinned references, locate mature rRNA, enumerate 31-mers, and
+# subtract every 31-mer shared with the rRNA background. Writes kmers/,
+# curated/, provenance/, and fresh copies of the reports under reports/.
+build = { cmd = "bash scripts/build_rrna_bait.sh", env = { PYTHONPATH = "src" } }
+
+# Re-derive the core-nt-validated bait set from the committed BLAST evidence in
+# results/, instead of repeating the 285 GB search. Requires `build` first.
+validate = { cmd = "bash scripts/build_core_nt_validated_index.sh results/core_nt_bait_exact_match_blast.tsv", env = { PYTHONPATH = "src" } }
+
+# Unit and fixture tests for this stage. Self-contained: runs on a fresh clone
+# with no network and no prior build. 89 unit tests plus 3 fixture builds.
+test = { cmd = "pytest -q && bash tests/test_build_fixture.sh && bash tests/test_build_zero_fixture.sh && bash tests/test_core_nt_finalize.sh", env = { PYTHONPATH = "src" } }
+
+[dependencies]
+python = ">=3.12,<3.13"
+pytest = ">=8,<9"
+curl = ">=8,<9"
+# exact k-mer set operations (specificity analysis)
+meryl = ">=1.4.1,<2"
+# nt validation + local specificity checks
+blast = ">=2.15,<3"
+# rRNA gene annotation (18S/5.8S/28S/5S)
+barrnap = ">=0.9,<0.10"
+# sequence handling / operon extraction
+seqkit = ">=2.13.0,<3"
+biopython = ">=1.87,<2"
+# reference retrieval
+entrez-direct = ">=25.3,<26"
+ncbi-datasets-cli = ">=18.33.1,<19"
+# builds the k=31,w=1 filtering index from the bait FASTA
+deacon = ">=0.15.0,<0.16"

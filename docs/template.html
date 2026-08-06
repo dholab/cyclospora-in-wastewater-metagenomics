@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE_TEXT}}</title>
+<meta name="description" content="Detection of Cyclospora cayetanensis in public wastewater metagenomic sequencing using species-specific ribosomal RNA 31-mers.">
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fdfdfc;
+  --fg: #16181d;
+  --muted: #5c6370;
+  --rule: #e2e2df;
+  --link: #1b5e8a;
+  --code-bg: #f3f3f0;
+  --panel: #f7f7f4;
+  --measure: 40rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --fg: #e6e6e3;
+    --muted: #9aa1ab;
+    --rule: #2b2f36;
+    --link: #7fc0e8;
+    --code-bg: #1d2026;
+    --panel: #1a1d22;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.65 "Charter", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  -webkit-text-size-adjust: 100%;
+}
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem 6rem; }
+header.masthead {
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 2.5rem;
+  padding: 3.5rem 0 2rem;
+}
+header.masthead h1 {
+  font-size: 1.95rem;
+  line-height: 1.25;
+  margin: 0 0 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.kicker {
+  font: 600 0.72rem/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1.1rem;
+}
+.masthead p.standfirst {
+  margin: 0;
+  color: var(--muted);
+  font: 0.95rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.masthead p.standfirst a { color: inherit; }
+h2, h3 {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+h2 {
+  font-size: 1.35rem;
+  font-weight: 650;
+  margin: 3rem 0 1rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+}
+h3 { font-size: 1.06rem; font-weight: 650; margin: 2.2rem 0 0.8rem; }
+p { margin: 0 0 1.15rem; }
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+strong { font-weight: 650; }
+sup { font-size: 0.72em; line-height: 0; }
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+code { background: var(--code-bg); padding: 0.12em 0.34em; border-radius: 3px; font-size: 0.855em; }
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+pre code { background: none; padding: 0; font-size: inherit; }
+.table-scroll, figure.chart { margin: 1.6rem 0 2rem; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font: 0.86rem/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+th, td { border-bottom: 1px solid var(--rule); padding: 0.5rem 0.65rem; text-align: left; vertical-align: top; }
+th { font-weight: 650; border-bottom: 1.5px solid var(--rule); }
+tbody tr:last-child td { border-bottom: none; }
+figure.chart {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+figure.chart img, figure.chart svg { max-width: 100%; height: auto; }
+.chart-note {
+  margin: 0.7rem 0 0;
+  font: 0.78rem/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--muted);
+}
+/* Figure and table captions are bolded lead-ins in the source text. */
+p > strong:first-child { font-weight: 650; }
+footer.colophon {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font: 0.83rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--muted);
+}
+@media (max-width: 34rem) {
+  body { font-size: 15px; }
+  header.masthead { padding-top: 2.25rem; }
+  header.masthead h1 { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="masthead">
+  <p class="kicker">Preprint · O'Connor Laboratory, University of Wisconsin-Madison</p>
+  <h1>{{TITLE_HTML}}</h1>
+  <p class="standfirst">
+    This is the reading version of the manuscript, with the wastewater heatmap interactive and every
+    method, script, and data file linked to its place in the
+    <a href="{{REPO}}">source repository</a>. Supporting evidence for each assertion in the
+    Introduction and Discussion is recorded in
+    <a href="{{REPO}}/blob/main/CITATION_SOURCE_LOCATIONS.md">CITATION_SOURCE_LOCATIONS.md</a>.
+  </p>
+</header>
+<main>
+{{BODY}}
+</main>
+<footer class="colophon">
+  Generated from <a href="{{REPO}}/blob/main/README.md">README.md</a> by
+  <a href="{{REPO}}/blob/main/docs/build_site.py">docs/build_site.py</a>. The repository holds the bait
+  design, the screening code, and every committed result.
+</footer>
+</div>
+<script>
+  const spec = "assets/cyclospora_heatmap.vl.json";
+  const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  vegaEmbed("#heatmap", spec, {
+    actions: {export: true, source: false, compiled: false, editor: false},
+    theme: dark ? "dark" : undefined,
+    renderer: "svg"
+  }).catch(err => {
+    document.getElementById("heatmap").innerHTML =
+      '<img src="assets/cyclospora_heatmap.svg" alt="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight">';
+    console.error(err);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+# NCBI taxids in the genus Cyclospora (root taxid 44417), the unit the
+# calibration treats as target. Expanded from the NCBI taxonomy shipped
+# with BLAST core_nt v2.5.0 (taxonomy4blast.sqlite3) on 2026-08-05.
+# A read is target when its best core-nt alignment carries one of these.
+44417
+44418
+83751
+83852
+83853
+88456
+88457
+88458
+88459
+261730
+262142
+310751
+332935
+332936
+391323
+492324
+1212670
+1233160
+1233161
+1416957
+1562300
+1562301
+1562302
+1562303
+1616144
+2643550

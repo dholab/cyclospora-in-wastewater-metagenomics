@@ -1,0 +1,294 @@
+sample	srr	cohort	status	layout	abs_threshold	rel_threshold	input_reads	input_bp	retained_reads	wall_seconds	deacon_version	failure_reason
+CA_Ontario_20250825__SRR36790980	SRR36790980	CA_Ontario	success	paired	1	0.0	2294042350	346400394850	18	5995	deacon 0.15.0	
+CA_Ontario_20250827__SRR36790970	SRR36790970	CA_Ontario	success	paired	1	0.0	2339340096	353240354496	18	5659	deacon 0.15.0	
+CA_Riverside_20250602__SRR35931371	SRR35931371	CA_Riverside	success	paired	1	0.0	2321237660	350506886660	22	7388	deacon 0.15.0	
+CA_Riverside_20250605__SRR35931372	SRR35931372	CA_Riverside	success	paired	1	0.0	2932979042	442879835342	0	5693	deacon 0.15.0	
+CA_Riverside_20250609__SRR35931373	SRR35931373	CA_Riverside	success	paired	1	0.0	3445843638	520322389338	0	6346	deacon 0.15.0	
+CA_Riverside_20250612__SRR35931374	SRR35931374	CA_Riverside	success	paired	1	0.0	2905896276	438790337676	28	1203	deacon 0.15.0	
+CA_Riverside_20250616__SRR35931375	SRR35931375	CA_Riverside	success	paired	1	0.0	2547819116	384720686516	20	7185	deacon 0.15.0	
+CA_Riverside_20250619__SRR35931376	SRR35931376	CA_Riverside	success	paired	1	0.0	2442044860	368748773860	84	4655	deacon 0.15.0	
+CA_Riverside_20250623__SRR35931353	SRR35931353	CA_Riverside	success	paired	1	0.0	2681441190	404897619690	0	8114	deacon 0.15.0	
+CA_Riverside_20250626__SRR35931355	SRR35931355	CA_Riverside	success	paired	1	0.0	2401444450	362618111950	2	970	deacon 0.15.0	
+CA_Riverside_20250630__SRR35931356	SRR35931356	CA_Riverside	success	paired	1	0.0	2502319688	377850272888	16	4763	deacon 0.15.0	
+CA_Riverside_20250703__SRR35931351	SRR35931351	CA_Riverside	success	paired	1	0.0	1957132542	295527013842	0	4668	deacon 0.15.0	
+CA_Riverside_20250707__SRR35931350	SRR35931350	CA_Riverside	success	paired	1	0.0	1769498736	267194309136	16	5206	deacon 0.15.0	
+CA_Riverside_20250710__SRR35931349	SRR35931349	CA_Riverside	success	paired	1	0.0	2097432266	316712272166	2	6139	deacon 0.15.0	
+CA_Riverside_20250714__SRR35931348	SRR35931348	CA_Riverside	success	paired	1	0.0	2166343298	327117837998	0	5561	deacon 0.15.0	
+CA_Riverside_20250717__SRR35931347	SRR35931347	CA_Riverside	success	paired	1	0.0	2072241464	312908461064	2	6032	deacon 0.15.0	
+CA_Riverside_20250721__SRR35931346	SRR35931346	CA_Riverside	success	paired	1	0.0	1733039078	261688900778	26	5164	deacon 0.15.0	
+CA_Riverside_20250731__SRR35931345	SRR35931345	CA_Riverside	success	paired	1	0.0	1824124756	275442838156	12	4882	deacon 0.15.0	
+CA_Riverside_20250804__SRR35931343	SRR35931343	CA_Riverside	success	paired	1	0.0	1848808270	279170048770	10	3434	deacon 0.15.0	
+CA_Riverside_20250807__SRR35931364	SRR35931364	CA_Riverside	success	paired	1	0.0	1857922326	280546271226	10	4633	deacon 0.15.0	
+CA_Riverside_20250811__SRR35931363	SRR35931363	CA_Riverside	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:27:24.405067 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CA_Riverside_20250814__SRR35931362	SRR35931362	CA_Riverside	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:28:00.781410 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CA_Riverside_20250818__SRR35931340	SRR35931340	CA_Riverside	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:28:37.849173 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CA_Riverside_20250821__SRR35931339	SRR35931339	CA_Riverside	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:29:14.754361 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CA_Riverside_20250825__SRR35931338	SRR35931338	CA_Riverside	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:29:48.615788 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CA_Riverside_20250828__SRR35931337	SRR35931337	CA_Riverside	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:30:26.228384 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CA_Sacramento_20250828__SRR36814890	SRR36814890	CA_Sacramento	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:31:08.153193 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CHI-A_20250601__SRR35987624	SRR35987624	CHI-A	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:31:44.286054 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CHI-A_20250608__SRR35987567	SRR35987567	CHI-A	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:32:58.417841 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CHI-A_20250615__SRR35987592	SRR35987592	CHI-A	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:33:34.010309 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CHI-A_20250622__SRR35987589	SRR35987589	CHI-A	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:34:09.933930 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CHI-A_20250629__SRR35987588	SRR35987588	CHI-A	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:34:46.901355 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CHI-A_20250706__SRR35987654	SRR35987654	CHI-A	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:35:24.429241 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CHI-A_20250713__SRR35987653	SRR35987653	CHI-A	success	paired	1	0.0	1416143930	213837733430	0	585	deacon 0.15.0	
+CHI-A_20250720__SRR35987652	SRR35987652	CHI-A	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 16:36:01.348097 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+CHI-A_20250727__SRR35987587	SRR35987587	CHI-A	success	paired	1	0.0	1842911986	278279709886	120	4552	deacon 0.15.0	
+CHI-A_20250803__SRR35987670	SRR35987670	CHI-A	success	paired	1	0.0	1868241616	282104484016	42	3590	deacon 0.15.0	
+CHI-A_20250810__SRR35987646	SRR35987646	CHI-A	success	paired	1	0.0	1562442768	235928857968	16	3991	deacon 0.15.0	
+CHI-A_20250817__SRR35987642	SRR35987642	CHI-A	success	paired	1	0.0	1755068398	265015328098	44	4442	deacon 0.15.0	
+CHI-A_20250826__SRR35987641	SRR35987641	CHI-A	success	paired	1	0.0	1599541588	241530779788	0	4018	deacon 0.15.0	
+CHI-A_20250831__SRR35987640	SRR35987640	CHI-A	success	paired	1	0.0	2037159668	307611109868	8	3724	deacon 0.15.0	
+CHI-B_20250601__SRR35987657	SRR35987657	CHI-B	success	paired	1	0.0	1910390424	288468954024	4	713	deacon 0.15.0	
+CHI-B_20250608__SRR35987656	SRR35987656	CHI-B	success	paired	1	0.0	2613828730	394688138230	22	797	deacon 0.15.0	
+CHI-B_20250615__SRR35987655	SRR35987655	CHI-B	success	paired	1	0.0	3098224746	467831936646	46	1522	deacon 0.15.0	
+CHI-B_20250622__SRR35987549	SRR35987549	CHI-B	success	paired	1	0.0	3231948608	488024239808	52	6455	deacon 0.15.0	
+CHI-B_20250629__SRR35987548	SRR35987548	CHI-B	success	paired	1	0.0	1933967484	292029090084	28	4737	deacon 0.15.0	
+CHI-B_20250706__SRR35987547	SRR35987547	CHI-B	success	paired	1	0.0	1840583192	277928061992	6	618	deacon 0.15.0	
+CHI-B_20250713__SRR35987546	SRR35987546	CHI-B	success	paired	1	0.0	2103437970	317619133470	0	1413	deacon 0.15.0	
+CHI-B_20250720__SRR35987545	SRR35987545	CHI-B	success	paired	1	0.0	1999438970	301915284470	52	4709	deacon 0.15.0	
+CHI-B_20250727__SRR35987615	SRR35987615	CHI-B	success	paired	1	0.0	1755225394	265039034494	114	532	deacon 0.15.0	
+CHI-B_20250803__SRR35987659	SRR35987659	CHI-B	success	paired	1	0.0	1786549322	269768947622	48	506	deacon 0.15.0	
+CHI-B_20250810__SRR35987601	SRR35987601	CHI-B	success	paired	1	0.0	1827126376	275896082776	46	592	deacon 0.15.0	
+CHI-B_20250817__SRR35987600	SRR35987600	CHI-B	success	paired	1	0.0	1904148094	287526362194	8	4929	deacon 0.15.0	
+CHI-B_20250831__SRR35987666	SRR35987666	CHI-B	success	paired	1	0.0	1874112596	282991001996	4	564	deacon 0.15.0	
+CHI-C_20250602__SRR35987579	SRR35987579	CHI-C	success	paired	1	0.0	2102002320	317402350320	24	4122	deacon 0.15.0	
+CHI-C_20250609__SRR35987576	SRR35987576	CHI-C	success	paired	1	0.0	2794369228	421949753428	10	864	deacon 0.15.0	
+CHI-C_20250616__SRR35987571	SRR35987571	CHI-C	success	paired	1	0.0	3115485118	470438252818	4	2095	deacon 0.15.0	
+CHI-C_20250623__SRR35987550	SRR35987550	CHI-C	success	paired	1	0.0	2858062864	431567492464	6	6714	deacon 0.15.0	
+CHI-C_20250630__SRR35987568	SRR35987568	CHI-C	success	paired	1	0.0	2892526650	436771524150	2	1459	deacon 0.15.0	
+CHI-C_20250714__SRR35987558	SRR35987558	CHI-C	success	paired	1	0.0	1922880122	290354898422	0	554	deacon 0.15.0	
+CHI-C_20250728__SRR35987635	SRR35987635	CHI-C	success	paired	1	0.0	1941158940	293114999940	30	4965	deacon 0.15.0	
+CHI-C_20250804__SRR35987595	SRR35987595	CHI-C	success	paired	1	0.0	1992811624	300914555224	50	488	deacon 0.15.0	
+CHI-C_20250811__SRR35987596	SRR35987596	CHI-C	success	paired	1	0.0	1918749706	289731205606	6	584	deacon 0.15.0	
+CHI-C_20250818__SRR35987597	SRR35987597	CHI-C	success	paired	1	0.0	1815240310	274101286810	7320	787	deacon 0.15.0	
+CHI-C_20250826__SRR35987598	SRR35987598	CHI-C	success	paired	1	0.0	1958582168	295745907368	104	649	deacon 0.15.0	
+CHI-D1_20250601__SRR37428229	SRR37428229	CHI-D1	success	paired	1	0.0	1769886758	267252900458	2	534	deacon 0.15.0	
+CHI-D1_20250608__SRR35987570	SRR35987570	CHI-D1	success	paired	1	0.0	2779379036	419686234436	16	1425	deacon 0.15.0	
+CHI-D1_20250615__SRR35987606	SRR35987606	CHI-D1	success	paired	1	0.0	3037551490	458670274990	6	1534	deacon 0.15.0	
+CHI-D1_20250622__SRR35987604	SRR35987604	CHI-D1	success	paired	1	0.0	2987127598	451056267298	54	6730	deacon 0.15.0	
+CHI-D1_20250629__SRR35987602	SRR35987602	CHI-D1	success	paired	1	0.0	2405678400	363257438400	66	921	deacon 0.15.0	
+CHI-D1_20250706__SRR37428228	SRR37428228	CHI-D1	success	paired	1	0.0	2087543918	315219131618	34	1734	deacon 0.15.0	
+CHI-D1_20250713__SRR37428230	SRR37428230	CHI-D1	success	paired	1	0.0	1936575622	292422918922	38	1005	deacon 0.15.0	
+CHI-D1_20250720__SRR37428231	SRR37428231	CHI-D1	success	paired	1	0.0	2094687876	316297869276	108	742	deacon 0.15.0	
+CHI-D1_20250727__SRR37428192	SRR37428192	CHI-D1	success	paired	1	0.0	2276125062	343694884362	394	656	deacon 0.15.0	
+CHI-D1_20250803__SRR37428193	SRR37428193	CHI-D1	success	paired	1	0.0	2008399524	303268328124	86	615	deacon 0.15.0	
+CHI-D1_20250810__SRR37428194	SRR37428194	CHI-D1	success	paired	1	0.0	1650107018	249166159718	4	596	deacon 0.15.0	
+CHI-D1_20250817__SRR37428207	SRR37428207	CHI-D1	success	paired	1	0.0	1845406144	278656327744	0	597	deacon 0.15.0	
+CHI-D1_20250826__SRR37428210	SRR37428210	CHI-D1	success	paired	1	0.0	1509764434	227974429534	0	450	deacon 0.15.0	
+CHI-D1_20250831__SRR37428223	SRR37428223	CHI-D1	success	paired	1	0.0	1686554482	254669726782	0	1787	deacon 0.15.0	
+CHI-D2_20250601__SRR37428204	SRR37428204	CHI-D2	success	paired	1	0.0	1300998366	196450753266	0	510	deacon 0.15.0	
+CHI-D2_20250615__SRR35987605	SRR35987605	CHI-D2	success	paired	1	0.0	3183780226	480750814126	42	8134	deacon 0.15.0	
+CHI-D2_20250622__SRR35987603	SRR35987603	CHI-D2	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 20:50:16.200519 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+CHI-D2_20250629__SRR35987667	SRR35987667	CHI-D2	success	paired	1	0.0	2461799580	371731736580	12	6626	deacon 0.15.0	
+CHI-D2_20250706__SRR37428202	SRR37428202	CHI-D2	success	paired	1	0.0	2164366448	326819333648	104	5491	deacon 0.15.0	
+CHI-D2_20250713__SRR37428206	SRR37428206	CHI-D2	success	paired	1	0.0	1640681764	247742946364	178	2930	deacon 0.15.0	
+CHI-D2_20250720__SRR37428211	SRR37428211	CHI-D2	success	paired	1	0.0	2056912374	310593768474	66	5431	deacon 0.15.0	
+CHI-D2_20250727__SRR37428209	SRR37428209	CHI-D2	success	paired	1	0.0	1716436650	259181934150	0	4279	deacon 0.15.0	
+CHI-D2_20250803__SRR37428195	SRR37428195	CHI-D2	success	paired	1	0.0	1584095158	239198368858	2	3268	deacon 0.15.0	
+CHI-D2_20250810__SRR37428222	SRR37428222	CHI-D2	success	paired	1	0.0	1751472814	264472394914	12	4691	deacon 0.15.0	
+CHI-D2_20250817__SRR37428198	SRR37428198	CHI-D2	success	paired	1	0.0	1540934818	232681157518	0	2833	deacon 0.15.0	
+CHI-D2_20250826__SRR37428197	SRR37428197	CHI-D2	success	paired	1	0.0	1959394170	295868519670	0	3916	deacon 0.15.0	
+CHI-D2_20250831__SRR37428196	SRR37428196	CHI-D2	success	paired	1	0.0	2105762588	317970150788	22	4211	deacon 0.15.0	
+FL_Miami_20250603__SRR36995839	SRR36995839	FL_Miami	success	paired	1	0.0	2220982846	333147426900	4	4488	deacon 0.15.0	
+FL_Miami_20250610__SRR36995877	SRR36995877	FL_Miami	success	paired	1	0.0	2365831282	354874692300	4	4566	deacon 0.15.0	
+FL_Miami_20250617__SRR36995876	SRR36995876	FL_Miami	success	paired	1	0.0	2370721880	355608282000	2	5755	deacon 0.15.0	
+FL_Miami_20250624__SRR36995875	SRR36995875	FL_Miami	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 23:14:16.623281 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+FL_Miami_20250701__SRR36995864	SRR36995864	FL_Miami	success	paired	1	0.0	2890617902	433592685300	18	6506	deacon 0.15.0	
+FL_Miami_20250708__SRR36995865	SRR36995865	FL_Miami	success	paired	1	0.0	2320868242	348130236300	66	5393	deacon 0.15.0	
+FL_Miami_20250715__SRR36995866	SRR36995866	FL_Miami	success	paired	1	0.0	1629030462	244354569300	0	3337	deacon 0.15.0	
+FL_Miami_20250722__SRR36995867	SRR36995867	FL_Miami	success	paired	1	0.0	1731185462	259677819300	256	3609	deacon 0.15.0	
+FL_Miami_20250729__SRR36995868	SRR36995868	FL_Miami	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-04 23:56:46.780839 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+FL_Miami_20250805__SRR36995869	SRR36995869	FL_Miami	success	paired	1	0.0	2526871842	379030776300	826	5413	deacon 0.15.0	
+FL_Miami_20250812__SRR36995870	SRR36995870	FL_Miami	success	paired	1	0.0	2275617844	341342676600	618	5448	deacon 0.15.0	
+FL_Miami_20250819__SRR36995872	SRR36995872	FL_Miami	success	paired	1	0.0	2081062746	312159411900	416	4255	deacon 0.15.0	
+FL_Miami_20250826__SRR36995873	SRR36995873	FL_Miami	success	paired	1	0.0	2366779362	355016904300	310	4714	deacon 0.15.0	
+IA_Ottumwa_20250604__SRR35946911	SRR35946911	IA_Ottumwa	success	paired	1	0.0	2022814552	305444997352	56	4254	deacon 0.15.0	
+IA_Ottumwa_20250611__SRR35946910	SRR35946910	IA_Ottumwa	success	paired	1	0.0	2714211796	409845981196	26	5944	deacon 0.15.0	
+IA_Ottumwa_20250618__SRR35946909	SRR35946909	IA_Ottumwa	failure	paired					0		deacon 0.15.0	R2 download failed: 2026-08-05 01:38:56.654456 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+IA_Ottumwa_20250625__SRR35946908	SRR35946908	IA_Ottumwa	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 01:36:07.462150 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+IA_Ottumwa_20250702__SRR35946907	SRR35946907	IA_Ottumwa	success	paired	1	0.0	2032432602	306897322902	12	4270	deacon 0.15.0	
+IA_Ottumwa_20250709__SRR35946901	SRR35946901	IA_Ottumwa	success	paired	1	0.0	2025135382	305795442682	20	5135	deacon 0.15.0	
+IA_Ottumwa_20250716__SRR35946903	SRR35946903	IA_Ottumwa	success	paired	1	0.0	2062210086	311393722986	156	4331	deacon 0.15.0	
+IA_Ottumwa_20250723__SRR35946904	SRR35946904	IA_Ottumwa	success	paired	1	0.0	1824451000	275492101000	2	3720	deacon 0.15.0	
+IA_Ottumwa_20250730__SRR35946900	SRR35946900	IA_Ottumwa	success	paired	1	0.0	1715456164	259033880764	6	3352	deacon 0.15.0	
+IA_Ottumwa_20250806__SRR35946902	SRR35946902	IA_Ottumwa	success	paired	1	0.0	1870880336	282502930736	20	4395	deacon 0.15.0	
+IA_Ottumwa_20250814__SRR35946885	SRR35946885	IA_Ottumwa	success	paired	1	0.0	1858546732	280640556532	26	4350	deacon 0.15.0	
+IA_Ottumwa_20250820__SRR35946886	SRR35946886	IA_Ottumwa	success	paired	1	0.0	1849998694	279349802794	40	3587	deacon 0.15.0	
+IA_Ottumwa_20250827__SRR35946887	SRR35946887	IA_Ottumwa	success	paired	1	0.0	2143429546	323657861446	0	5273	deacon 0.15.0	
+ID_Boise_20250602__SRR36876979	SRR36876979	ID_Boise	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 03:00:22.942360 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+ID_Boise_20250609__SRR36876978	SRR36876978	ID_Boise	success	paired	1	0.0	2617823426	395291337326	2	5181	deacon 0.15.0	
+ID_Boise_20250616__SRR36876977	SRR36876977	ID_Boise	success	paired	1	0.0	2931546918	442663584618	0	6728	deacon 0.15.0	
+ID_Boise_20250630__SRR36876975	SRR36876975	ID_Boise	success	paired	1	0.0	2247334158	339347457858	80	4487	deacon 0.15.0	
+ID_Boise_20250804__SRR36876967	SRR36876967	ID_Boise	success	paired	1	0.0	1319904302	199305549602	26	2705	deacon 0.15.0	
+ID_Boise_20250811__SRR36877022	SRR36877022	ID_Boise	success	paired	1	0.0	1657388626	250265682526	72	3487	deacon 0.15.0	
+MA_Boston_DITPN_20250611__SRR37367532	SRR37367532	MA_Boston_DITPN	success	paired	1	0.0	2685802018	402870302700	4	5496	deacon 0.15.0	
+MA_Boston_DITPN_20250618__SRR37367652	SRR37367652	MA_Boston_DITPN	success	paired	1	0.0	2815623952	422343592800	28	5005	deacon 0.15.0	
+MA_Boston_DITPN_20250625__SRR37367650	SRR37367650	MA_Boston_DITPN	success	paired	1	0.0	3435914140	515387121000	42	8331	deacon 0.15.0	
+MA_Boston_DITPN_20250709__SRR37059701	SRR37059701	MA_Boston_DITPN	success	paired	1	0.0	940969424	142086383024	26	1969	deacon 0.15.0	
+MA_Boston_DITPN_20250709__SRR37367552	SRR37367552	MA_Boston_DITPN	success	paired	1	0.0	931324612	140630016412	22	1727	deacon 0.15.0	
+MA_Boston_DITPN_20250709__SRR37367646	SRR37367646	MA_Boston_DITPN	failure	paired					0		deacon 0.15.0	R2 download failed: Exception: [AbstractCommand.cc:340] errorCode=2 Timeout. 2026-08-05 05:37:41.838382 [ERROR] [Abstrac
+MA_Boston_DITPN_20250716__SRR37059702	SRR37059702	MA_Boston_DITPN	success	paired	1	0.0	1090427410	164654538910	6	2322	deacon 0.15.0	
+MA_Boston_DITPN_20250716__SRR37367550	SRR37367550	MA_Boston_DITPN	success	paired	1	0.0	1092160272	164916201072	0	2188	deacon 0.15.0	
+MA_Boston_DITPN_20250716__SRR37367644	SRR37367644	MA_Boston_DITPN	failure	paired					0		deacon 0.15.0	R1 download failed: Exception: [DownloadCommand.cc:234] errorCode=1 Got EOF from the server. 2026-08-05 05:36:59.436867 
+MA_Boston_DITPN_20250723__SRR37059703	SRR37059703	MA_Boston_DITPN	success	paired	1	0.0	951538416	143682300816	14	404	deacon 0.15.0	
+MA_Boston_DITPN_20250723__SRR37367549	SRR37367549	MA_Boston_DITPN	success	paired	1	0.0	964395174	145623671274	8	455	deacon 0.15.0	
+MA_Boston_DITPN_20250723__SRR37367639	SRR37367639	MA_Boston_DITPN	success	paired	1	0.0	2170510470	325576570500	88	858	deacon 0.15.0	
+MA_Boston_DITPN_20250730__SRR37059721	SRR37059721	MA_Boston_DITPN	success	paired	1	0.0	932754114	140845871214	20	428	deacon 0.15.0	
+MA_Boston_DITPN_20250730__SRR37367530	SRR37367530	MA_Boston_DITPN	success	paired	1	0.0	943403396	142453912796	34	442	deacon 0.15.0	
+MA_Boston_DITPN_20250806__SRR37059723	SRR37059723	MA_Boston_DITPN	success	paired	1	0.0	1132054274	170940195374	0	2363	deacon 0.15.0	
+MA_Boston_DITPN_20250806__SRR37367528	SRR37367528	MA_Boston_DITPN	success	paired	1	0.0	1152455482	174020777782	2	2065	deacon 0.15.0	
+MA_Boston_DITPN_20250806__SRR37367635	SRR37367635	MA_Boston_DITPN	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 05:57:00.676950 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPN_20250813__SRR37059724	SRR37059724	MA_Boston_DITPN	success	paired	1	0.0	977409484	147588832084	12	2503	deacon 0.15.0	
+MA_Boston_DITPN_20250813__SRR37367527	SRR37367527	MA_Boston_DITPN	success	paired	1	0.0	980129404	147999540004	12	2016	deacon 0.15.0	
+MA_Boston_DITPN_20250813__SRR37367633	SRR37367633	MA_Boston_DITPN	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:05:32.872318 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPN_20250820__SRR37059725	SRR37059725	MA_Boston_DITPN	success	paired	1	0.0	630881970	95263177470	14	218	deacon 0.15.0	
+MA_Boston_DITPN_20250820__SRR37367526	SRR37367526	MA_Boston_DITPN	success	paired	1	0.0	632167662	95457316962	4	220	deacon 0.15.0	
+MA_Boston_DITPN_20250820__SRR37367631	SRR37367631	MA_Boston_DITPN	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:09:18.616486 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPN_20250827__SRR37059726	SRR37059726	MA_Boston_DITPN	success	paired	1	0.0	973878138	147055598838	0	326	deacon 0.15.0	
+MA_Boston_DITPN_20250827__SRR37367525	SRR37367525	MA_Boston_DITPN	success	paired	1	0.0	980858486	148109631386	0	1924	deacon 0.15.0	
+MA_Boston_DITPS_20250604__SRR37367533	SRR37367533	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:23:44.028886 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250611__SRR37367531	SRR37367531	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:25:24.514185 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250618__SRR37367651	SRR37367651	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:28:43.339835 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250625__SRR37367649	SRR37367649	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:32:39.089387 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250702__SRR37367647	SRR37367647	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:38:06.784156 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250709__SRR37059688	SRR37059688	MA_Boston_DITPS	success	paired	1	0.0	946497780	142921164780	12	1800	deacon 0.15.0	
+MA_Boston_DITPS_20250709__SRR37367664	SRR37367664	MA_Boston_DITPS	success	paired	1	0.0	929168700	140304473700	6	835	deacon 0.15.0	
+MA_Boston_DITPS_20250716__SRR37059687	SRR37059687	MA_Boston_DITPS	success	paired	1	0.0	1012433238	152877418938	0	640	deacon 0.15.0	
+MA_Boston_DITPS_20250716__SRR37367643	SRR37367643	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:44:13.020124 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250716__SRR37367663	SRR37367663	MA_Boston_DITPS	success	paired	1	0.0	1023865818	154603738518	0	457	deacon 0.15.0	
+MA_Boston_DITPS_20250723__SRR37059686	SRR37059686	MA_Boston_DITPS	success	paired	1	0.0	1092568394	164977827494	2	458	deacon 0.15.0	
+MA_Boston_DITPS_20250723__SRR37367662	SRR37367662	MA_Boston_DITPS	success	paired	1	0.0	1108193904	167337279504	0	479	deacon 0.15.0	
+MA_Boston_DITPS_20250730__SRR37059685	SRR37059685	MA_Boston_DITPS	success	paired	1	0.0	846969784	127892437384	28	1649	deacon 0.15.0	
+MA_Boston_DITPS_20250730__SRR37367661	SRR37367661	MA_Boston_DITPS	success	paired	1	0.0	853406392	128864365192	20	375	deacon 0.15.0	
+MA_Boston_DITPS_20250806__SRR37059684	SRR37059684	MA_Boston_DITPS	success	paired	1	0.0	934153924	141057242524	0	1774	deacon 0.15.0	
+MA_Boston_DITPS_20250806__SRR37367660	SRR37367660	MA_Boston_DITPS	success	paired	1	0.0	941006830	142092031330	0	1773	deacon 0.15.0	
+MA_Boston_DITPS_20250813__SRR37059720	SRR37059720	MA_Boston_DITPS	success	paired	1	0.0	816318314	123264065414	26	1659	deacon 0.15.0	
+MA_Boston_DITPS_20250813__SRR37367632	SRR37367632	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:58:21.790110 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250813__SRR37367658	SRR37367658	MA_Boston_DITPS	success	paired	1	0.0	818642030	123614946530	6	1660	deacon 0.15.0	
+MA_Boston_DITPS_20250820__SRR37059719	SRR37059719	MA_Boston_DITPS	success	paired	1	0.0	868666122	131168584422	22	1882	deacon 0.15.0	
+MA_Boston_DITPS_20250820__SRR37367630	SRR37367630	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 06:59:48.384040 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250820__SRR37367657	SRR37367657	MA_Boston_DITPS	success	paired	1	0.0	864514272	130541655072	26	1729	deacon 0.15.0	
+MA_Boston_DITPS_20250827__SRR37059718	SRR37059718	MA_Boston_DITPS	success	paired	1	0.0	672142106	101493458006	0	1234	deacon 0.15.0	
+MA_Boston_DITPS_20250827__SRR37367604	SRR37367604	MA_Boston_DITPS	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:20:42.935918 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MA_Boston_DITPS_20250827__SRR37367656	SRR37367656	MA_Boston_DITPS	success	paired	1	0.0	680382610	102737774110	0	1227	deacon 0.15.0	
+MO_Columbia_20250603__SRR35917726	SRR35917726	MO_Columbia	success	paired	1	0.0	2323559310	350857455810	6	4034	deacon 0.15.0	
+MO_Columbia_20250610__SRR35917725	SRR35917725	MO_Columbia	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:05:19.731675 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Columbia_20250617__SRR35917724	SRR35917724	MO_Columbia	success	paired	1	0.0	3187902292	481373246092	38	5922	deacon 0.15.0	
+MO_Columbia_20250624__SRR35917723	SRR35917723	MO_Columbia	success	paired	1	0.0	3317021516	500870248916	58	6187	deacon 0.15.0	
+MO_Columbia_20250701__SRR37092466	SRR37092466	MO_Columbia	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:31:18.454437 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Columbia_20250708__SRR37092455	SRR37092455	MO_Columbia	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:13:08.173886 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Columbia_20250729__SRR37092442	SRR37092442	MO_Columbia	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:13:21.408698 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Columbia_20250805__SRR37092443	SRR37092443	MO_Columbia	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:33:54.016394 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Columbia_20250812__SRR37092444	SRR37092444	MO_Columbia	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:38:40.773625 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Columbia_20250819__SRR37092445	SRR37092445	MO_Columbia	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:41:24.535445 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Columbia_20250826__SRR37092465	SRR37092465	MO_Columbia	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:44:01.020856 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_KC_BlueRiver_20250812__SRR37027369	SRR37027369	MO_KC_BlueRiver	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:45:03.909212 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_KC_BlueRiver_20250819__SRR37027368	SRR37027368	MO_KC_BlueRiver	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:52:03.906035 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_KC_BlueRiver_20250826__SRR37027357	SRR37027357	MO_KC_BlueRiver	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:44:24.949049 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Milan_20250612__SRR35971499	SRR35971499	MO_Milan	success	paired	1	0.0	2208630402	333503190702	54	4499	deacon 0.15.0	
+MO_Milan_20250617__SRR35971517	SRR35971517	MO_Milan	success	paired	1	0.0	2823532900	426353467900	104	5858	deacon 0.15.0	
+MO_Milan_20250626__SRR35971516	SRR35971516	MO_Milan	success	paired	1	0.0	2637970276	398333511676	26	6598	deacon 0.15.0	
+MO_Milan_20250709__SRR35971515	SRR35971515	MO_Milan	success	paired	1	0.0	1810033456	273315051856	8	3420	deacon 0.15.0	
+MO_Milan_20250724__SRR35971514	SRR35971514	MO_Milan	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:44:51.167073 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Milan_20250729__SRR35971513	SRR35971513	MO_Milan	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 07:45:18.452294 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Milan_20250813__SRR35971512	SRR35971512	MO_Milan	success	paired	1	0.0	1734943226	261976427126	62	3854	deacon 0.15.0	
+MO_Milan_20250827__SRR35971511	SRR35971511	MO_Milan	success	paired	1	0.0	1937279358	292529183058	0	4055	deacon 0.15.0	
+MO_Monett_20250610__SRR35939776	SRR35939776	MO_Monett	success	paired	1	0.0	2551372784	385257290384	4904	6423	deacon 0.15.0	
+MO_Monett_20250616__SRR35939775	SRR35939775	MO_Monett	failure	paired					0		deacon 0.15.0	R2 download failed: 2026-08-05 09:00:44.598555 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+MO_Monett_20250623__SRR35939765	SRR35939765	MO_Monett	success	paired	1	0.0	4486161416	677410373816	30	9296	deacon 0.15.0	
+MO_Monett_20250630__SRR35939764	SRR35939764	MO_Monett	success	paired	1	0.0	2148427814	324412599914	44	4252	deacon 0.15.0	
+MO_Monett_20250707__SRR35939763	SRR35939763	MO_Monett	success	paired	1	0.0	2104793520	317823821520	40	4174	deacon 0.15.0	
+MO_Monett_20250714__SRR35939762	SRR35939762	MO_Monett	success	paired	1	0.0	1871841320	282648039320	2	3874	deacon 0.15.0	
+MO_Monett_20250721__SRR35939761	SRR35939761	MO_Monett	success	paired	1	0.0	1864784520	281582462520	2	3808	deacon 0.15.0	
+MO_Monett_20250728__SRR35939760	SRR35939760	MO_Monett	success	paired	1	0.0	1884751156	284597424556	56	3806	deacon 0.15.0	
+MO_Monett_20250804__SRR35939759	SRR35939759	MO_Monett	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 09:33:09.130172 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+MO_Monett_20250811__SRR35939758	SRR35939758	MO_Monett	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 09:33:25.753394 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_Monett_20250818__SRR35939774	SRR35939774	MO_Monett	success	paired	1	0.0	1770423890	267334007390	22	3657	deacon 0.15.0	
+MO_Monett_20250825__SRR35939773	SRR35939773	MO_Monett	success	paired	1	0.0	1751757980	264515454980	6	3505	deacon 0.15.0	
+MO_STL_Bissell_20250603__SRR38294189	SRR38294189	MO_STL_Bissell	success	paired	1	0.0	1634007312	246735104112	56	3894	deacon 0.15.0	
+MO_STL_Bissell_20250605__SRR38294188	SRR38294188	MO_STL_Bissell	success	paired	1	0.0	1719584968	259657330168	642	4275	deacon 0.15.0	
+MO_STL_Bissell_20250609__SRR38294129	SRR38294129	MO_STL_Bissell	success	paired	1	0.0	2079373130	313985342630	80	4527	deacon 0.15.0	
+MO_STL_Bissell_20250612__SRR38294154	SRR38294154	MO_STL_Bissell	success	paired	1	0.0	1747027872	263801208672	8	3481	deacon 0.15.0	
+MO_STL_Bissell_20250620__SRR38294114	SRR38294114	MO_STL_Bissell	failure	paired					0		deacon 0.15.0	R2 download failed: 2026-08-05 11:06:29.802414 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+MO_STL_Bissell_20250624__SRR38294086	SRR38294086	MO_STL_Bissell	success	paired	1	0.0	2134347708	322286503908	234	4783	deacon 0.15.0	
+MO_STL_Bissell_20250701__SRR38294060	SRR38294060	MO_STL_Bissell	success	paired	1	0.0	705061272	106464252072	2	1454	deacon 0.15.0	
+MO_STL_Bissell_20250707__SRR38294078	SRR38294078	MO_STL_Bissell	success	paired	1	0.0	1956325506	295405151406	2	4189	deacon 0.15.0	
+MO_STL_Bissell_20250717__SRR38294147	SRR38294147	MO_STL_Bissell	success	paired	1	0.0	1785176818	269561699518	96	4032	deacon 0.15.0	
+MO_STL_Bissell_20250723__SRR38294098	SRR38294098	MO_STL_Bissell	success	paired	1	0.0	1635547036	246967602436	46	3718	deacon 0.15.0	
+MO_STL_Bissell_20250728__SRR38294187	SRR38294187	MO_STL_Bissell	success	paired	1	0.0	1776797906	268296483806	26	4020	deacon 0.15.0	
+MO_STL_Bissell_20250806__SRR38294176	SRR38294176	MO_STL_Bissell	failure	paired					0		deacon 0.15.0	R1 download failed: Exception: [AbstractCommand.cc:856] errorCode=1 Failed to establish connection, cause: Connection re
+MO_STL_Bissell_20250811__SRR38294134	SRR38294134	MO_STL_Bissell	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 11:59:43.504342 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Bissell_20250818__SRR38294162	SRR38294162	MO_STL_Bissell	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:00:02.025470 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Bissell_20250825__SRR38294164	SRR38294164	MO_STL_Bissell	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:00:01.534253 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250603__SRR38294121	SRR38294121	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:00:01.584777 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250605__SRR38294119	SRR38294119	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:00:04.942475 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250609__SRR38294118	SRR38294118	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:00:08.269883 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250612__SRR38294117	SRR38294117	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:00:11.620583 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250617__SRR38294116	SRR38294116	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:15.186903 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250620__SRR38294115	SRR38294115	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:16.011725 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250626__SRR38294112	SRR38294112	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:00:42.774483 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250701__SRR38294113	SRR38294113	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:11.270491 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250707__SRR38294111	SRR38294111	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:18.528755 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250714__SRR38294097	SRR38294097	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:20.706024 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250717__SRR38294096	SRR38294096	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:21.786189 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250723__SRR38294094	SRR38294094	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:25.573132 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250728__SRR38294095	SRR38294095	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:25.119154 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250806__SRR38294083	SRR38294083	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:28.499280 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250811__SRR38294088	SRR38294088	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:30.346342 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250818__SRR38294087	SRR38294087	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:31.802009 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Coldwater_20250825__SRR38294084	SRR38294084	MO_STL_Coldwater	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:35.783787 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250603__SRR38294076	SRR38294076	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:35.081627 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250605__SRR38294075	SRR38294075	MO_STL_Lemay	success	paired	1	0.0	305836222	46181269522	5036	107	deacon 0.15.0	
+MO_STL_Lemay_20250609__SRR38294074	SRR38294074	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:46.190584 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250612__SRR38294072	SRR38294072	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:41.441907 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250620__SRR38294073	SRR38294073	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:46.817063 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250626__SRR38294071	SRR38294071	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:51.866754 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250701__SRR38294151	SRR38294151	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:01:56.711812 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250707__SRR38294150	SRR38294150	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:02:01.881881 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250714__SRR38294149	SRR38294149	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:02:06.725583 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250723__SRR38294148	SRR38294148	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:02:10.818110 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250728__SRR38294145	SRR38294145	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:02:08.989323 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250806__SRR38294146	SRR38294146	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:02:12.168640 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250811__SRR38294144	SRR38294144	MO_STL_Lemay	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:02:15.372865 [ERROR] [AbstractCommand.cc:378] CUID#7 - Download aborted. URI=https://f
+MO_STL_Lemay_20250818__SRR38294143	SRR38294143	MO_STL_Lemay	success	paired	1	0.0	1910306748	288456318948	42	3394	deacon 0.15.0	
+MO_STL_Lemay_20250825__SRR38294142	SRR38294142	MO_STL_Lemay	success	paired	1	0.0	1400816918	211523354618	0	3316	deacon 0.15.0	
+MO_STL_MORiver_20250620__SRR38294184	SRR38294184	MO_STL_MORiver	success	paired	1	0.0	1998325312	301747122112	20	5039	deacon 0.15.0	
+MO_STL_MORiver_20250624__SRR38294182	SRR38294182	MO_STL_MORiver	success	paired	1	0.0	1472476434	222343941534	8	3608	deacon 0.15.0	
+MO_STL_MORiver_20250701__SRR38294181	SRR38294181	MO_STL_MORiver	success	paired	1	0.0	1478502566	223253887466	10	3485	deacon 0.15.0	
+MO_STL_MORiver_20250710__SRR38294180	SRR38294180	MO_STL_MORiver	success	paired	1	0.0	1722455918	260090843618	22	4057	deacon 0.15.0	
+MO_STL_MORiver_20250714__SRR38294178	SRR38294178	MO_STL_MORiver	success	paired	1	0.0	1655429286	249969822186	24	3921	deacon 0.15.0	
+MO_STL_MORiver_20250723__SRR38294179	SRR38294179	MO_STL_MORiver	success	paired	1	0.0	2026389800	305984859800	0	4524	deacon 0.15.0	
+MO_STL_MORiver_20250728__SRR38294177	SRR38294177	MO_STL_MORiver	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 12:54:14.323168 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+MO_STL_MORiver_20250806__SRR38294175	SRR38294175	MO_STL_MORiver	success	paired	1	0.0	1796350602	271248940902	4	4132	deacon 0.15.0	
+MO_STL_MORiver_20250811__SRR38294173	SRR38294173	MO_STL_MORiver	success	paired	1	0.0	1729003732	261079563532	32	3517	deacon 0.15.0	
+MO_STL_MORiver_20250818__SRR38294174	SRR38294174	MO_STL_MORiver	success	paired	1	0.0	1951697950	294706390450	0	3846	deacon 0.15.0	
+MO_STL_MORiver_20250825__SRR38294172	SRR38294172	MO_STL_MORiver	success	paired	1	0.0	1803761534	272367991634	0	4388	deacon 0.15.0	
+NYC-Hospital-A_20250828__SRR37006695	SRR37006695	NYC-Hospital-A	failure	paired					0		deacon 0.15.0	R2 download failed: 2026-08-05 14:30:36.972973 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+NYC-Hospital-B_20250604__SRR37006680	SRR37006680	NYC-Hospital-B	success	paired	1	0.0	1877229772	283461695572	42	4291	deacon 0.15.0	
+NYC-Hospital-B_20250612__SRR37006679	SRR37006679	NYC-Hospital-B	success	paired	1	0.0	2176018030	328578722530	714	4975	deacon 0.15.0	
+NYC-Hospital-B_20250618__SRR37006678	SRR37006678	NYC-Hospital-B	success	paired	1	0.0	2123990064	320722499664	0	7333	deacon 0.15.0	
+NYC-Hospital-B_20250624__SRR37006677	SRR37006677	NYC-Hospital-B	success	paired	1	0.0	1858060050	280567067550	105626	4365	deacon 0.15.0	
+NYC-Hospital-C_20250827__SRR37006674	SRR37006674	NYC-Hospital-C	success	paired	1	0.0	2009680512	303461757312	2	4810	deacon 0.15.0	
+OK-A_20250826__SRR36861566	SRR36861566	OK-A	success	paired	1	0.0	2042680830	308444805330	0	3663	deacon 0.15.0	
+OK-B_20250826__SRR36861556	SRR36861556	OK-B	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 14:58:41.116217 [ERROR] [CheckIntegrityCommand.cc:86] Checksum error detected. file=/var/
+Southern_California_20250604__SRR36876851	SRR36876851	Southern_California	success	paired	1	0.0	2408278992	363650127792	0	4926	deacon 0.15.0	
+Southern_California_20250608__SRR36876852	SRR36876852	Southern_California	success	paired	1	0.0	2900520452	437978588252	8	6714	deacon 0.15.0	
+Southern_California_20250611__SRR36876854	SRR36876854	Southern_California	failure	paired					0		deacon 0.15.0	R1 download failed: 2026-08-05 14:59:06.762362 [ERROR] [AbstractCommand.cc:351] CUID#7 - Download aborted. URI=https://f
+Southern_California_20250615__SRR36876853	SRR36876853	Southern_California	success	paired	1	0.0	2879824106	434853440006	2	6773	deacon 0.15.0	
+Southern_California_20250622__SRR36876856	SRR36876856	Southern_California	success	paired	1	0.0	3273620026	494316623926	2	8434	deacon 0.15.0	
+Southern_California_20250625__SRR36876820	SRR36876820	Southern_California	success	paired	1	0.0	2590193544	391119225144	4	6382	deacon 0.15.0	
+Southern_California_20250629__SRR36876821	SRR36876821	Southern_California	success	paired	1	0.0	2399862806	362379283706	6	6798	deacon 0.15.0	
+Southern_California_20250702__SRR36876822	SRR36876822	Southern_California	success	paired	1	0.0	1956911434	295493626534	0	4630	deacon 0.15.0	
+Southern_California_20250709__SRR36876837	SRR36876837	Southern_California	success	paired	1	0.0	1879712806	283836633706	2	5060	deacon 0.15.0	
+Southern_California_20250713__SRR36876838	SRR36876838	Southern_California	success	paired	1	0.0	1998444086	301765056986	2	4174	deacon 0.15.0	
+Southern_California_20250716__SRR36876839	SRR36876839	Southern_California	success	paired	1	0.0	1970831836	297595607236	0	5289	deacon 0.15.0	
+Southern_California_20250720__SRR36876840	SRR36876840	Southern_California	success	paired	1	0.0	1559917814	235547589914	0	3254	deacon 0.15.0	
+Southern_California_20250723__SRR36876841	SRR36876841	Southern_California	success	paired	1	0.0	1676328956	253125672356	2	3866	deacon 0.15.0	
+Southern_California_20250727__SRR36876842	SRR36876842	Southern_California	success	paired	1	0.0	1635799086	247005661986	0	4079	deacon 0.15.0	
+Southern_California_20250730__SRR36876844	SRR36876844	Southern_California	success	paired	1	0.0	1693499458	255718418158	0	3758	deacon 0.15.0	
+Southern_California_20250803__SRR36876845	SRR36876845	Southern_California	success	paired	1	0.0	1809155392	273182464192	0	5113	deacon 0.15.0	
+Southern_California_20250806__SRR36876846	SRR36876846	Southern_California	success	paired	1	0.0	1672441100	252538606100	10	4205	deacon 0.15.0	
+Southern_California_20250817__SRR36876848	SRR36876848	Southern_California	success	paired	1	0.0	1852378232	279709113032	0	3823	deacon 0.15.0	
+Southern_California_20250820__SRR36876819	SRR36876819	Southern_California	success	paired	1	0.0	1993611406	301035322306	10	5138	deacon 0.15.0	

@@ -1,0 +1,18 @@
+[workspace]
+authors = ["DHO-CHTC <dhoconno@wisc.edu>"]
+channels = ["conda-forge", "bioconda"]
+name = "cyclospora-wastewater-screen"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+# Re-derive both threshold sweep tables from the committed per-read evidence.
+# Pure Python, no database, no network. Takes under a second.
+sweep = "python scripts/sweep_threshold.py"
+
+[dependencies]
+python = ">=3.12,<3.13"
+# filters reads against the stage 01 bait index
+deacon = ">=0.15.0,<0.16"
+# only needed to repeat the whole-read core-nt search yourself
+blast = ">=2.15,<3"

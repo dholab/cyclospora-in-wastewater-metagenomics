@@ -1,0 +1,15 @@
+[project]
+name = "cyclospora-manuscript-site"
+version = "0.1.0"
+description = "Builds the GitHub Pages reading version of the manuscript from README.md"
+authors = ["DHO-CHTC <dhoconno@wisc.edu>"]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tasks]
+build = "python build_site.py"
+
+[dependencies]
+python = ">=3.12,<3.13"
+# markdown -> HTML; the site is generated from README.md so the text has one source
+markdown = ">=3.6,<4"
