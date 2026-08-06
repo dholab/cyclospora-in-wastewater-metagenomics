@@ -72,9 +72,9 @@ def collect_reads() -> dict[str, dict]:
     """Load the committed diagnostic reads, keyed by the sample id the chart uses.
 
     Reads are collapsed to distinct sequences within a run, which is the count the
-    heatmap plots, with the number of observations kept alongside each one. The
-    committed FASTAs hold every retained read, copies included; a cell that plots
-    two distinct reads would otherwise open as sixteen near-identical records.
+    heatmap plots, so the panel opens the same reads the cell reports. A read and
+    its reverse complement are one molecule and collapse together, matching how
+    the screen counts distinct reads.
 
     Every file here is one public SRA run, so the payload the page ships carries
     nothing that is not already in the repository and in the BioProject.
@@ -94,16 +94,12 @@ def collect_reads() -> dict[str, dict]:
                 # A read and its reverse complement are one molecule, and that is
                 # how the screen counts distinct reads, so collapse canonically.
                 key = min(line, line.translate(COMPLEMENT)[::-1])
-                seen = distinct.get(key)
-                if seen is None:
+                if key not in distinct:
                     distinct[key] = {
                         "id": name,
                         "k": int(kmers.group(1)) if kmers else None,
                         "s": line,
-                        "n": 1,
                     }
-                else:
-                    seen["n"] += 1
                 header = None
         records = list(distinct.values())
         if records:
@@ -264,12 +260,8 @@ def build() -> None:
     reads = collect_reads()
     (DOCS / "assets/diagnostic_reads.json").write_text(json.dumps(reads, separators=(",", ":")))
     distinct = sum(len(entry["reads"]) for entry in reads.values())
-    observed = sum(r["n"] for entry in reads.values() for r in entry["reads"])
     runs = sum(len(entry["runs"]) for entry in reads.values())
-    print(
-        f"  {distinct:,} distinct diagnostic reads ({observed:,} observations) "
-        f"from {runs} runs available on click"
-    )
+    print(f"  {distinct:,} distinct diagnostic reads from {runs} runs available on click")
 
     template = (DOCS / "template.html").read_text()
     page = (

@@ -284,21 +284,15 @@ footer.colophon {
       seen[id] = true;
       return true;
     });
-    /* One record per distinct sequence per run, which is what the cell plots.
-       copies= reports how many times that sequence was retained in its run. */
-    var lines = [], distinct = 0, observed = 0, runs = [];
+    /* One record per distinct read, the same reads the cell plots. */
+    var lines = [], distinct = 0, runs = [];
     ids.forEach(function (id) {
       var entry = reads[id];
       if (!entry) return;
       runs = runs.concat(entry.runs);
       entry.reads.forEach(function (rec) {
         distinct += 1;
-        observed += rec.n;
-        lines.push(
-          ">" + rec.id +
-          (rec.k == null ? "" : " diagnostic_kmers=" + rec.k) +
-          " copies=" + rec.n
-        );
+        lines.push(">" + rec.id + (rec.k == null ? "" : " diagnostic_kmers=" + rec.k));
         lines.push(wrap(rec.s));
       });
     });
@@ -308,7 +302,6 @@ footer.colophon {
     titleEl.textContent = datum.site + " · fortnight beginning " + datum.fortnight;
     subEl.textContent =
       distinct + " distinct read" + (distinct === 1 ? "" : "s") + " · " +
-      observed + " retained · " +
       runs.length + " run" + (runs.length === 1 ? "" : "s") + " · " + runs.join(", ");
     body.textContent = fastaText;
     panel.hidden = false;
