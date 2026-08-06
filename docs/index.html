@@ -5,141 +5,193 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Putative Cyclospora cayetanensis detection in wastewater metagenomic datasets</title>
 <meta name="description" content="Detection of Cyclospora cayetanensis in public wastewater metagenomic sequencing using species-specific ribosomal RNA 31-mers.">
+<meta name="theme-color" content="#F8F4E9">
 <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 <style>
+/* House palette. No hues outside these five, tints excepted. */
 :root {
-  color-scheme: light dark;
-  --bg: #fdfdfc;
-  --fg: #16181d;
-  --muted: #5c6370;
-  --rule: #e2e2df;
-  --link: #1b5e8a;
-  --code-bg: #f3f3f0;
-  --panel: #f7f7f4;
-  --measure: 40rem;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #14161a;
-    --fg: #e6e6e3;
-    --muted: #9aa1ab;
-    --rule: #2b2f36;
-    --link: #7fc0e8;
-    --code-bg: #1d2026;
-    --panel: #1a1d22;
-  }
+  --cream: #F8F4E9;
+  --ink: #163139;          /* Deep Teal: titles, body, rules */
+  --accent: #C16A3C;       /* Terracotta: eyebrows, captions, links */
+  --accent-light: #D98E60;
+  --surface: #FFFFFF;
+  --rule: rgba(22, 49, 57, 0.14);
+  --rule-strong: rgba(22, 49, 57, 0.32);
+  --tint: rgba(22, 49, 57, 0.05);
+  --measure: 42rem;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: Arial, Helvetica, "Liberation Sans", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
+html { background: var(--cream); }
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font: 16px/1.65 "Charter", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  background: var(--cream);
+  color: var(--ink);
+  font: 400 16px/1.62 var(--sans);
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
 }
-.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem 6rem; }
-header.masthead {
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 2.5rem;
-  padding: 3.5rem 0 2rem;
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.375rem 6rem; }
+
+/* ---------- masthead ---------- */
+header.masthead { padding: 4rem 0 0; }
+.eyebrow {
+  margin: 0 0 1.25rem;
+  font: 700 12px/1.3 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 header.masthead h1 {
-  font-size: 1.95rem;
-  line-height: 1.25;
-  margin: 0 0 1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  margin: 0 0 1.5rem;
+  font: 700 clamp(2rem, 1.35rem + 2.6vw, 2.6rem)/1.18 var(--serif);
+  letter-spacing: -0.008em;
+  color: var(--ink);
 }
-.kicker {
-  font: 600 0.72rem/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--muted);
+.byline {
+  margin: 0 0 0.85rem;
+  font: 400 15px/1.55 var(--sans);
+  color: var(--ink);
+}
+.byline sup { font-size: 0.68em; }
+.affiliations {
   margin: 0 0 1.1rem;
+  font: 400 12.5px/1.6 var(--sans);
+  color: rgba(22, 49, 57, 0.78);
 }
-.masthead p.standfirst {
-  margin: 0;
-  color: var(--muted);
-  font: 0.95rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-.masthead p.standfirst a { color: inherit; }
-h2, h3 {
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  line-height: 1.3;
-  letter-spacing: -0.005em;
-}
-h2 {
-  font-size: 1.35rem;
-  font-weight: 650;
-  margin: 3rem 0 1rem;
-  padding-top: 0.6rem;
+.affiliations sup { font-size: 0.75em; }
+.standfirst {
+  margin: 1.5rem 0 0;
+  padding-top: 1.35rem;
   border-top: 1px solid var(--rule);
+  font: 400 14px/1.6 var(--sans);
+  color: rgba(22, 49, 57, 0.8);
 }
-h3 { font-size: 1.06rem; font-weight: 650; margin: 2.2rem 0 0.8rem; }
+main { margin-top: 3.25rem; }
+
+/* ---------- headings ---------- */
+h2 {
+  margin: 3.25rem 0 1.05rem;
+  font: 700 1.45rem/1.25 var(--serif);
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+h3 {
+  margin: 2.5rem 0 0.85rem;
+  font: 700 1.1rem/1.35 var(--serif);
+  color: var(--ink);
+}
+h2 + h3 { margin-top: 1.75rem; }
+
+/* ---------- body ---------- */
 p { margin: 0 0 1.15rem; }
-a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-a:hover { text-decoration-thickness: 2px; }
-strong { font-weight: 650; }
-sup { font-size: 0.72em; line-height: 0; }
-code, pre {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(193, 106, 60, 0.42);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
-code { background: var(--code-bg); padding: 0.12em 0.34em; border-radius: 3px; font-size: 0.855em; }
+a:hover { text-decoration-color: var(--accent); }
+strong { font-weight: 700; }
+em { font-family: var(--serif); font-style: italic; }
+sup { font-size: 0.7em; line-height: 0; }
+code, pre { font-family: var(--mono); }
+code {
+  background: var(--tint);
+  padding: 0.1em 0.34em;
+  border-radius: 3px;
+  font-size: 0.845em;
+}
 pre {
-  background: var(--code-bg);
+  background: var(--surface);
   border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 0.9rem 1rem;
+  border-radius: 4px;
+  padding: 0.95rem 1.05rem;
   overflow-x: auto;
-  font-size: 0.83rem;
-  line-height: 1.5;
+  font-size: 0.8rem;
+  line-height: 1.55;
 }
 pre code { background: none; padding: 0; font-size: inherit; }
-.table-scroll, figure.chart { margin: 1.6rem 0 2rem; }
-table {
-  border-collapse: collapse;
-  width: 100%;
-  font: 0.86rem/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+/* ---------- display items: figures and tables ---------- */
+figure.display {
+  margin: 2.5rem 0;
+  padding: 1.5rem 0 1.35rem;
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
 }
-th, td { border-bottom: 1px solid var(--rule); padding: 0.5rem 0.65rem; text-align: left; vertical-align: top; }
-th { font-weight: 650; border-bottom: 1.5px solid var(--rule); }
+figure.display > figcaption {
+  font: 400 12.5px/1.55 var(--sans);
+  color: rgba(22, 49, 57, 0.82);
+}
+figure.display > figcaption:first-child { margin-bottom: 1.1rem; }
+figure.display > figcaption:last-child { margin-top: 1.1rem; }
+.fig-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font: 700 11px/1.3 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.fig-title { font-weight: 700; color: var(--ink); }
+.chart-frame { background: var(--surface); border-radius: 4px; padding: 0.85rem; overflow-x: auto; }
+.chart-frame img, .chart-frame svg { max-width: 100%; height: auto; }
+.chart-hint {
+  margin: 0.75rem 0 0;
+  font: 400 10.5px/1.4 var(--sans);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.table-scroll { overflow-x: auto; background: var(--surface); border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; font: 400 13px/1.45 var(--sans); }
+th, td { padding: 0.52rem 0.7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+th {
+  font: 700 10.5px/1.35 var(--sans);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule-strong);
+  white-space: nowrap;
+}
 tbody tr:last-child td { border-bottom: none; }
-figure.chart {
-  background: var(--panel);
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 1rem;
-  overflow-x: auto;
-}
-figure.chart img, figure.chart svg { max-width: 100%; height: auto; }
-.chart-note {
-  margin: 0.7rem 0 0;
-  font: 0.78rem/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  color: var(--muted);
-}
-/* Figure and table captions are bolded lead-ins in the source text. */
-p > strong:first-child { font-weight: 650; }
+td code { font-size: 0.92em; }
+
+/* Data-availability and reference tables sit inline, not as display items. */
+main > .table-scroll { margin: 1.6rem 0 2rem; border: 1px solid var(--rule); }
+
 footer.colophon {
-  margin-top: 4rem;
-  padding-top: 1.5rem;
+  margin-top: 4.5rem;
+  padding-top: 1.4rem;
   border-top: 1px solid var(--rule);
-  font: 0.83rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  color: var(--muted);
+  font: 400 12.5px/1.6 var(--sans);
+  color: rgba(22, 49, 57, 0.72);
 }
 @media (max-width: 34rem) {
   body { font-size: 15px; }
-  header.masthead { padding-top: 2.25rem; }
-  header.masthead h1 { font-size: 1.6rem; }
+  header.masthead { padding-top: 2.5rem; }
+  .wrap { padding: 0 1.1rem 4rem; }
 }
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="masthead">
-  <p class="kicker">Preprint · O'Connor Laboratory, University of Wisconsin-Madison</p>
+  <p class="eyebrow">Preprint · O'Connor Laboratory, University of Wisconsin-Madison</p>
   <h1>Putative <em>Cyclospora cayetanensis</em> detection in wastewater metagenomic datasets</h1>
+  <p class="byline">Nicholas R. Minor<sup>1</sup>, William G. Gardner<sup>1</sup>, Marc C. Johnson<sup>2,3</sup>, Shelby L. O'Connor<sup>1,4</sup>, David H. O'Connor<sup>1,4*</sup></p>
+  <p class="affiliations"><sup>1</sup> Department of Pathology and Laboratory Medicine, University of Wisconsin School of Medicine and Public Health, Madison, WI 53711, USA<br />
+<sup>2</sup> Department of Molecular Microbiology and Immunology, University of Missouri School of Medicine, Columbia, MO 65211, USA<br />
+<sup>3</sup> Christopher S. Bond Life Sciences Center, University of Missouri, Columbia, MO 65211, USA<br />
+<sup>4</sup> Wisconsin National Primate Research Center, University of Wisconsin-Madison, Madison, WI 53715, USA<br />
+<sup>*</sup> Corresponding author: Dave O'Connor • <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#99;&#111;&#110;&#110;&#111;&#64;&#119;&#105;&#115;&#99;&#46;&#101;&#100;&#117;">&#100;&#104;&#111;&#99;&#111;&#110;&#110;&#111;&#64;&#119;&#105;&#115;&#99;&#46;&#101;&#100;&#117;</a></p>
   <p class="standfirst">
     This is the reading version of the manuscript, with the wastewater heatmap interactive and every
     method, script, and data file linked to its place in the
@@ -167,9 +219,10 @@ footer.colophon {
 <p>Every 31-mer in those seven sequences and their reverse complements was then computed with <a href="https://github.com/marbl/meryl">meryl</a>, as <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L406-L407"><code>meryl count k=31</code></a>. Many 31-mers were duplicated because the two 18S copies are nearly identical and the three 5S copies differ only slightly, leaving 5,561 distinct 31-mers: 1,824 from 18S, 3,457 from 28S, 154 from 5S, and 126 from 5.8S. Every position at which a 31-mer occurs is recorded in <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_kmer_manifest.tsv">a manifest</a>.</p>
 <p>The 5,561 candidates were then passed through three successive filters, (1) removing 31-mers present in the ribosomal RNA of other organisms, (2) 31-mers present in the ribosomal RNA of other <em>Cyclospora</em> species, and (3) 31-mers too repetitive to be informative. To remove 31-mers in rRNA from other organisms, we downloaded <a href="https://ftp.arb-silva.de/release_138.2/Exports/">SILVA 138.2</a> SSURef_NR99 and LSURef_NR99, which contain 18S and 28S sequence from across the tree of life with near-duplicates removed at 99% identity, together with <a href="https://ftp.ebi.ac.uk/pub/databases/Rfam/15.1/fasta_files/">Rfam 15.1</a> families RF00001 and RF00002, which include the 5S and 5.8S that SILVA does not contain. We excluded the 9 <em>C. cayetanensis</em> rRNA sequences from SILVA and these nine plus <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/config/target_rrna_accessions.txt">329 <em>C. cayetanensis</em> rRNA accessions</a> from Rfam (<a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/src/rrna_bait/sources.py"><code>src/rrna_bait/sources.py</code></a>). The k-mers in the non-<em>C. cayetanensis</em> rRNAs were then enumerated with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L408-L413"><code>meryl count k=31</code></a> as described above. We then removed every <em>C. cayetanensis</em> 31-mer that also appears in SILVA or Rfam using <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L414-L417"><code>meryl union</code></a> after merging the SILVA and Rfam 31-mer sets into a single "background 31-mer set". <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L418-L421"><code>meryl difference</code></a> subtracts this background 31-mer set from the <em>C. cayetanensis</em> 31-mers. This left 1,839 k-mers that occur in <em>C. cayetanensis</em> ribosomal RNA and in no ribosomal RNA sequences from SILVA or Rfam.</p>
 <p>Next we removed 31-mers shared between <em>C. cayetanensis</em> and the other species of its own genus. The rRNA of those relatives are largely missing from SILVA because the SSU Ref only considers sequences 1,200 bases or longer, and NR99 then dereplicates what remains at 99% identity, which is finer than the differences between congeneric <em>Cyclospora</em>. There are <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/config/other_cyclospora_accessions.txt">94 additional <em>Cyclospora</em> rRNA sequences we retrieved</a> from NCBI Genbank, mostly partial amplicons deposited from genotyping and barcoding studies. We counted their 31-mers with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L412-L413"><code>meryl count k=31</code></a>, added that set to the SILVA and Rfam background with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L422-L426"><code>meryl union</code></a>, and subtracted the combined background from the target with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L427-L430"><code>meryl difference</code></a> a second time. That removed 169 k-mers and left 1,670.</p>
-<p>Finally, 282 additional low-complexity k-mers were discarded with <a href="https://github.com/bede/deacon">Deacon</a>, using <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L477-L481"><code>deacon index build -k 31 -w 1 -e 0.6</code></a>, which drops any k-mer whose sequence entropy falls below 0.6. This left 1,388 putative <em>C. cayetanensis</em> k-mers as shown in Table 1.</p>
-<p><strong>Table 1. What each filter removed.</strong> Each row counts only the k-mers that the rows above it had not already removed, so no k-mer is counted twice. Counted from <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_kmer_manifest.tsv">the manifest</a>.</p>
-<table>
+<p>Finally, 282 additional low-complexity k-mers were discarded with <a href="https://github.com/bede/deacon">Deacon</a>, using <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L477-L481"><code>deacon index build -k 31 -w 1 -e 0.6</code></a>, which drops any k-mer whose sequence entropy falls below 0.6. This left 1,388 putative <em>C. cayetanensis</em> k-mers as shown in <a href="#table-1">Table 1</a>.</p>
+<figure class="display" id="table-1">
+  <figcaption><span class="fig-label">Table 1</span><span class="fig-title">What each filter removed.</span> Each row counts only the k-mers that the rows above it had not already removed, so no k-mer is counted twice. Counted from <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_kmer_manifest.tsv">the manifest</a>.</figcaption>
+  <div class="table-scroll"><table>
 <thead>
 <tr>
 <th>Step</th>
@@ -204,7 +257,8 @@ footer.colophon {
 <td style="text-align: right;"><strong>1,388</strong></td>
 </tr>
 </tbody>
-</table>
+</table></div>
+</figure>
 <p>The surviving baits are distributed unevenly across the four genes. 28S rRNA, the longest of the four loci, supplied 1,293 of the 1,388 31-mers. 37% of the 28S candidates survived, compared with 4% of the 18S candidates. This may mean that 28S is the better target for a diagnostic assay, but it may also reflect uneven coverage of the background: SILVA's large-subunit reference set is roughly a third the size of its small-subunit set, 70.6 MB against 201.1 MB compressed (<a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/01-identify-cyclospora-specific-kmers/config/sources.tsv"><code>config/sources.tsv</code></a>), so a 28S candidate had fewer opportunities to be removed.</p>
 <h3>Exact screening against the complete nucleotide collection removes an additional 204 31-mers</h3>
 <p>An apparently <em>C. cayetanensis</em>-specific 31-mer absent from both SILVA and Rfam could still occur in an unannotated region of a genome, in a metagenomic assembly, or in an organism whose rRNA has never been cataloged in SILVA/Rfam (e.g., rRNA sequences shorter than 1,200 bases). We therefore screened all 1,388 baits against the complete NCBI nucleotide collection core-nt with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/REPRODUCING.md#repeating-the-core-nt-search"><code>blastn -word_size 31 -ungapped -perc_identity 100 -qcov_hsp_perc 100 -dust no</code></a>, which reports only exact, full-length matches to a 31-mer.</p>
@@ -213,9 +267,10 @@ footer.colophon {
 <h3>Setting a calibration threshold of twenty diagnostic 31-mers before a read counts as <em>Cyclospora</em></h3>
 <p>To determine how many 31-mers a read must carry before it can be confidently classified as <em>Cyclospora</em>, we screened 205 wastewater metagenomic SRA datasets collected in the summer of 2025. Deacon retained every read pair in which at least one of the 1,184 <em>C. cayetanensis</em>-specific 31-mers appears (<code>deacon filter -a 1 -r 0</code>), and each retained read was then aligned along its full length against the same core-nt database used to validate the 31-mer baits. Deacon's paired mode pools k-mer hits across Illumina R1 and R2 mates and emits both, and amplified fragments recur many times over, so we collapsed duplicate fragments and then dropped mates carrying no diagnostic 31-mer of their own (<a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/scripts/prepare_read_blast_query.py#L150-L165"><code>scripts/prepare_read_blast_query.py</code></a>). That reduced 131,580 retained sequences originally reported by Deacon to the 16,425 reads used for calibration. A read is on-target when its single best bit score anywhere in core-nt is to <em>C. cayetanensis</em>, off-target when its best alignment is to anything else, and a tie when the top score is shared between the two.</p>
 <p>The presence of a single 31-mer is not sufficiently specific. A read can carry a genuinely unique diagnostic 31-mer that has no exact full-length match outside <em>C. cayetanensis</em> and still align best to another organism across the rest of its length. Of the 16,425 reads carrying at least one <em>C. cayetanensis</em>-specific 31-mer, <strong>98.1% are not <em>Cyclospora</em></strong>. These include uncultured fungi, the bdelloid rotifer <em>Adineta vaga</em>, uncultured eukaryotes, and other apicomplexa such as <em>Eimeria acervulina</em>, <em>Voromonas pontica</em>, and <em>Babesia microti</em>.</p>
-<p>Off-target reads thin quickly as the threshold for the number of 31-mer matches in a read rises (Table 2). Only two off-target reads carry as many as 10 diagnostic 31-mers, and none carry 13 or more. Genuine <em>Cyclospora</em> reads carry a median of 34 diagnostic 31-mers and as many as 105. Requiring 13 would therefore have been a reasonable choice, but we screen at 20 to reduce the chance of false positives in datasets that were not part of this calibration. Specificity matters most here, because a false detection could prompt an unnecessary public health response. The more conservative threshold still retains 187 of the 282 on-target reads, a sensitivity above 66%. The evidence tables, the sweep, and the candidate reads themselves are in <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/tree/main/02-screen-wastewater-metagenomes/results/calibration"><code>results/calibration/</code></a>, which regenerates from a clean checkout.</p>
-<p><strong>Table 2. Whole-read classification as the required number of diagnostic 31-mers rises.</strong> Each row counts the calibration reads carrying at least that many diagnostic 31-mers, classified by their single best core-nt alignment along the full read. Selected thresholds from <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/calibration/threshold_blast_read_counts.tsv"><code>threshold_blast_read_counts.tsv</code></a>, which lists every value from 1 to 105.</p>
-<table>
+<p>Off-target reads thin quickly as the threshold for the number of 31-mer matches in a read rises (<a href="#table-2">Table 2</a>). Only two off-target reads carry as many as 10 diagnostic 31-mers, and none carry 13 or more. Genuine <em>Cyclospora</em> reads carry a median of 34 diagnostic 31-mers and as many as 105. Requiring 13 would therefore have been a reasonable choice, but we screen at 20 to reduce the chance of false positives in datasets that were not part of this calibration. Specificity matters most here, because a false detection could prompt an unnecessary public health response. The more conservative threshold still retains 187 of the 282 on-target reads, a sensitivity above 66%. The evidence tables, the sweep, and the candidate reads themselves are in <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/tree/main/02-screen-wastewater-metagenomes/results/calibration"><code>results/calibration/</code></a>, which regenerates from a clean checkout.</p>
+<figure class="display" id="table-2">
+  <figcaption><span class="fig-label">Table 2</span><span class="fig-title">Whole-read classification as the required number of diagnostic 31-mers rises.</span> Each row counts the calibration reads carrying at least that many diagnostic 31-mers, classified by their single best core-nt alignment along the full read. Selected thresholds from <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/calibration/threshold_blast_read_counts.tsv"><code>threshold_blast_read_counts.tsv</code></a>, which lists every value from 1 to 105.</figcaption>
+  <div class="table-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: right;">Deacon threshold (<code>-a</code>)</th>
@@ -308,21 +363,18 @@ footer.colophon {
 <td style="text-align: right;">100%</td>
 </tr>
 </tbody>
-</table>
-<h3><em>Cyclospora</em> recurs seasonally across the public wastewater record</h3>
-<p>We evaluated every <a href="https://securebio.org/casper/">CASPER</a> wastewater metagenome in NCBI SRA BioProject <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874">PRJNA1247874</a> (as of July 30, 2026) for <em>C. cayetanensis</em> using the calibrated Deacon filter (<code>deacon filter -m -a 20 -r 0</code>) against the 1,184-bait index. This includes 2,292 samples collected between 2023-12-26 and 2026-06-30. To focus our analysis on sewersheds with longitudinal data, we restricted our anlaysis to the 30 sewersheds sampled at 10 or more timepoints (2,287 samples). 73 samples (3.2%) contained <em>C. cayetanensis</em> reads. 24 of the 30 sewersheds recorded a detection in at least one sample.</p>
-
-<figure class="chart">
-  <div id="heatmap" role="img"
-       aria-label="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight"></div>
-  <noscript>
-    <img src="assets/cyclospora_heatmap.svg"
-         alt="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight">
-  </noscript>
-  <p class="chart-note">Hover any cell for its read count, sequencing depth, and contributing runs.</p>
+</table></div>
 </figure>
-
-<p><strong>Figure 1. <em>Cyclospora cayetanensis</em> in public wastewater sequencing data, by sewershed and fortnight.</strong> An interactive version, which reports the underlying read counts, sequencing depth, and contributing runs for every cell on hover, is published as a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.vl.json">Vega-Lite specification</a> with a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.html">ready-to-open wrapper</a>. Color shows distinct <em>C. cayetanensis</em> reads per billion reads sequenced, where distinct is the count of unique read sequences per run, so PCR and optical copies are collapsed; however, the denominator is the total number of reads in the SRA dataset. Each column is a separate sewershed, geographically ordered west to east. Grey marks a fortnight with no sample and white a run screened with no <em>C. cayetanensis</em> reads found. The figure, the specification, and the matrix behind them regenerate with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/scripts/plot_heatmap.py"><code>scripts/plot_heatmap.py</code></a>.</p>
+<h3><em>Cyclospora</em> recurs seasonally across the public wastewater record</h3>
+<p>We evaluated every <a href="https://securebio.org/casper/">CASPER</a> wastewater metagenome in NCBI SRA BioProject <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874">PRJNA1247874</a> (as of July 30, 2026) for <em>C. cayetanensis</em> using the calibrated Deacon filter (<code>deacon filter -m -a 20 -r 0</code>) against the 1,184-bait index. This includes 2,292 samples collected between 2023-12-26 and 2026-06-30. To focus our analysis on sewersheds with longitudinal data, we restricted our anlaysis to the 30 sewersheds sampled at 10 or more timepoints (2,287 samples). 73 samples (3.2%) contained <em>C. cayetanensis</em> reads. 24 of the 30 sewersheds recorded a detection in at least one sample (<a href="#figure-1">Figure 1</a>).</p>
+<figure class="display" id="figure-1">
+  <div class="chart-frame">
+    <div id="figure-1-chart" role="img"
+         aria-label="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight"></div>
+  </div>
+  <p class="chart-hint">Hover any cell for its read count, sequencing depth, and contributing runs</p>
+  <figcaption><span class="fig-label">Figure 1</span><span class="fig-title"><em>Cyclospora cayetanensis</em> in public wastewater sequencing data, by sewershed and fortnight.</span> An interactive version, which reports the underlying read counts, sequencing depth, and contributing runs for every cell on hover, is published as a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.vl.json">Vega-Lite specification</a> with a <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.html">ready-to-open wrapper</a>. Color shows distinct <em>C. cayetanensis</em> reads per billion reads sequenced, where distinct is the count of unique read sequences per run, so PCR and optical copies are collapsed; however, the denominator is the total number of reads in the SRA dataset. Each column is a separate sewershed, geographically ordered west to east. Grey marks a fortnight with no sample and white a run screened with no <em>C. cayetanensis</em> reads found. The figure, the specification, and the matrix behind them regenerate with <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/scripts/plot_heatmap.py"><code>scripts/plot_heatmap.py</code></a>.</figcaption>
+</figure>
 <p>As expected from the seasonal epidemiology of cyclosporiasis <a href="https://doi.org/10.15585/mmwr.ss6803a1">Casillas et al., 2019</a>, the detections in wastewater are strongly seasonal. The public record spans two cyclosporiasis seasons and <em>C. cayetanensis</em> rises in both: detection climbs from near zero in spring to roughly one run in nine across June, July and August of 2025, falls back to near zero through the winter, and rises again in the early summer of 2026. That the same seasonal pattern appears in two independent summers is strong evidence that these detections track community infection rather than sequencing artefacts.</p>
 <h2>Discussion</h2>
 <p>Here we demonstrate that wastewater metagenomic sequencing can identify samples with rRNA reads that are more similar to <em>C. cayetanensis</em> than any other taxa in NCBI core-nt. The most parsimonious explanation is that these reads are, in fact, from <em>C. cayetanensis</em> parasites shed into wastewater. However, we cannot formally exclude the possibility that some of these detections are associated with as yet undiscovered <em>Cyclospora</em> species that are not represented in core-nt or other databases. Nevertheless, it is reasonable to cautiously assert that this approach may be useful for monitoring Cyclospora outbreaks.</p>
@@ -333,7 +385,7 @@ footer.colophon {
 <p>Software versions, pinned input identities, and the commands needed to repeat every step on a single machine are in <a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/REPRODUCING.md">REPRODUCING.md</a>.</p>
 <h2>Data availability</h2>
 <p>All sequencing analysed here is public in NCBI SRA under BioProject <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874">PRJNA1247874</a>. Each run is identified below by its <code>public_code_CASPER_SRA</code> and its SRA run accession.</p>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>What</th>
@@ -358,7 +410,7 @@ footer.colophon {
 <td><a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/casper_sites.tsv"><code>casper_sites.tsv</code></a></td>
 </tr>
 <tr>
-<td>The matrix plotted in Figure 1</td>
+<td>The matrix plotted in <a href="#figure-1">Figure 1</a></td>
 <td><a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/blob/main/02-screen-wastewater-metagenomes/results/site_fortnight_matrix_per_billion.tsv"><code>site_fortnight_matrix_per_billion.tsv</code></a></td>
 </tr>
 <tr>
@@ -374,14 +426,7 @@ footer.colophon {
 <td><a href="https://github.com/dholab/cyclospora-in-wastewater-metagenomics/tree/main/01-identify-cyclospora-specific-kmers/results"><code>01-identify-cyclospora-specific-kmers/results/</code></a></td>
 </tr>
 </tbody>
-</table>
-<h2>Authors and affiliations</h2>
-<p>Nicholas R. Minor<sup>1</sup>, William G. Gardner<sup>1</sup>, Marc C. Johnson<sup>2,3</sup>, Shelby L. O'Connor<sup>1,4</sup>, David H. O'Connor<sup>1,4*</sup></p>
-<p><sup>1</sup> Department of Pathology and Laboratory Medicine, University of Wisconsin School of Medicine and Public Health, Madison, WI 53711, USA<br />
-<sup>2</sup> Department of Molecular Microbiology and Immunology, University of Missouri School of Medicine, Columbia, MO 65211, USA<br />
-<sup>3</sup> Christopher S. Bond Life Sciences Center, University of Missouri, Columbia, MO 65211, USA<br />
-<sup>4</sup> Wisconsin National Primate Research Center, University of Wisconsin-Madison, Madison, WI 53715, USA<br />
-<sup>*</sup> Corresponding author: Dave O'Connor • <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#99;&#111;&#110;&#110;&#111;&#64;&#119;&#105;&#115;&#99;&#46;&#101;&#100;&#117;">&#100;&#104;&#111;&#99;&#111;&#110;&#110;&#111;&#64;&#119;&#105;&#115;&#99;&#46;&#101;&#100;&#117;</a></p>
+</table></div>
 <h2>Acknowledgements</h2>
 <p>This work is funded by <a href="https://ink.fish">Inkfish</a>.</p>
 <p>The wastewater metagenomics datasets are generated by the <a href="https://securebio.org/casper/">CAPSER collaboratory</a>. We would like to thank all of the participating sewersheds who contribute wastewater samples weekly and who make this sort of analysis possible.</p>
@@ -418,14 +463,18 @@ footer.colophon {
 </footer>
 </div>
 <script>
-  const spec = "assets/cyclospora_heatmap.vl.json";
-  const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  vegaEmbed("#heatmap", spec, {
+  vegaEmbed("#figure-1-chart", "assets/cyclospora_heatmap.vl.json", {
     actions: {export: true, source: false, compiled: false, editor: false},
-    theme: dark ? "dark" : undefined,
-    renderer: "svg"
-  }).catch(err => {
-    document.getElementById("heatmap").innerHTML =
+    renderer: "svg",
+    config: {
+      background: "transparent",
+      font: "Arial, Helvetica, sans-serif",
+      axis: {labelColor: "#163139", titleColor: "#163139", domainColor: "rgba(22,49,57,0.32)", tickColor: "rgba(22,49,57,0.32)"},
+      legend: {labelColor: "#163139", titleColor: "#163139"},
+      title: {color: "#163139"}
+    }
+  }).catch(function (err) {
+    document.getElementById("figure-1-chart").innerHTML =
       '<img src="assets/cyclospora_heatmap.svg" alt="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight">';
     console.error(err);
   });

@@ -5,141 +5,188 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{TITLE_TEXT}}</title>
 <meta name="description" content="Detection of Cyclospora cayetanensis in public wastewater metagenomic sequencing using species-specific ribosomal RNA 31-mers.">
+<meta name="theme-color" content="#F8F4E9">
 <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 <style>
+/* House palette. No hues outside these five, tints excepted. */
 :root {
-  color-scheme: light dark;
-  --bg: #fdfdfc;
-  --fg: #16181d;
-  --muted: #5c6370;
-  --rule: #e2e2df;
-  --link: #1b5e8a;
-  --code-bg: #f3f3f0;
-  --panel: #f7f7f4;
-  --measure: 40rem;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #14161a;
-    --fg: #e6e6e3;
-    --muted: #9aa1ab;
-    --rule: #2b2f36;
-    --link: #7fc0e8;
-    --code-bg: #1d2026;
-    --panel: #1a1d22;
-  }
+  --cream: #F8F4E9;
+  --ink: #163139;          /* Deep Teal: titles, body, rules */
+  --accent: #C16A3C;       /* Terracotta: eyebrows, captions, links */
+  --accent-light: #D98E60;
+  --surface: #FFFFFF;
+  --rule: rgba(22, 49, 57, 0.14);
+  --rule-strong: rgba(22, 49, 57, 0.32);
+  --tint: rgba(22, 49, 57, 0.05);
+  --measure: 42rem;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: Arial, Helvetica, "Liberation Sans", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
+html { background: var(--cream); }
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font: 16px/1.65 "Charter", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  background: var(--cream);
+  color: var(--ink);
+  font: 400 16px/1.62 var(--sans);
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
 }
-.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem 6rem; }
-header.masthead {
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 2.5rem;
-  padding: 3.5rem 0 2rem;
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.375rem 6rem; }
+
+/* ---------- masthead ---------- */
+header.masthead { padding: 4rem 0 0; }
+.eyebrow {
+  margin: 0 0 1.25rem;
+  font: 700 12px/1.3 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 header.masthead h1 {
-  font-size: 1.95rem;
-  line-height: 1.25;
-  margin: 0 0 1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  margin: 0 0 1.5rem;
+  font: 700 clamp(2rem, 1.35rem + 2.6vw, 2.6rem)/1.18 var(--serif);
+  letter-spacing: -0.008em;
+  color: var(--ink);
 }
-.kicker {
-  font: 600 0.72rem/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--muted);
+.byline {
+  margin: 0 0 0.85rem;
+  font: 400 15px/1.55 var(--sans);
+  color: var(--ink);
+}
+.byline sup { font-size: 0.68em; }
+.affiliations {
   margin: 0 0 1.1rem;
+  font: 400 12.5px/1.6 var(--sans);
+  color: rgba(22, 49, 57, 0.78);
 }
-.masthead p.standfirst {
-  margin: 0;
-  color: var(--muted);
-  font: 0.95rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-.masthead p.standfirst a { color: inherit; }
-h2, h3 {
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  line-height: 1.3;
-  letter-spacing: -0.005em;
-}
-h2 {
-  font-size: 1.35rem;
-  font-weight: 650;
-  margin: 3rem 0 1rem;
-  padding-top: 0.6rem;
+.affiliations sup { font-size: 0.75em; }
+.standfirst {
+  margin: 1.5rem 0 0;
+  padding-top: 1.35rem;
   border-top: 1px solid var(--rule);
+  font: 400 14px/1.6 var(--sans);
+  color: rgba(22, 49, 57, 0.8);
 }
-h3 { font-size: 1.06rem; font-weight: 650; margin: 2.2rem 0 0.8rem; }
+main { margin-top: 3.25rem; }
+
+/* ---------- headings ---------- */
+h2 {
+  margin: 3.25rem 0 1.05rem;
+  font: 700 1.45rem/1.25 var(--serif);
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+h3 {
+  margin: 2.5rem 0 0.85rem;
+  font: 700 1.1rem/1.35 var(--serif);
+  color: var(--ink);
+}
+h2 + h3 { margin-top: 1.75rem; }
+
+/* ---------- body ---------- */
 p { margin: 0 0 1.15rem; }
-a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-a:hover { text-decoration-thickness: 2px; }
-strong { font-weight: 650; }
-sup { font-size: 0.72em; line-height: 0; }
-code, pre {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(193, 106, 60, 0.42);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
-code { background: var(--code-bg); padding: 0.12em 0.34em; border-radius: 3px; font-size: 0.855em; }
+a:hover { text-decoration-color: var(--accent); }
+strong { font-weight: 700; }
+em { font-family: var(--serif); font-style: italic; }
+sup { font-size: 0.7em; line-height: 0; }
+code, pre { font-family: var(--mono); }
+code {
+  background: var(--tint);
+  padding: 0.1em 0.34em;
+  border-radius: 3px;
+  font-size: 0.845em;
+}
 pre {
-  background: var(--code-bg);
+  background: var(--surface);
   border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 0.9rem 1rem;
+  border-radius: 4px;
+  padding: 0.95rem 1.05rem;
   overflow-x: auto;
-  font-size: 0.83rem;
-  line-height: 1.5;
+  font-size: 0.8rem;
+  line-height: 1.55;
 }
 pre code { background: none; padding: 0; font-size: inherit; }
-.table-scroll, figure.chart { margin: 1.6rem 0 2rem; }
-table {
-  border-collapse: collapse;
-  width: 100%;
-  font: 0.86rem/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+/* ---------- display items: figures and tables ---------- */
+figure.display {
+  margin: 2.5rem 0;
+  padding: 1.5rem 0 1.35rem;
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
 }
-th, td { border-bottom: 1px solid var(--rule); padding: 0.5rem 0.65rem; text-align: left; vertical-align: top; }
-th { font-weight: 650; border-bottom: 1.5px solid var(--rule); }
+figure.display > figcaption {
+  font: 400 12.5px/1.55 var(--sans);
+  color: rgba(22, 49, 57, 0.82);
+}
+figure.display > figcaption:first-child { margin-bottom: 1.1rem; }
+figure.display > figcaption:last-child { margin-top: 1.1rem; }
+.fig-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font: 700 11px/1.3 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.fig-title { font-weight: 700; color: var(--ink); }
+.chart-frame { background: var(--surface); border-radius: 4px; padding: 0.85rem; overflow-x: auto; }
+.chart-frame img, .chart-frame svg { max-width: 100%; height: auto; }
+.chart-hint {
+  margin: 0.75rem 0 0;
+  font: 400 10.5px/1.4 var(--sans);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.table-scroll { overflow-x: auto; background: var(--surface); border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; font: 400 13px/1.45 var(--sans); }
+th, td { padding: 0.52rem 0.7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+th {
+  font: 700 10.5px/1.35 var(--sans);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule-strong);
+  white-space: nowrap;
+}
 tbody tr:last-child td { border-bottom: none; }
-figure.chart {
-  background: var(--panel);
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 1rem;
-  overflow-x: auto;
-}
-figure.chart img, figure.chart svg { max-width: 100%; height: auto; }
-.chart-note {
-  margin: 0.7rem 0 0;
-  font: 0.78rem/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  color: var(--muted);
-}
-/* Figure and table captions are bolded lead-ins in the source text. */
-p > strong:first-child { font-weight: 650; }
+td code { font-size: 0.92em; }
+
+/* Data-availability and reference tables sit inline, not as display items. */
+main > .table-scroll { margin: 1.6rem 0 2rem; border: 1px solid var(--rule); }
+
 footer.colophon {
-  margin-top: 4rem;
-  padding-top: 1.5rem;
+  margin-top: 4.5rem;
+  padding-top: 1.4rem;
   border-top: 1px solid var(--rule);
-  font: 0.83rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  color: var(--muted);
+  font: 400 12.5px/1.6 var(--sans);
+  color: rgba(22, 49, 57, 0.72);
 }
 @media (max-width: 34rem) {
   body { font-size: 15px; }
-  header.masthead { padding-top: 2.25rem; }
-  header.masthead h1 { font-size: 1.6rem; }
+  header.masthead { padding-top: 2.5rem; }
+  .wrap { padding: 0 1.1rem 4rem; }
 }
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="masthead">
-  <p class="kicker">Preprint · O'Connor Laboratory, University of Wisconsin-Madison</p>
+  <p class="eyebrow">Preprint · O'Connor Laboratory, University of Wisconsin-Madison</p>
   <h1>{{TITLE_HTML}}</h1>
+  {{AUTHORS}}
   <p class="standfirst">
     This is the reading version of the manuscript, with the wastewater heatmap interactive and every
     method, script, and data file linked to its place in the
@@ -158,14 +205,18 @@ footer.colophon {
 </footer>
 </div>
 <script>
-  const spec = "assets/cyclospora_heatmap.vl.json";
-  const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  vegaEmbed("#heatmap", spec, {
+  vegaEmbed("#figure-1-chart", "assets/cyclospora_heatmap.vl.json", {
     actions: {export: true, source: false, compiled: false, editor: false},
-    theme: dark ? "dark" : undefined,
-    renderer: "svg"
-  }).catch(err => {
-    document.getElementById("heatmap").innerHTML =
+    renderer: "svg",
+    config: {
+      background: "transparent",
+      font: "Arial, Helvetica, sans-serif",
+      axis: {labelColor: "#163139", titleColor: "#163139", domainColor: "rgba(22,49,57,0.32)", tickColor: "rgba(22,49,57,0.32)"},
+      legend: {labelColor: "#163139", titleColor: "#163139"},
+      title: {color: "#163139"}
+    }
+  }).catch(function (err) {
+    document.getElementById("figure-1-chart").innerHTML =
       '<img src="assets/cyclospora_heatmap.svg" alt="Heatmap of Cyclospora cayetanensis diagnostic reads per billion, by sewershed and fortnight">';
     console.error(err);
   });
