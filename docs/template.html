@@ -58,6 +58,20 @@ header.masthead h1 {
   color: rgba(22, 49, 57, 0.78);
 }
 .affiliations sup { font-size: 0.75em; }
+.manuscript-actions { margin: 1.25rem 0 0; }
+.download-pdf {
+  display: inline-block;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  color: var(--ink);
+  font: 700 11px/1 var(--sans);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.download-pdf:hover { border-color: var(--accent); color: var(--accent); }
+.download-pdf:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .standfirst {
   margin: 1.5rem 0 0;
   padding-top: 1.35rem;
@@ -229,6 +243,7 @@ footer.colophon {
 <header class="masthead">
   <h1>{{TITLE_HTML}}</h1>
   {{AUTHORS}}
+  <p class="manuscript-actions"><a class="download-pdf" href="preprint.pdf" download>Download PDF</a></p>
   <p class="standfirst">
     This interactive version is the preferred way to read this manuscript, since the figure showing
     wastewater reads over time is interactive and every method, script, and data file is linked to

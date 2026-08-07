@@ -20,7 +20,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  preprint:
+    uses: ./.github/workflows/preprint.yml
+
   build:
+    needs: preprint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,13 +38,20 @@ jobs:
       - name: Render index.html from README.md
         run: pixi run --manifest-path docs/pixi.toml build
 
+      - name: Download the rendered preprint PDF
+        uses: actions/download-artifact@v8
+        with:
+          name: preprint-pdf
+          path: _preprint
+
       - name: Assemble the site
-        # Only the rendered page and its assets are published. The build script,
-        # template, and environment stay in the repository.
+        # Only the rendered page, its assets, and the preprint are published. The
+        # build scripts, templates, and environments stay in the repository.
         run: |
           mkdir -p _site
           cp docs/index.html _site/
           cp -r docs/assets _site/assets
+          cp _preprint/preprint.pdf _site/preprint.pdf
           touch _site/.nojekyll
 
       - name: Check the page was rendered from the current README
@@ -48,8 +59,10 @@ jobs:
           set -euo pipefail
           test -s _site/index.html
           test -s _site/assets/diagnostic_reads.json
+          test -s _site/preprint.pdf
           grep -q '<h1>' _site/index.html
           grep -q 'id="figure-1-chart"' _site/index.html
+          grep -q 'href="preprint.pdf"' _site/index.html
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
