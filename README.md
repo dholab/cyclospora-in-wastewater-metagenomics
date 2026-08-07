@@ -1,6 +1,6 @@
 # Putative *Cyclospora cayetanensis* detection in wastewater metagenomic datasets
 
-Nicholas R. Minor<sup>1</sup>, William G. Gardner<sup>1</sup>, Marc C. Johnson<sup>2,3</sup>, Shelby L. O'Connor<sup>1,4</sup>, David H. O'Connor<sup>1,4*</sup>
+Nicholas R. Minor<sup>1</sup>, William K. Gardner<sup>1</sup>, Marc C. Johnson<sup>2,3</sup>, Shelby L. O'Connor<sup>1,4</sup>, David H. O'Connor<sup>1,4*</sup>
 
 <sup>1</sup> Department of Pathology and Laboratory Medicine, University of Wisconsin School of Medicine and Public Health, Madison, WI 53711, USA
 <sup>2</sup> Department of Molecular Microbiology and Immunology, University of Missouri School of Medicine, Columbia, MO 65211, USA
