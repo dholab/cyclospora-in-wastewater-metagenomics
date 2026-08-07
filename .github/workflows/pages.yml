@@ -1,0 +1,67 @@
+name: Publish the manuscript site
+
+# Rebuilds https://dholab.github.io/cyclospora-in-wastewater-metagenomics/ from
+# README.md on every push to main, so an edit made from any machine, or in the
+# GitHub web editor, reaches the site without anyone running the build locally.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running publish finish rather than cancelling it part way.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the pinned build environment
+        uses: prefix-dev/setup-pixi@v0.8.8
+        with:
+          manifest-path: docs/pixi.toml
+          locked: true
+
+      - name: Render index.html from README.md
+        run: pixi run --manifest-path docs/pixi.toml build
+
+      - name: Assemble the site
+        # Only the rendered page and its assets are published. The build script,
+        # template, and environment stay in the repository.
+        run: |
+          mkdir -p _site
+          cp docs/index.html _site/
+          cp -r docs/assets _site/assets
+          touch _site/.nojekyll
+
+      - name: Check the page was rendered from the current README
+        run: |
+          set -euo pipefail
+          test -s _site/index.html
+          test -s _site/assets/diagnostic_reads.json
+          grep -q '<h1>' _site/index.html
+          grep -q 'id="figure-1-chart"' _site/index.html
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
