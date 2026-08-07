@@ -1,0 +1,11 @@
+from: markdown
+to: typst
+input-files:
+  - ../README.md
+output-file: build/preprint.typ
+standalone: true
+template: preprint.typ
+filters:
+  - readme.lua
+wrap: none
+fail-if-warnings: true
