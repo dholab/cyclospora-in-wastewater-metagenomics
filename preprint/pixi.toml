@@ -1,0 +1,18 @@
+[workspace]
+name = "cyclospora-preprint"
+version = "0.1.0"
+description = "Builds an Arkheion-formatted preprint from the manuscript README"
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[tasks]
+convert = "mkdir -p build && pandoc --defaults preprint.yaml"
+compile = { cmd = "typst compile --root .. build/preprint.typ build/preprint.pdf", depends-on = ["convert"] }
+build = { depends-on = ["compile"] }
+inspect = { cmd = "pdfinfo build/preprint.pdf && pdffonts build/preprint.pdf", depends-on = ["compile"] }
+
+[dependencies]
+pandoc = "3.10.*"
+typst = "0.15.*"
+poppler = "26.7.*"
+fonts-conda-ecosystem = "1.*"

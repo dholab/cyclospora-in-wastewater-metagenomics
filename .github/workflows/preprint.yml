@@ -1,0 +1,31 @@
+name: Build the preprint PDF
+
+on:
+  workflow_call:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the locked preprint environment
+        uses: prefix-dev/setup-pixi@v0.8.8
+        with:
+          manifest-path: preprint/pixi.toml
+          locked: true
+
+      - name: Render and inspect the preprint from README.md
+        run: pixi run --locked --manifest-path preprint/pixi.toml inspect
+
+      - name: Upload the preprint PDF
+        uses: actions/upload-artifact@v7
+        with:
+          name: preprint-pdf
+          path: preprint/build/preprint.pdf
+          if-no-files-found: error
