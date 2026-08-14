@@ -2,7 +2,7 @@
 authors = ["DHO-CHTC <dhoconno@wisc.edu>"]
 channels = ["conda-forge", "bioconda"]
 name = "32434-rrna-bait"
-platforms = ["linux-64"]
+platforms = ["linux-64", "linux-aarch64", "osx-arm64"]
 version = "0.1.0"
 
 [tasks]
@@ -27,13 +27,8 @@ curl = ">=8,<9"
 meryl = ">=1.4.1,<2"
 # nt validation + local specificity checks
 blast = ">=2.15,<3"
-# rRNA gene annotation (18S/5.8S/28S/5S)
-barrnap = ">=0.9,<0.10"
-# sequence handling / operon extraction
+# sequence handling
 seqkit = ">=2.13.0,<3"
 biopython = ">=1.87,<2"
-# reference retrieval
-entrez-direct = ">=25.3,<26"
-ncbi-datasets-cli = ">=18.33.1,<19"
 # builds the k=31,w=1 filtering index from the bait FASTA
 deacon = ">=0.15.0,<0.16"

@@ -24,7 +24,7 @@ The stage 01 README, [`01-identify-cyclospora-specific-kmers/README.md`](01-iden
 
 ## Prerequisites
 
-[Pixi](https://pixi.sh) is the only prerequisite. It installs every tool at the version used here from [`pixi.toml`](01-identify-cyclospora-specific-kmers/pixi.toml) and the accompanying `pixi.lock`: Python 3.12, BLAST+ 2.15, meryl 1.4.1, Deacon 0.15, seqkit 2.13, barrnap 0.9, and entrez-direct 25.3. The lock is solved for `linux-64`; on another platform, add it to `platforms` in `pixi.toml` and re-solve.
+[Pixi](https://pixi.sh) is the only prerequisite. It installs the locked Python 3.12, BLAST+, meryl, Deacon 0.15, seqkit 2.13, and Python dependencies from [`pixi.toml`](01-identify-cyclospora-specific-kmers/pixi.toml) and the accompanying `pixi.lock`. Both stage environments are solved for `linux-64`, `linux-aarch64`, and `osx-arm64`.
 
 Requirements are approximately 330 MB of network downloads and a few GB of working space for intermediate k-mer databases.
 
