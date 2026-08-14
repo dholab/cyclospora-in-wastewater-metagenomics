@@ -1,12 +1,12 @@
 # *Cyclospora cayetanensis* ribosomal RNA bait k-mers
 
-Two FASTA files, each record a single canonical 31-mer drawn from *C. cayetanensis* mature ribosomal
-RNA. **Use the core-nt-validated set unless you have a specific reason not to.**
+Two historical FASTA files, each record a single canonical 31-mer drawn from *C. cayetanensis* mature ribosomal
+RNA. **Use the core-nt-validated set to reproduce the downstream results in this repository.**
 
 | File | Records | Stage | Use it when |
 |---|---:|---|---|
-| [cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta](cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta) | 1,184 | Step 2, after exact core-nt megablast screening | Almost always. This is the set behind every result reported in this repository. |
-| [cyclospora_cayetanensis_rrna_specific_baits.fasta](cyclospora_cayetanensis_rrna_specific_baits.fasta) | 1,388 | Step 1, after SILVA, Rfam, and other-*Cyclospora* subtraction only | You want the pre-validation set for comparison, or you are re-running the core-nt screen yourself. |
+| [cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta](cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta) | 1,184 | Historical subset after exact core-nt screening | You want to reproduce a downstream result reported in this repository. |
+| [cyclospora_cayetanensis_rrna_specific_baits.fasta](cyclospora_cayetanensis_rrna_specific_baits.fasta) | 1,388 | Historical pre-screening subset | You are comparing with the original run. The corrected pre-screening set contains 1,670 baits. |
 
 Composition of the validated set is 49 × 18S, 1,112 × 28S, and 23 × 5S. There are no 5.8S baits,
 because all 126 5.8S candidates occur in Rfam RF00002 and were subtracted.
@@ -18,7 +18,7 @@ because all 126 5.8S candidates occur in Rfam RF00002 and were subtracted.
 AAAAACACGAACCTCTCCCTACTCTCACTCT
 ```
 
-The identifier is a stable serial number followed by the rRNA class the k-mer came from. Sequences
+The identifier is a sequential number within this historical file followed by the rRNA class the k-mer came from. It is not stable when the upstream bait set changes. Sequences
 are canonical, meaning each is the lexicographically smaller of the 31-mer and its reverse
 complement, so a bait matches a read on either strand. Because they are canonical rather than
 genomic, the records are **not** in coordinate order along the rRNA and adjacent records do not
@@ -28,7 +28,7 @@ which carries the source locus, start coordinates, and copy count for every cand
 
 ## What these are and are not
 
-**What they are.** Each 31-mer occurs in *C. cayetanensis* mature rRNA, occurs in no other rRNA
+**What they are.** Each 31-mer in the 1,184-bait screened set occurs in *C. cayetanensis* mature rRNA, occurs in no other rRNA
 sequence in SILVA 138.2 or Rfam 15.1, occurs in no non-*cayetanensis Cyclospora* reference we could
 obtain, and has no exact full-length match anywhere in NCBI core-nt assigned to a taxon other than
 *C. cayetanensis* (taxid 88456).

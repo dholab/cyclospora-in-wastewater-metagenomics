@@ -65,25 +65,25 @@ The parameters at each stage are as follows.
 4. **Drop low-complexity k-mers.** `deacon index build -k 31 -w 1 -e 0.6`, an entropy threshold of 0.6.
 5. **Build and check the index.** `deacon index build -k 31 -w 1 -e 0`, followed by two round trips that must both hold: every bait is recovered when the bait FASTA is filtered against its own index, and zero records are retained when each background FASTA is filtered against it. The full invariant list is in [`src/rrna_bait/verify.py`](01-identify-cyclospora-specific-kmers/src/rrna_bait/verify.py).
 
-Expected output is 1,388 baits in `kmers/cyclospora_cayetanensis_rrna_baits.fasta` and the attrition of Table 1 in `reports/cyclospora_cayetanensis_rrna_index_summary.tsv`, matching the committed [`results/cyclospora_cayetanensis_rrna_index_summary.tsv`](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_index_summary.tsv).
+Expected output is 1,670 baits in `kmers/cyclospora_cayetanensis_rrna_baits.fasta`. The committed [`results/cyclospora_cayetanensis_rrna_index_summary.tsv`](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_index_summary.tsv) records the historical 1,388-bait output from the original strand-sensitive finalizer.
 
 ## Step 3. Validate against the complete nucleotide collection
 
-This step reduces the 1,388 baits from Step 2 to the 1,184 published baits. Each bait is searched against NCBI `core_nt` for exact, full-length 31-of-31 matches, and a bait is discarded if any such match is assigned to a taxon other than 88456 (*C. cayetanensis*); a match carrying no taxid counts as non-target. Of the 1,388 baits, 204 have at least one non-target match and are discarded, leaving 1,184.
+In the historical run, this step reduced the 1,388 baits that reached `core_nt` to the 1,184 published baits. Each bait is searched for exact, full-length 31-of-31 matches, and a bait is discarded if any such match is assigned to a taxon other than 88456 (*C. cayetanensis*); a match carrying no taxid counts as non-target. The corrected 1,670-bait set requires a new search.
 
-The search results are committed, so the reduction reproduces in a few minutes without the database.
+The committed search results apply only to the historical 1,388-bait set. `validate` rebuilds the current bait set before searching it, so it requires the operator-provisioned `core_nt` database.
 
 ```bash
-pixi run validate       # applies the committed BLAST evidence to the baits from Step 2
+pixi run validate /path/to/core_nt
 ```
 
-The evidence is [`results/core_nt_bait_exact_match_blast.tsv`](01-identify-cyclospora-specific-kmers/results/core_nt_bait_exact_match_blast.tsv), which holds one row per bait–subject match: 5,012 rows, because a bait present in many database records produces a row for each. Those rows cover the 1,280 baits with at least one exact match anywhere in `core_nt`; the other 108 match nothing and are retained.
+The historical evidence is [`results/core_nt_bait_exact_match_blast.tsv`](01-identify-cyclospora-specific-kmers/results/core_nt_bait_exact_match_blast.tsv), which holds one row per bait–subject match: 5,012 rows, because a bait present in many database records produces a row for each. Those rows cover the 1,280 historical baits with at least one exact match anywhere in `core_nt`; the other 108 match nothing and are retained.
 
 The rule is implemented in [`src/rrna_bait/core_nt.py`](01-identify-cyclospora-specific-kmers/src/rrna_bait/core_nt.py), and the per-bait verdicts, with target and non-target hit counts, are written to [`results/cyclospora_cayetanensis_core_nt_validation.tsv`](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_core_nt_validation.tsv). [`scripts/finalize_core_nt_validation.sh`](01-identify-cyclospora-specific-kmers/scripts/finalize_core_nt_validation.sh) re-runs the index and background round trips from Step 2 before publishing any output.
 
 ### Repeating the core-nt search
 
-This requires the `core_nt` BLAST database, approximately 285 GB across 89 volumes, retrieved with `update_blastdb.pl --decompress core_nt` from the BLAST+ installation Pixi provides. The search is a single command over all 1,388 baits.
+This requires the `core_nt` BLAST database, approximately 285 GB across 89 volumes, retrieved with `update_blastdb.pl --decompress core_nt` from the BLAST+ installation Pixi provides. The corrected search is a single command over all 1,670 baits.
 
 ```bash
 blastn -task blastn -word_size 31 -ungapped \
@@ -100,16 +100,16 @@ We ran this query as one job per database volume on an HTCondor pool, staging ea
 
 ## Step 4. Check the result
 
-These three commands, run from the stage directory after Step 3, confirm that the rebuild matches ours. They use the build's own file names; the same two bait sets are published under `baits/` with longer names.
+These commands, run from the stage directory after Step 3, report the corrected bait counts and index checksum.
 
 ```bash
-grep -c '^>' kmers/cyclospora_cayetanensis_rrna_baits.fasta                     # 1388, after Step 2
-grep -c '^>' kmers/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta   # 1184, after Step 3
+grep -c '^>' kmers/cyclospora_cayetanensis_rrna_baits.fasta                     # 1670, after Step 2
+grep -c '^>' kmers/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta   # corrected count, after Step 3
 shasum -a 256 cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx
-# 4bd2ee592ab7dfff30b56bfebd8346f7b2b91e903d1f8a88639d8e19b0d8e248
+# Historical 1,184-bait index: 4bd2ee592ab7dfff30b56bfebd8346f7b2b91e903d1f8a88639d8e19b0d8e248
 ```
 
-The checksum is the decisive one: it matches only if the 1,184 baits are identical to ours. `git diff curated/` should also stay empty, since `curated/` is committed and overwritten in place, which checks the locus-finding step. Everything else a rerun writes is gitignored and can be compared against the committed copies in [`results/`](01-identify-cyclospora-specific-kmers/results/).
+The listed checksum identifies the historical 1,184-bait index and is not the expected checksum for the corrected branch. `git diff curated/` should still stay empty, since `curated/` is committed and overwritten in place, which checks the locus-finding step.
 
 ## Step 5. Screen reads with the bait set
 

@@ -6,6 +6,8 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
+.DS_Store
+
 # Downloaded reference data (pinned in config/sources.tsv, re-fetched by the build)
 01-identify-cyclospora-specific-kmers/silva/
 01-identify-cyclospora-specific-kmers/pos/
