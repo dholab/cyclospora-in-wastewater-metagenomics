@@ -5,6 +5,15 @@ cd "$(dirname "$0")/.."
 test_root="$(mktemp -d)"
 trap 'rm -rf "$test_root"' EXIT
 
+if bash scripts/build_core_nt_validated_index.sh >"$test_root/no_argument.log" 2>&1; then
+  printf 'Finalization without explicit current-bait BLAST evidence succeeded unexpectedly.\n' >&2
+  exit 1
+else
+  status=$?
+fi
+test "$status" -eq 2
+grep -q '^Usage:' "$test_root/no_argument.log"
+
 input_baits="$test_root/input.fasta"
 input_manifest="$test_root/input.tsv"
 blast_tsv="$test_root/blast.tsv"

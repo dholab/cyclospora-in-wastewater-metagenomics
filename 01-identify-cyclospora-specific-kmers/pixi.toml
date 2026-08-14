@@ -11,12 +11,12 @@ version = "0.1.0"
 # curated/, provenance/, and fresh copies of the reports under reports/.
 build = { cmd = "bash scripts/build_rrna_bait.sh", env = { PYTHONPATH = "src" } }
 
-# Re-derive the core-nt-validated bait set from the committed BLAST evidence in
-# results/, instead of repeating the 285 GB search. Requires `build` first.
-validate = { cmd = "bash scripts/build_core_nt_validated_index.sh results/core_nt_bait_exact_match_blast.tsv", env = { PYTHONPATH = "src" } }
+# Rebuild the current bait set, search it against the supplied core-nt database,
+# and apply the taxonomic exact-match decisions.
+validate = { cmd = "bash scripts/validate_core_nt.sh {{ core_nt_database }}", args = ["core_nt_database"], depends-on = ["build"], env = { PYTHONPATH = "src" } }
 
 # Unit and fixture tests for this stage. Self-contained: runs on a fresh clone
-# with no network and no prior build. 89 unit tests plus 3 fixture builds.
+# with no network and no prior build. 90 unit tests plus 3 fixture builds.
 test = { cmd = "pytest -q && bash tests/test_build_fixture.sh && bash tests/test_build_zero_fixture.sh && bash tests/test_core_nt_finalize.sh", env = { PYTHONPATH = "src" } }
 
 [dependencies]

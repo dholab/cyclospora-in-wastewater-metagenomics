@@ -191,7 +191,7 @@ def finalize_manifest(
     final_baits: Path,
 ) -> int:
     entropy_pass = {
-        normalize_dna(str(record.seq))
+        canonical_kmer(normalize_dna(str(record.seq)))
         for record in SeqIO.parse(Path(entropy_pass_fasta), "fasta")
     }
     with Path(raw_manifest).open(newline="") as handle:

@@ -2,7 +2,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-blast_tsv="${1:-results/core_nt_bait_exact_match_blast.tsv}"
+if (( $# != 1 )); then
+  printf 'Usage: %s <completed-current-bait-blast.tsv>\n' "$0" >&2
+  exit 2
+fi
+
+blast_tsv="$1"
 
 if [[ ! -f "$blast_tsv" ]]; then
   printf 'Completed exact-match BLAST TSV is absent: %s\n' "$blast_tsv" >&2

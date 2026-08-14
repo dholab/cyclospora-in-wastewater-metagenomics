@@ -172,7 +172,9 @@ def test_finalize_uses_entropy_dump_and_writes_stable_sorted_baits(tmp_path: Pat
     raw_rows = list(csv.DictReader(raw_manifest.open(), delimiter="\t"))
     assert raw_rows[0]["rejection_reason"] == "other_cyclospora;silva;rfam"
     entropy_pass = tmp_path / "entropy_pass.fasta"
-    entropy_pass.write_text(f">dumped_by_deacon\n{PASS_KMER}\n")
+    entropy_pass.write_text(
+        f">dumped_by_deacon\n{reverse_complement(PASS_KMER)}\n"
+    )
     final_manifest = tmp_path / "final.tsv"
     final_baits = tmp_path / "final.fasta"
 

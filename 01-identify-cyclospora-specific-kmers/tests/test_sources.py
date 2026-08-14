@@ -1,6 +1,7 @@
 import csv
 import gzip
 from pathlib import Path
+import tomllib
 
 from Bio import SeqIO
 import pytest
@@ -176,6 +177,19 @@ def test_production_build_uses_only_frozen_versioned_accessions() -> None:
         assert all(
             accession.rsplit(".", 1)[-1].isdigit() for accession in accessions
         )
+
+
+def test_validate_task_rebuilds_and_searches_the_current_bait_set() -> None:
+    project = Path(__file__).parents[1]
+    workspace = tomllib.loads((project / "pixi.toml").read_text())
+    task = workspace["tasks"]["validate"]
+    script = (project / "scripts/validate_core_nt.sh").read_text()
+
+    assert task["depends-on"] == ["build"]
+    assert task["args"] == ["core_nt_database"]
+    assert 'baits=kmers/cyclospora_cayetanensis_rrna_baits.fasta' in script
+    assert 'bash scripts/build_core_nt_validated_index.sh "$blast_tsv"' in script
+    assert "results/core_nt_bait_exact_match_blast.tsv" not in script
 
 def test_write_provenance_replaces_source_row_and_sorts_by_name(tmp_path: Path):
     provenance = tmp_path / "provenance.tsv"

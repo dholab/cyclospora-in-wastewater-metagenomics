@@ -33,12 +33,12 @@ awk -F '\t' '
     if ($class_column != "5.8S") exit 1
   }
   END {
-    if (passing != 27) exit 1
+    if (passing != 34) exit 1
   }
 ' "$manifest"
 
 bait_count="$(grep -c '^>' "$output_root/kmers/cyclospora_cayetanensis_rrna_baits.fasta")"
-test "$bait_count" -eq 27
+test "$bait_count" -eq 34
 
 index_info="$(< "$output_root/work/final_index_info.txt")"
 grep -q 'k.*31' <<< "$index_info"
