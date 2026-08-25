@@ -3,19 +3,18 @@
 
 Reads `results/calibration/read_blast_deacon.tsv`, which carries one row per
 candidate read with its diagnostic 31-mer count and the independent whole-read
-BLAST classification, and rewrites the two sweep tables the threshold choice
-rests on.
+BLAST classification, and rewrites the threshold table the choice rests on.
 
-  threshold_blast_read_counts.tsv   reads surviving each threshold, by class
-  absolute_threshold_curve.tsv      samples and pairs surviving each threshold
+  threshold_read_counts.tsv   reads surviving each threshold, by class, and
+                              runs with at least one surviving read
 
-Both are regenerated from scratch, so running this against a clean checkout
-reproduces the committed files exactly. No database, no cluster, no network.
+The table is regenerated from scratch, so running this against a clean checkout
+reproduces the committed file exactly. No database, no cluster, no network.
 
 A read counts toward a threshold when it carries at least that many diagnostic
-31-mers on its own. A pair counts when either of its mates does. That is the
-per-read rule used throughout this work, and it is deliberately stricter than
-Deacon's paired mode, which pools distinct hits across both mates.
+31-mers on its own. That is the per-read rule used throughout this work, and it
+is deliberately stricter than Deacon's paired mode, which pools distinct hits
+across both mates.
 """
 
 from __future__ import annotations
@@ -64,42 +63,32 @@ def main() -> int:
     hits = {r["read_id"]: int(r["deacon_hits"]) for r in rows}
     top = args.max_threshold or max(hits.values())
 
-    # A pair is keyed by the read id with its mate suffix removed.
-    pair_best: dict[str, int] = {}
-    pair_sample: dict[str, str] = {}
-    for r in rows:
-        pair = r["read_id"].rsplit("/", 1)[0]
-        pair_best[pair] = max(pair_best.get(pair, 0), int(r["deacon_hits"]))
-        pair_sample[pair] = r["sample"]
-
-    read_rows, curve_rows = [], []
+    read_rows = []
     for t in range(1, top + 1):
+        retained = [r for r in rows if int(r["deacon_hits"]) >= t]
         counts = collections.Counter(
-            r["blast_class"] for r in rows if int(r["deacon_hits"]) >= t)
-        read_rows.append((t, *(counts.get(c, 0) for c in CLASSES)))
+            r["blast_class"] for r in retained)
+        retained_runs = len({r["sample"] for r in retained})
+        read_rows.append((t, *(counts.get(c, 0) for c in CLASSES), retained_runs))
 
-        kept = [p for p, best in pair_best.items() if best >= t]
-        curve_rows.append((t, len({pair_sample[p] for p in kept}), len(kept)))
-
-    write_tsv(args.outdir / "threshold_blast_read_counts.tsv",
+    write_tsv(args.outdir / "threshold_read_counts.tsv",
               ("threshold", "target_reads", "non_target_reads",
-               "top_tie_reads", "no_hit_reads"), read_rows)
-    write_tsv(args.outdir / "absolute_threshold_curve.tsv",
-              ("abs_threshold", "retained_samples", "retained_pairs"), curve_rows)
+               "top_tie_reads", "no_hit_reads", "runs_with_retained_reads"),
+              read_rows)
 
     # The chosen threshold is the lowest at which neither a confidently
     # non-target read nor an ambiguous one survives.
-    chosen = next((t for t, _, nt, tie, _ in read_rows if nt == 0 and tie == 0), None)
+    chosen = next((t for t, _, nt, tie, _, _ in read_rows
+                   if nt == 0 and tie == 0), None)
     worst_nt = max((int(r["deacon_hits"]) for r in rows
                     if r["blast_class"] == "non_target"), default=0)
-    print(f"reads: {len(rows)}  pairs: {len(pair_best)}  "
-          f"samples: {len(set(pair_sample.values()))}")
+    print(f"reads: {len(rows)}  runs: {len({r['sample'] for r in rows})}")
     print(f"highest diagnostic k-mer count on a non-target read: {worst_nt}")
     print(f"lowest threshold with no non-target and no tie reads: {chosen}")
     if chosen:
         row = read_rows[chosen - 1]
         print(f"at that threshold, target reads retained: {row[1]}")
-    print(f"wrote 2 tables to {args.outdir}")
+    print(f"wrote {args.outdir / 'threshold_read_counts.tsv'}")
     return 0
 
 

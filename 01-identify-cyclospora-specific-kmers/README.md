@@ -1,6 +1,6 @@
 # Stage 01. Identify *Cyclospora cayetanensis*-specific rRNA k-mers
 
-This stage produced the historical bait set used to screen wastewater libraries in [stage 02](../02-screen-wastewater-metagenomes/): 1,184 canonical 31-mers that occur in *C. cayetanensis* mature ribosomal RNA, occur in no other ribosomal RNA in SILVA or Rfam, occur in no non-*cayetanensis Cyclospora* reference, and have no exact full-length match anywhere in NCBI `core_nt` assigned to another taxon. The corrected pre-screening set contains 1,670 baits; 282 restored baits still require taxonomic exact-match screening.
+This stage produced the bait set used to screen wastewater libraries in [stage 02](../02-screen-wastewater-metagenomes/): 1,464 canonical 31-mers that occur in *C. cayetanensis* mature ribosomal RNA, occur in no other ribosomal RNA in SILVA or Rfam, occur in no non-*cayetanensis Cyclospora* reference, and have no exact full-length match anywhere in NCBI `core_nt` assigned to another taxon. They were retained from 1,670 candidates submitted to exact taxonomic screening.
 
 The narrative version, with the reasoning behind each threshold, is in the [main README](../REPRODUCING.md). This file is the map of what is here.
 
@@ -33,18 +33,18 @@ pixi run validate /path/to/core_nt  # rebuild, search, and screen the current ba
 
 ## What is in `results/`
 
-These are the historical manuscript outputs from the original 1,388-bait branch.
+These are the manuscript outputs for the current analysis.
 
 | File | Rows | What it records |
 |---|---:|---|
 | [`cyclospora_cayetanensis_rrna_kmer_manifest.tsv`](results/cyclospora_cayetanensis_rrna_kmer_manifest.tsv) | 5,561 | Every candidate 31-mer: source locus and offset, copy count, which backgrounds it matched, why it was kept or dropped, and its core-nt decision. The one file to read if you want to know what happened to a particular k-mer. |
 | [`cyclospora_cayetanensis_rrna_index_summary.tsv`](results/cyclospora_cayetanensis_rrna_index_summary.tsv) | 92 keys | Attrition at every stage, overall and per rRNA class. The per-class survival rates quoted in the main README come from here. Note that `attrition.silva_shared_count`, `attrition.rfam_shared_count`, and `specificity.other_cyclospora_shared_count` are absolute memberships, not sequential removals: they overlap, so subtracting them in series double-counts. Table 1 of the main README reports the incremental removals, counted from the manifest. |
 | [`cyclospora_cayetanensis_rrna_index_report.md`](results/cyclospora_cayetanensis_rrna_index_report.md) | — | The same verification in prose, with a SHA-256 for each intermediate artifact. |
-| [`core_nt_bait_exact_match_blast.tsv`](results/core_nt_bait_exact_match_blast.tsv) | 5,012 | Raw exact-match hits from the historical `core_nt` search, with subject accession, taxid, and title. These hits do not apply to the corrected 1,670-bait build. |
-| [`cyclospora_cayetanensis_core_nt_validation.tsv`](results/cyclospora_cayetanensis_core_nt_validation.tsv) | 1,388 | Per-bait verdict: 1,184 `PASS_CORE_NT`, 204 `REJECT_CORE_NT_EXACT_NON_TARGET`, with target and non-target hit counts. |
+| [`core_nt_bait_exact_match_blast.tsv`](results/core_nt_bait_exact_match_blast.tsv) | 5,874 | Raw exact-match hits from the `core_nt` search, with subject accession, taxid, and title. |
+| [`cyclospora_cayetanensis_core_nt_validation.tsv`](results/cyclospora_cayetanensis_core_nt_validation.tsv) | 1,670 | Per-bait verdict: 1,464 `PASS_CORE_NT`, 206 `REJECT_CORE_NT_EXACT_NON_TARGET`, with target and non-target hit counts. |
 | [`cyclospora_cayetanensis_core_nt_near_hits.tsv`](results/cyclospora_cayetanensis_core_nt_near_hits.tsv) | 0 | BLAST rows matching a bait over 30 of its 31 bases. Empty by construction: the search required exact, full-length matches, so no partial match could be reported. It would populate only if the search were repeated at a permissive identity setting. |
-| [`input_manifest.tsv`](results/input_manifest.tsv) | 10 | What was actually downloaded, when, and with what checksum. |
+| [`input_manifest.tsv`](results/input_manifest.tsv) | 8 | What was actually downloaded, when, and with what checksum. |
 
 ## Regenerated versus committed
 
-`pixi run build` writes its working files to `kmers/`, `reports/`, `provenance/`, `work/`, `logs/`, and the downloads to `silva/`, `pos/`, and `background/`. All of those are gitignored, so a rerun never masquerades as a change to the record. It does overwrite `curated/`, which is committed on purpose: if your rebuild is faithful, `git diff curated/` stays empty. The corrected attrition reports differ from the committed historical reports at the low-complexity step.
+`pixi run build` writes its working files to `kmers/`, `reports/`, `provenance/`, `work/`, `logs/`, and the downloads to `silva/`, `pos/`, and `background/`. All of those are ignored, so a rerun never masquerades as a change to the record. It does overwrite `curated/`, which is committed on purpose: if your rebuild is faithful, `jj diff curated/` stays empty. The committed manifest, summary, and report record the current result.

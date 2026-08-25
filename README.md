@@ -54,9 +54,9 @@ The 5,561 candidates were then passed through three successive filters, (1) remo
 
 Next we removed 31-mers shared between *C. cayetanensis* and the other species of its own genus. The rRNA of those relatives are largely missing from SILVA because the SSU Ref only considers sequences 1,200 bases or longer, and NR99 then dereplicates what remains at 99% identity, which is finer than the differences between congeneric *Cyclospora*. There are [94 additional *Cyclospora* rRNA sequences we retrieved](01-identify-cyclospora-specific-kmers/config/other_cyclospora_accessions.txt) from NCBI Genbank, mostly partial amplicons deposited from genotyping and barcoding studies. We counted their 31-mers with [`meryl count k=31`](01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L412-L413), added that set to the SILVA and Rfam background with [`meryl union`](01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L422-L426), and subtracted the combined background from the target with [`meryl difference`](01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L427-L430) a second time. That removed 169 k-mers and left 1,670.
 
-Finally, we applied [Deacon](https://github.com/bede/deacon), using [`deacon index build -k 31 -w 1 -e 0.6`](01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L477-L481), which drops any k-mer whose sequence entropy falls below 0.6. Deacon retained all 1,670 k-mers. The original finalizer compared Deacon's output by strand-sensitive string identity and incorrectly labeled 282 reverse-complement records as low-complexity rejections, producing the historical 1,388-bait subset.
+Finally, we applied [Deacon](https://github.com/bede/deacon), using [`deacon index build -k 31 -w 1 -e 0.6`](01-identify-cyclospora-specific-kmers/scripts/build_rrna_bait.sh#L477-L481), which drops any k-mer whose sequence entropy falls below 0.6. Deacon retained all 1,670 k-mers.
 
-**Table 1. Filtering removes non-specific 31-mers.** Each row counts only the k-mers that the rows above it had not already removed, so no k-mer is counted twice. The committed [historical manifest](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_kmer_manifest.tsv) records the original strand-sensitive result.
+**Table 1. Filtering removes non-specific 31-mers.** Each row counts only the k-mers that the rows above it had not already removed, so no k-mer is counted twice. The complete decisions are recorded in the [k-mer manifest](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_kmer_manifest.tsv).
 
 | Step | Removed | Remaining |
 |---|---:|---:|
@@ -68,36 +68,36 @@ Finally, we applied [Deacon](https://github.com/bede/deacon), using [`deacon ind
 
 The surviving baits are distributed unevenly across the four genes. 28S rRNA, the longest of the four loci, supplied 1,550 of the 1,670 31-mers. 45% of the 28S candidates survived, compared with 5% of the 18S candidates. This may mean that 28S is the better target for a diagnostic assay, but it may also reflect uneven coverage of the background: SILVA's large-subunit reference set is roughly a third the size of its small-subunit set, 70.6 MB against 201.1 MB compressed ([`config/sources.tsv`](01-identify-cyclospora-specific-kmers/config/sources.tsv)), so a 28S candidate had fewer opportunities to be removed.
 
-### Historical exact screening removed 204 of the 1,388 baits that reached core-nt
+### Exact taxonomic screening retained 1,464 baits
 
-An apparently *C. cayetanensis*-specific 31-mer absent from both SILVA and Rfam could still occur in an unannotated region of a genome, in a metagenomic assembly, or in an organism whose rRNA has never been cataloged in SILVA/Rfam (e.g., rRNA sequences shorter than 1,200 bases). In the original run, we screened the 1,388 baits produced by the strand-sensitive finalizer against the complete NCBI nucleotide collection core-nt with [`blastn -word_size 31 -ungapped -perc_identity 100 -qcov_hsp_perc 100 -dust no`](REPRODUCING.md#repeating-the-core-nt-search), which reports only exact, full-length matches to a 31-mer.
+An apparently *C. cayetanensis*-specific 31-mer absent from both SILVA and Rfam could still occur in an unannotated region of a genome, in a metagenomic assembly, or in an organism whose rRNA has never been cataloged in SILVA/Rfam (e.g., rRNA sequences shorter than 1,200 bases). We therefore screened all 1,670 baits against the complete NCBI nucleotide collection `core_nt` with [`blastn -word_size 31 -ungapped -perc_identity 100 -qcov_hsp_perc 100 -dust no`](REPRODUCING.md#repeating-the-core-nt-search), which reports only exact, full-length matches to a 31-mer.
 
-A bait was rejected if any exact 31-of-31 match belonged to a taxon other than *C. cayetanensis* ([taxid 88456](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88456)), or matched a sequence carrying no taxon assignment at all ([`src/rrna_bait/core_nt.py`](01-identify-cyclospora-specific-kmers/src/rrna_bait/core_nt.py)). After 204 31-mers were removed by this screen [`results/cyclospora_cayetanensis_core_nt_validation.tsv`](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_core_nt_validation.tsv), 1,184 putative *C. cayetanensis*-specific 31-mers remained. In this set of 31-mers, 49 are derived from 18S, 1,112 from 28S, 23 from 5S, and none from 5.8S ([cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta](01-identify-cyclospora-specific-kmers/baits/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta)). The restored 282 baits have not yet been screened against core-nt, so the corrected final count is not yet known; the published 1,184 remain a conservative screened subset.
+A bait was rejected if any exact 31-of-31 match belonged to a taxon other than *C. cayetanensis* ([taxid 88456](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88456)), or matched a sequence carrying no taxon assignment at all ([`src/rrna_bait/core_nt.py`](01-identify-cyclospora-specific-kmers/src/rrna_bait/core_nt.py)). The screen rejected 206 baits and retained 1,464, as recorded in [`results/cyclospora_cayetanensis_core_nt_validation.tsv`](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_core_nt_validation.tsv). The retained set contains 61 baits from 18S, 1,372 from 28S, 31 from 5S, and none from 5.8S ([cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta](01-identify-cyclospora-specific-kmers/baits/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta)).
 
-We then built a Deacon filtering index from these 1,184 31-mers using [`deacon index build -k 31 -w 1 -e 0`](01-identify-cyclospora-specific-kmers/scripts/finalize_core_nt_validation.sh#L96-L99). Setting `w=1` makes every 31-mer its own minimizer, so nothing is subsampled and all diagnostic 31-mers are in the index.
+We then built a Deacon filtering index from these 1,464 31-mers using [`deacon index build -k 31 -w 1 -e 0`](01-identify-cyclospora-specific-kmers/scripts/finalize_core_nt_validation.sh#L96-L99). Setting `w=1` makes every 31-mer its own minimizer, so nothing is subsampled and all diagnostic 31-mers are in the index.
 
-### Setting a calibration threshold of twenty diagnostic 31-mers before a read counts as *Cyclospora*
+### Setting a calibration threshold of 24 diagnostic 31-mers before a read counts as *Cyclospora*
 
-To determine how many 31-mers a read must carry before it can be confidently classified as *Cyclospora*, we screened 205 wastewater metagenomic SRA datasets collected in the summer of 2025. Deacon retained every read pair in which at least one of the 1,184 *C. cayetanensis*-specific 31-mers appears (`deacon filter -a 1 -r 0`), and each retained read was then aligned along its full length against the same core-nt database used to validate the 31-mer baits. Deacon's paired mode pools k-mer hits across Illumina R1 and R2 mates and emits both, and amplified fragments recur many times over, so we collapsed duplicate fragments and then dropped mates carrying no diagnostic 31-mer of their own ([`scripts/prepare_read_blast_query.py`](02-screen-wastewater-metagenomes/scripts/prepare_read_blast_query.py#L150-L165)). That reduced 131,580 retained sequences originally reported by Deacon to the 16,425 reads used for calibration. A read is on-target when its single best bit score anywhere in core-nt is to *C. cayetanensis*, off-target when its best alignment is to anything else, and a tie when the top score is shared between the two.
+To determine how many 31-mers a read must carry before it can be confidently classified as *Cyclospora*, we used 293 public wastewater metagenomic SRA runs from BioProject [PRJNA1247874](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874), collected from 27 sewersheds between June 1 and August 31, 2025. We screened the read sets with the 1,464-bait index at `deacon filter -a 1 -r 0`. Of the 293 runs, 232 returned at least one bait-bearing read, yielding 108,474 reads carrying at least one bait. Each distinct read sequence was aligned along its full length against the same `core_nt` database used to validate the baits. A read is on-target when its single best bit score anywhere in `core_nt` is to *C. cayetanensis*, off-target when its best alignment is to anything else, and a tie when the top score is shared between the two.
 
-The presence of a single 31-mer is not sufficiently specific. A read can carry a genuinely unique diagnostic 31-mer that has no exact full-length match outside *C. cayetanensis* and still align best to another organism across the rest of its length. Of the 16,425 reads carrying at least one *C. cayetanensis*-specific 31-mer, 98.1% are not *Cyclospora*. These include uncultured fungi, the bdelloid rotifer *Adineta vaga*, uncultured eukaryotes, and other apicomplexa such as *Eimeria acervulina*, *Voromonas pontica*, and *Babesia microti*.
+The presence of a single 31-mer is not sufficiently specific. A read can carry a genuinely unique diagnostic 31-mer that has no exact full-length match outside *C. cayetanensis* and still align best to another organism across the rest of its length. At a threshold of one bait, the calibration contained 1,284 target reads, 107,040 non-target reads, 123 ties, and 27 reads with no `core_nt` hit.
 
-Off-target reads thin quickly as the threshold for the number of 31-mer matches in a read rises (Table 2). Only two off-target reads carry as many as 10 diagnostic 31-mers, and none carry 13 or more. Genuine *Cyclospora* reads carry a median of 34 diagnostic 31-mers and as many as 105. Requiring 13 would therefore have been a reasonable choice, but we screen at 20 to reduce the chance of false positives in datasets that were not part of this calibration. Specificity matters most here, because a false detection could prompt an unnecessary public health response. The more conservative threshold still retains 187 of the 282 on-target reads, a sensitivity above 66%.
+Non-target or tied reads remained through a bait count of 23 (Table 2). At a minimum count of 24, 853 target-classified reads and no non-target, tied, or no-hit reads remained. We therefore used an absolute Deacon threshold of 24.
 
-**Table 2. Specificity for Cyclospora improves as the threshold for diagnostic 31-mers per-read rises.** Each row counts the calibration reads carrying at least that many diagnostic 31-mers, classified by their single best core-nt alignment along the full read. Selected thresholds from [`threshold_blast_read_counts.tsv`](02-screen-wastewater-metagenomes/results/calibration/threshold_blast_read_counts.tsv), which lists every value from 1 to 105.
+**Table 2. Specificity for Cyclospora improves as the threshold for diagnostic 31-mers per-read rises.** Each row counts the calibration reads carrying at least that many diagnostic 31-mers, classified by their single best core-nt alignment along the full read. Selected thresholds from [`threshold_read_counts.tsv`](02-screen-wastewater-metagenomes/results/calibration/threshold_read_counts.tsv), which lists every value from 1 to 121.
 
 | Deacon threshold (`-a`) | Target reads | Non-target | Tie | No hit | Target % of retained |
 |---:|---:|---:|---:|---:|---:|
-| 1 | 282 | 16,111 | 24 | 8 | 1.7% |
-| 2 | 275 | 2,683 | 24 | 0 | 9.2% |
-| 3 | 263 | 491 | 14 | 0 | 34.2% |
-| 4 | 259 | 11 | 2 | 0 | 95.2% |
-| 5 | 257 | 9 | 2 | 0 | 95.9% |
-| 10 | 227 | 2 | 0 | 0 | 99.1% |
-| 12 | 221 | 2 | 0 | 0 | 99.1% |
-| **13** | 220 | 0 | 0 | 0 | **100%** |
-| **20** | 187 | 0 | 0 | 0 | **100%** |
-| 30 | 160 | 0 | 0 | 0 | 100% |
+| 1 | 1,284 | 107,040 | 123 | 27 | 1.2% |
+| 2 | 1,258 | 10,655 | 121 | 0 | 10.5% |
+| 3 | 1,196 | 2,284 | 118 | 0 | 33.2% |
+| 4 | 1,190 | 2,087 | 109 | 0 | 35.1% |
+| 5 | 1,121 | 246 | 38 | 0 | 79.8% |
+| 10 | 1,071 | 18 | 33 | 0 | 95.5% |
+| 20 | 941 | 0 | 32 | 0 | 96.7% |
+| 23 | 855 | 0 | 16 | 0 | 98.2% |
+| **24** | **853** | **0** | **0** | **0** | **100%** |
+| 25 | 809 | 0 | 0 | 0 | 100% |
 
 ### *Cyclospora* recurs seasonally across the public wastewater record
 
@@ -134,7 +134,7 @@ All sequencing analyzed here is public in NCBI SRA under BioProject [PRJNA124787
 | Diagnostic reads, one FASTA per positive run | [`02-screen-wastewater-metagenomes/results/reads/`](02-screen-wastewater-metagenomes/results/reads/) ([index](02-screen-wastewater-metagenomes/results/reads/README.md)) |
 | The sewershed codes, with coordinates and role | [`casper_sites.tsv`](02-screen-wastewater-metagenomes/results/casper_sites.tsv) |
 | The matrix plotted in Figure 1 | [`site_fortnight_matrix_per_billion.tsv`](02-screen-wastewater-metagenomes/results/site_fortnight_matrix_per_billion.tsv) |
-| Threshold calibration evidence, from the 205-run SRA `-a 1` screen | [`02-screen-wastewater-metagenomes/results/calibration/`](02-screen-wastewater-metagenomes/results/calibration/) |
+| Threshold calibration evidence for 108,474 reads carrying at least one bait | [`02-screen-wastewater-metagenomes/results/calibration/`](02-screen-wastewater-metagenomes/results/calibration/) |
 | The bait sets | [`01-identify-cyclospora-specific-kmers/baits/`](01-identify-cyclospora-specific-kmers/baits/) |
 | Bait design and core-nt validation evidence | [`01-identify-cyclospora-specific-kmers/results/`](01-identify-cyclospora-specific-kmers/results/) |
 

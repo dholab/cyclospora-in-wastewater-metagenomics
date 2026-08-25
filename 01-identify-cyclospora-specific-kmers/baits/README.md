@@ -1,14 +1,14 @@
 # *Cyclospora cayetanensis* ribosomal RNA bait k-mers
 
-Two historical FASTA files, each record a single canonical 31-mer drawn from *C. cayetanensis* mature ribosomal
+Two FASTA files, each record a single canonical 31-mer drawn from *C. cayetanensis* mature ribosomal
 RNA. **Use the core-nt-validated set to reproduce the downstream results in this repository.**
 
 | File | Records | Stage | Use it when |
 |---|---:|---|---|
-| [cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta](cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta) | 1,184 | Historical subset after exact core-nt screening | You want to reproduce a downstream result reported in this repository. |
-| [cyclospora_cayetanensis_rrna_specific_baits.fasta](cyclospora_cayetanensis_rrna_specific_baits.fasta) | 1,388 | Historical pre-screening subset | You are comparing with the original run. The corrected pre-screening set contains 1,670 baits. |
+| [cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta](cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta) | 1,464 | After exact `core_nt` screening | You want to reproduce the downstream analysis. |
+| [cyclospora_cayetanensis_rrna_specific_baits.fasta](cyclospora_cayetanensis_rrna_specific_baits.fasta) | 1,670 | Before exact `core_nt` screening | You want to inspect or repeat taxonomic screening. |
 
-Composition of the validated set is 49 × 18S, 1,112 × 28S, and 23 × 5S. There are no 5.8S baits,
+Composition of the validated set is 61 × 18S, 1,372 × 28S, and 31 × 5S. There are no 5.8S baits,
 because all 126 5.8S candidates occur in Rfam RF00002 and were subtracted.
 
 ## Record format
@@ -18,7 +18,7 @@ because all 126 5.8S candidates occur in Rfam RF00002 and were subtracted.
 AAAAACACGAACCTCTCCCTACTCTCACTCT
 ```
 
-The identifier is a sequential number within this historical file followed by the rRNA class the k-mer came from. It is not stable when the upstream bait set changes. Sequences
+The identifier is a sequential number within the pre-screening file followed by the rRNA class the k-mer came from. It is not stable when the upstream bait set changes. Sequences
 are canonical, meaning each is the lexicographically smaller of the 31-mer and its reverse
 complement, so a bait matches a read on either strand. Because they are canonical rather than
 genomic, the records are **not** in coordinate order along the rRNA and adjacent records do not
@@ -28,7 +28,7 @@ which carries the source locus, start coordinates, and copy count for every cand
 
 ## What these are and are not
 
-**What they are.** Each 31-mer in the 1,184-bait screened set occurs in *C. cayetanensis* mature rRNA, occurs in no other rRNA
+**What they are.** Each 31-mer in the 1,464-bait screened set occurs in *C. cayetanensis* mature rRNA, occurs in no other rRNA
 sequence in SILVA 138.2 or Rfam 15.1, occurs in no non-*cayetanensis Cyclospora* reference we could
 obtain, and has no exact full-length match anywhere in NCBI core-nt assigned to a taxon other than
 *C. cayetanensis* (taxid 88456).
@@ -46,8 +46,8 @@ deacon index build -k 31 -w 1 -e 0 \
   cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta \
   -o cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx
 
-# Retain reads carrying at least 20 distinct diagnostic 31-mers.
-deacon filter -m -a 20 -r 0 \
+# Retain reads carrying at least 24 distinct diagnostic 31-mers.
+deacon filter -m -a 24 -r 0 \
   cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx \
   reads_R1.fastq.gz reads_R2.fastq.gz
 ```
@@ -55,10 +55,10 @@ deacon filter -m -a 20 -r 0 \
 `w=1` makes every 31-mer its own minimizer, so nothing is subsampled and the `-a` threshold reads
 directly as "number of distinct diagnostic 31-mers found in this read". At any larger `w` the
 threshold stops meaning that. The index rebuilds byte-identically from the FASTA and has SHA-256
-`4bd2ee592ab7dfff30b56bfebd8346f7b2b91e903d1f8a88639d8e19b0d8e248`.
+`0a695f65d973a067c690699e3025da50519ab0de9be73b8f43606a763fdf520d`.
 
-> **Deacon pools k-mer hits across mates in paired mode.** Two mates carrying 13 and 10 *disjoint*
-> hits are retained at `-a 20`, because the union is 23. If you need a per-read guarantee, recount
+> **Deacon pools k-mer hits across mates in paired mode.** Two mates carrying 13 and 12 *disjoint*
+> hits are retained at `-a 24`, because the union is 25. If you need a per-read guarantee, recount
 > each retained read against the bait FASTA independently rather than trusting the pair-level
 > decision. This repository does exactly that, and it is the reason the reported counts are lower
 > than Deacon's own retained-read counts.

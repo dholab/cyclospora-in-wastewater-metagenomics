@@ -32,7 +32,7 @@ Requirements are approximately 330 MB of network downloads and a few GB of worki
 git clone <this repository>
 cd cyclospora-in-wastewater-metagenomics/01-identify-cyclospora-specific-kmers
 pixi install
-pixi run test    # 89 unit tests and 3 fixture builds; no network, no prior build
+pixi run test    # 90 unit tests and 3 fixture builds; no network, no prior build
 ```
 
 ## Step 1. Input data
@@ -65,25 +65,25 @@ The parameters at each stage are as follows.
 4. **Drop low-complexity k-mers.** `deacon index build -k 31 -w 1 -e 0.6`, an entropy threshold of 0.6.
 5. **Build and check the index.** `deacon index build -k 31 -w 1 -e 0`, followed by two round trips that must both hold: every bait is recovered when the bait FASTA is filtered against its own index, and zero records are retained when each background FASTA is filtered against it. The full invariant list is in [`src/rrna_bait/verify.py`](01-identify-cyclospora-specific-kmers/src/rrna_bait/verify.py).
 
-Expected output is 1,670 baits in `kmers/cyclospora_cayetanensis_rrna_baits.fasta`. The committed [`results/cyclospora_cayetanensis_rrna_index_summary.tsv`](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_index_summary.tsv) records the historical 1,388-bait output from the original strand-sensitive finalizer.
+Expected output is 1,670 baits in `kmers/cyclospora_cayetanensis_rrna_baits.fasta`. The committed [`results/cyclospora_cayetanensis_rrna_index_summary.tsv`](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_rrna_index_summary.tsv) records the same current result.
 
 ## Step 3. Validate against the complete nucleotide collection
 
-In the historical run, this step reduced the 1,388 baits that reached `core_nt` to the 1,184 published baits. Each bait is searched for exact, full-length 31-of-31 matches, and a bait is discarded if any such match is assigned to a taxon other than 88456 (*C. cayetanensis*); a match carrying no taxid counts as non-target. The corrected 1,670-bait set requires a new search.
+This step reduced the 1,670 baits that reached `core_nt` to 1,464 validated baits. Each bait is searched for exact, full-length 31-of-31 matches, and a bait is discarded if any such match is assigned to a taxon other than 88456 (*C. cayetanensis*); a match carrying no taxid counts as non-target.
 
-The committed search results apply only to the historical 1,388-bait set. `validate` rebuilds the current bait set before searching it, so it requires the operator-provisioned `core_nt` database.
+`validate` rebuilds the current bait set before searching it, so it requires the operator-provisioned `core_nt` database.
 
 ```bash
 pixi run validate /path/to/core_nt
 ```
 
-The historical evidence is [`results/core_nt_bait_exact_match_blast.tsv`](01-identify-cyclospora-specific-kmers/results/core_nt_bait_exact_match_blast.tsv), which holds one row per bait–subject match: 5,012 rows, because a bait present in many database records produces a row for each. Those rows cover the 1,280 historical baits with at least one exact match anywhere in `core_nt`; the other 108 match nothing and are retained.
+The evidence is [`results/core_nt_bait_exact_match_blast.tsv`](01-identify-cyclospora-specific-kmers/results/core_nt_bait_exact_match_blast.tsv), which holds one row per bait–subject match: 5,874 rows, because a bait present in many database records produces a row for each. Those rows cover 1,540 baits with at least one exact match anywhere in `core_nt`; the other 130 match nothing and are retained.
 
 The rule is implemented in [`src/rrna_bait/core_nt.py`](01-identify-cyclospora-specific-kmers/src/rrna_bait/core_nt.py), and the per-bait verdicts, with target and non-target hit counts, are written to [`results/cyclospora_cayetanensis_core_nt_validation.tsv`](01-identify-cyclospora-specific-kmers/results/cyclospora_cayetanensis_core_nt_validation.tsv). [`scripts/finalize_core_nt_validation.sh`](01-identify-cyclospora-specific-kmers/scripts/finalize_core_nt_validation.sh) re-runs the index and background round trips from Step 2 before publishing any output.
 
 ### Repeating the core-nt search
 
-This requires the `core_nt` BLAST database, approximately 285 GB across 89 volumes, retrieved with `update_blastdb.pl --decompress core_nt` from the BLAST+ installation Pixi provides. The corrected search is a single command over all 1,670 baits.
+This requires the `core_nt` BLAST database, approximately 285 GB across 89 volumes, retrieved with `update_blastdb.pl --decompress core_nt` from the BLAST+ installation Pixi provides. The search is a single command over all 1,670 baits.
 
 ```bash
 blastn -task blastn -word_size 31 -ungapped \
@@ -100,16 +100,16 @@ We ran this query as one job per database volume on an HTCondor pool, staging ea
 
 ## Step 4. Check the result
 
-These commands, run from the stage directory after Step 3, report the corrected bait counts and index checksum.
+These commands, run from the stage directory after Step 3, report the bait counts and index checksum.
 
 ```bash
 grep -c '^>' kmers/cyclospora_cayetanensis_rrna_baits.fasta                     # 1670, after Step 2
-grep -c '^>' kmers/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta   # corrected count, after Step 3
+grep -c '^>' kmers/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta   # 1464, after Step 3
 shasum -a 256 cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx
-# Historical 1,184-bait index: 4bd2ee592ab7dfff30b56bfebd8346f7b2b91e903d1f8a88639d8e19b0d8e248
+# 1,464-bait index: 0a695f65d973a067c690699e3025da50519ab0de9be73b8f43606a763fdf520d
 ```
 
-The listed checksum identifies the historical 1,184-bait index and is not the expected checksum for the corrected branch. `git diff curated/` should still stay empty, since `curated/` is committed and overwritten in place, which checks the locus-finding step.
+`jj diff -- curated/` should stay empty, since `curated/` is committed and overwritten in place, which checks the locus-finding step.
 
 ## Step 5. Screen reads with the bait set
 
@@ -120,17 +120,17 @@ deacon index build -k 31 -w 1 -e 0 \
   baits/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta \
   -o cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx
 
-deacon filter -m -a 20 -r 0 \
+deacon filter -m -a 24 -r 0 \
   cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx \
   reads_R1.fastq.gz reads_R2.fastq.gz
 ```
 
-`w=1` is required: it makes every 31-mer its own minimizer, so `-a` corresponds directly to the number of distinct diagnostic 31-mers found. In paired mode Deacon pools hits across mates, so a pair passes `-a 20` on 13 and 10 disjoint hits between the two reads. Each retained read is therefore recounted against the bait FASTA individually, which is why our reported counts are lower than Deacon's retained-read counts.
+`w=1` is required: it makes every 31-mer its own minimizer, so `-a` corresponds directly to the number of distinct diagnostic 31-mers found. In paired mode Deacon pools hits across mates, so a pair passes `-a 24` on 13 and 12 disjoint hits between the two reads. Each retained read is therefore recounted against the bait FASTA individually.
 
 ## Step 6. Reproduce the wastewater screen
 
 Stage 02 applies the bait set to the libraries and calibrates the detection threshold. Its README, [`02-screen-wastewater-metagenomes/README.md`](02-screen-wastewater-metagenomes/README.md), is the entry point.
 
-Two parts reproduce without the sequencing data. Every read counted in the analysis is committed under [`02-screen-wastewater-metagenomes/results/reads/`](02-screen-wastewater-metagenomes/results/reads/), and `python scripts/verify_published_reads.py` recounts all 1,156 of them against the bait set to confirm none falls below the threshold of 20. The heatmap in Figure 1, the Vega-Lite specification behind its interactive version, and the site-by-fortnight matrix regenerate with `python scripts/plot_heatmap.py` from [`sra_sample_summary.tsv`](02-screen-wastewater-metagenomes/results/sra_sample_summary.tsv). The threshold sweep behind Table 2 regenerates with `pixi run sweep` (or `python scripts/sweep_threshold.py`), which requires only Python 3, with no database or network access; it reads the per-read classifications in [`results/calibration/`](02-screen-wastewater-metagenomes/results/calibration/), derived from the public SRA `-a 1` screen — 205 runs, 394.5 billion reads — with every candidate read classified against `core_nt` along its full length.
+Two parts reproduce without the sequencing data. Every read counted in the analysis is committed under [`02-screen-wastewater-metagenomes/results/reads/`](02-screen-wastewater-metagenomes/results/reads/), and `python scripts/verify_published_reads.py` recounts all 1,156 of them against the bait set to confirm none falls below the threshold of 20. The heatmap in Figure 1, the Vega-Lite specification behind its interactive version, and the site-by-fortnight matrix regenerate with `python scripts/plot_heatmap.py` from [`sra_sample_summary.tsv`](02-screen-wastewater-metagenomes/results/sra_sample_summary.tsv). The threshold sweep behind Table 2 regenerates with `pixi run sweep` (or `python scripts/sweep_threshold.py`), which requires only Python 3, with no database or network access; it reads the 108,474 per-read classifications in [`results/calibration/`](02-screen-wastewater-metagenomes/results/calibration/).
 
 Screening the libraries themselves requires the reads. Each pair is filtered with `deacon filter -m -a 20 -r 0` against the 1,184-bait index, and every retained read is then recounted against the bait FASTA individually, because Deacon pools k-mer hits across mates while the reported counts are per-read. More than 2,200 publicly available wastewater metagenomics datasets are available as of August 2026 in [BioProject PRJNA1247874](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874).

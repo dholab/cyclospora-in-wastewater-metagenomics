@@ -14,7 +14,7 @@ under in SRA — so nothing here depends on an internal sample name.
 scripts/
   plot_heatmap.py               builds Figure 1 and the matrix behind it
   verify_published_reads.py     recounts every published read against the baits
-  sweep_threshold.py            re-derives the two threshold sweep tables
+  sweep_threshold.py            re-derives the threshold table
   recount_diagnostic_reads.py   recounts each retained read against the bait FASTA
   prepare_read_blast_query.py   dedups candidate reads to the unique BLAST query
   classify_reads.py             assigns each read target/non-target from core-nt
@@ -26,7 +26,7 @@ results/
   figures/cyclospora_heatmap.svg       static figure, embedded in the main README
   figures/cyclospora_heatmap.vl.json   Vega-Lite spec behind the interactive figure
   figures/cyclospora_heatmap.html      vega-embed wrapper around that spec
-  calibration/                         threshold evidence — the -a 1 SRA screen and its core-nt classification
+  calibration/                         threshold evidence — the -a 1 calibration and its core-nt classification
 pixi.toml, pixi.lock            Deacon and BLAST+, only needed to screen your own reads
 ```
 
@@ -35,10 +35,9 @@ library only and run on a bare checkout with no environment, no network, and no 
 
 ## The short version
 
-A read counts as *Cyclospora* when it carries **at least 20 diagnostic 31-mers of its own**. In
-Deacon that is `-a 20 -r 0`. Requiring fewer admits reads that belong to other organisms: calibrated
-against the SRA runs alone, the highest count on any read that is not *Cyclospora* is 12, so 13 is
-the lowest fully specific threshold and 20 is a conservative 1.5× margin above it. See
+A read counts as *Cyclospora* when it carries **at least 24 diagnostic 31-mers of its own**. In
+Deacon that is `-a 24 -r 0`. Non-target or tied reads remained through a bait count of 23; 24 is
+the lowest threshold at which only target-classified reads remain. See
 [the threshold section](#the-threshold-evidence) below.
 
 ## Screening results
@@ -94,61 +93,49 @@ to order the figure, not survey coordinates.
 
 ## The threshold evidence
 
-The calibration rests on the public SRA runs alone: 205 of them screened at `-a 1 -r 0` — 394.5
-billion reads, 59.5 Tbp — and every candidate read then aligned along its full length against
-`core_nt`. The evidence, the sweep tables, and the candidate reads themselves are in
+The calibration contains 108,474 reads carrying at least one of the 1,464 validated baits. The
+10,894 distinct sequences are committed as
+[`calibration_read_blast_queries.fasta.gz`](results/calibration/calibration_read_blast_queries.fasta.gz)
+and were aligned along their full lengths against `core_nt`. The per-read evidence and threshold table are in
 [`results/calibration/`](results/calibration/), which explains the analysis in full.
 
-At `-a 1`, **98.1% of retained reads are not *Cyclospora***: uncultured fungi, bdelloid rotifers,
-and other apicomplexa including *Eimeria* and *Babesia*. The highest diagnostic 31-mer count carried
-by any read that is not *Cyclospora* is **12** — an *Eimeria acervulina* 28S read that beats
-*C. cayetanensis* by four bits along its length — so **13 is the lowest fully specific threshold**.
-The screen runs at **20**, 1.5× that minimum. Of the 282 target reads found at `-a 1`, 220 survive
-the fully specific threshold of 13 and 187 survive 20, so the extra margin costs 33 of them and buys
-room against the next such read in data not yet screened.
+At `-a 1`, the calibration contains 1,284 target reads, 107,040 non-target reads, 123 ties, and 27
+reads with no `core_nt` hit. At 23 baits, 855 target reads and 16 ties remain. At **24**, 853 target
+reads remain and no non-target, tied, or no-hit reads remain, making 24 the lowest fully specific
+threshold.
 
-Both sweep tables regenerate from committed evidence, with no database, cluster, or network:
+The threshold table regenerates from committed evidence, with no database, cluster, or network:
 
 ```bash
-python3 scripts/sweep_threshold.py     # -> threshold_blast_read_counts.tsv, absolute_threshold_curve.tsv
+python3 scripts/sweep_threshold.py     # -> threshold_read_counts.tsv
 ```
 
 The narrative that interprets the sweep is in the
-[Results](../README.md#setting-a-calibration-threshold-of-twenty-diagnostic-31-mers-before-a-read-counts-as-cyclospora) of
+[Results](../README.md#setting-a-calibration-threshold-of-24-diagnostic-31-mers-before-a-read-counts-as-cyclospora) of
 the main README.
 
-The reads carried into the sweep are not simply what Deacon returned. Paired mode pools k-mer hits
-across mates and emits both, so a read carrying no diagnostic 31-mer of its own rides out on its
-partner, and amplified fragments are returned many times over. Collapsing duplicate fragments — a
-duplicate only when *both* mates match base for base — and then dropping the mates that carry
-nothing takes 131,580 returned sequences to **16,425 reads**, of which 8,421 are distinct. Both
-corrections are applied by `scripts/prepare_read_blast_query.py`, which recounts each read against
-the stage 01 baits rather than trusting the screen.
+The threshold sweep uses each read's own count of distinct diagnostic 31-mers. This avoids treating
+the pooled count across paired mates as if both individual reads reached the threshold.
 
 ### Repeating the whole-read alignment
 
 The classification behind the sweep aligns each distinct candidate read along its full length against
-`core_nt` and takes its global best bit score. The 8,421 distinct reads are committed as
-[`results/calibration/candidate_reads_a1.fasta.gz`](results/calibration/candidate_reads_a1.fasta.gz),
-so this can be repeated without re-screening 59.5 Tbp. It needs the database, roughly 285 GB,
-retrieved with `update_blastdb.pl --decompress core_nt`.
+`core_nt` and compares its best target and non-target bit scores. Repeating the alignment needs the
+database, roughly 285 GB, retrieved with `update_blastdb.pl --decompress core_nt`.
 
 ```bash
-gunzip -c results/calibration/candidate_reads_a1.fasta.gz > query.fasta
+gzip -dc results/calibration/calibration_read_blast_queries.fasta.gz > query.fasta
 pixi run blastn -task blastn -db core_nt -query query.fasta \
-  -evalue 1e-10 -max_target_seqs 25 -dust no \
+  -evalue 1e-10 -max_target_seqs 100 -dust no \
   -outfmt '6 qseqid qlen saccver staxids pident length mismatch gapopen qstart qend sstart send evalue bitscore qcovhsp stitle' \
   -out read_blast.tsv
-python3 scripts/classify_reads.py --blast read_blast.tsv    # -> read_blast_deacon.tsv
+python3 scripts/classify_reads.py --blast read_blast.tsv --target-taxids 88456
 ```
 
-A read is **target** when its single highest-scoring alignment anywhere in the collection is to the
-genus *Cyclospora*, **non-target** when it is to anything else, and a **tie** when the top bit score
-is shared between the two. Ties are held apart rather than assigned, because a tie is exactly the
-case where the evidence does not decide. Target is the genus rather than *C. cayetanensis* alone
-because GenBank carries genus-level deposits with identical 18S; the taxids are committed in
-[`results/calibration/cyclospora_genus_taxids.txt`](results/calibration/cyclospora_genus_taxids.txt),
-and `--target-taxids 88456` reproduces the species-strict variant.
+A read is **target** when its single highest-scoring alignment anywhere in the collection is to
+*C. cayetanensis* taxid 88456, **non-target** when it is to anything else, and a **tie** when the top
+bit score is shared between the two. Ties are held apart rather than assigned, because a tie is
+exactly the case where the evidence does not decide.
 
 ## Screening your own reads
 
@@ -159,17 +146,17 @@ deacon index build -k 31 -w 1 -e 0 \
   ../01-identify-cyclospora-specific-kmers/baits/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta \
   -o cyclospora_k31w1.idx
 
-deacon filter -m -a 20 -r 0 cyclospora_k31w1.idx reads_R1.fastq.gz reads_R2.fastq.gz
+deacon filter -m -a 24 -r 0 cyclospora_k31w1.idx reads_R1.fastq.gz reads_R2.fastq.gz
 ```
 
 Two things will bite you if you skip them.
 
-**Deacon pools k-mer hits across mates in paired mode.** A pair whose mates carry 13 and 10 *disjoint*
-hits passes `-a 20`, because the union is 23, even though neither read reaches 20 on its own. Every
-read reported in this work was therefore recounted against the bait FASTA after filtering, and only
-reads reaching 20 by themselves are counted or published. This is why our numbers are lower than
-Deacon's retained-read counts.
+**Deacon pools k-mer hits across mates in paired mode.** A pair whose mates carry 13 and 12 *disjoint*
+hits passes `-a 24`, because the union is 25, even though neither read reaches 24 on its own. Each
+retained read must therefore be recounted against the bait FASTA after filtering, and only reads
+reaching 24 by themselves should be counted.
 
-**The threshold is specific to 151 nt reads.** A 151 nt read has 121 possible 31-mer positions, so
-demanding 20 is demanding roughly a sixth of them. On 100 nt reads the same number is a far harsher
-demand, and on 250 nt reads a far softer one. Repeat the calibration if your read lengths differ.
+**The threshold was calibrated on 150–151 nt reads.** Those reads have 120–121 possible 31-mer
+positions, so demanding 24 is demanding roughly a fifth of them. On 100 nt reads the same number is
+a far harsher demand, and on 250 nt reads a far softer one. Repeat the calibration if your read
+lengths differ substantially.
