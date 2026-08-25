@@ -96,13 +96,13 @@ to order the figure, not survey coordinates.
 The calibration contains 108,474 reads carrying at least one of the 1,464 validated baits. The
 10,894 distinct sequences are committed as
 [`calibration_read_blast_queries.fasta.gz`](results/calibration/calibration_read_blast_queries.fasta.gz)
-and were aligned along their full lengths against `core_nt`. The per-read evidence and threshold table are in
+and were submitted in full to BLASTN against `core_nt`. Classification compared their best local-alignment bit scores within and outside the declared *Cyclospora* target scope. The per-read evidence and threshold table are in
 [`results/calibration/`](results/calibration/), which explains the analysis in full.
 
 At `-a 1`, the calibration contains 1,284 target reads, 107,040 non-target reads, 123 ties, and 27
 reads with no `core_nt` hit. At 23 baits, 855 target reads and 16 ties remain. At **24**, 853 target
-reads remain and no non-target, tied, or no-hit reads remain, making 24 the lowest fully specific
-threshold.
+reads remain and no non-target, tied, or no-hit reads remain, making 24 the lowest threshold
+supported by the calibration rule.
 
 The threshold table regenerates from committed evidence, with no database, cluster, or network:
 
@@ -117,11 +117,18 @@ the main README.
 The threshold sweep uses each read's own count of distinct diagnostic 31-mers. This avoids treating
 the pooled count across paired mates as if both individual reads reached the threshold.
 
-### Repeating the whole-read alignment
+### Repeating the read classification
 
-The classification behind the sweep aligns each distinct candidate read along its full length against
-`core_nt` and compares its best target and non-target bit scores. Repeating the alignment needs the
-database, roughly 285 GB, retrieved with `update_blastdb.pl --decompress core_nt`.
+The committed raw alignments reproduce the classification without the database:
+
+```bash
+gzip -dc results/calibration/read_blast_hits.tsv.gz > read_blast.tsv
+python3 scripts/classify_reads.py --blast read_blast.tsv
+```
+
+Repeating the BLASTN search needs the database, roughly 285 GB, retrieved with
+`update_blastdb.pl --decompress core_nt`. Each complete read sequence is submitted as a query, but
+BLASTN reports local alignments and no minimum query coverage is imposed.
 
 ```bash
 gzip -dc results/calibration/calibration_read_blast_queries.fasta.gz > query.fasta
@@ -129,13 +136,12 @@ pixi run blastn -task blastn -db core_nt -query query.fasta \
   -evalue 1e-10 -max_target_seqs 100 -dust no \
   -outfmt '6 qseqid qlen saccver staxids pident length mismatch gapopen qstart qend sstart send evalue bitscore qcovhsp stitle' \
   -out read_blast.tsv
-python3 scripts/classify_reads.py --blast read_blast.tsv --target-taxids 88456
 ```
 
-A read is **target** when its single highest-scoring alignment anywhere in the collection is to
-*C. cayetanensis* taxid 88456, **non-target** when it is to anything else, and a **tie** when the top
-bit score is shared between the two. Ties are held apart rather than assigned, because a tie is
-exactly the case where the evidence does not decide.
+A read is **target** when its highest local-alignment bit score is to a taxon in the declared 26-taxid
+*Cyclospora* scope, **non-target** when the highest score is outside that scope, and a **tie** when the
+best scores within and outside the scope differ by less than 0.1 bits. Ties are held apart rather than
+assigned because the alignment evidence does not decide.
 
 ## Screening your own reads
 

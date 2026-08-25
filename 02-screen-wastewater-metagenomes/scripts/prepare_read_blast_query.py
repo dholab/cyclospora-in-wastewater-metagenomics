@@ -2,9 +2,10 @@
 """Build the core-nt BLAST query from `-a 1` candidate reads.
 
 A validated 31-mer is necessary but not sufficient evidence about a read (see the
-README, step 4), so candidate reads are classified against core-nt along their
-full length before any threshold is chosen. This prepares that query, and in
-doing so fixes the read population the calibration is computed over.
+README, step 4), so complete candidate read sequences are submitted as core-nt
+BLASTN queries before any threshold is chosen. BLASTN evaluates local alignments;
+this script prepares the queries and fixes the read population the calibration is
+computed over.
 
 Deacon's paired mode emits two kinds of sequence that must not reach the sweep:
 

@@ -4,25 +4,22 @@
 Joins two independent facts for every read kept by `prepare_read_blast_query.py`:
 
   * `deacon_hits`  — diagnostic 31-mers the read carries on its own
-  * `blast_class`  — what the read's full length says it is, from core-nt
+  * `blast_class`  — what its best local core-nt alignment scores support
 
 and writes `results/calibration/read_blast_deacon.tsv`, the one table the
 threshold sweep reads.
 
 Four classes, from the best bit score on each side:
 
-  target      the best alignment anywhere in core-nt is *Cyclospora*
-  non_target  the best alignment is to something else
+  target      the best local-alignment score supports *Cyclospora*
+  non_target  the best local-alignment score supports something else
   top_tie     the two tie for the top bit score — the evidence does not decide
   no_hit      the read has no core-nt alignment at all
 
-**Target is the genus, not the species.** GenBank carries genus-level deposits
-such as U40261.1 "Cyclospora sp." whose 18S is identical to *C. cayetanensis*.
-Under a species-strict rule a read matching both is scored a tie and looks like a
-specificity failure, when the only thing that happened is that one depositor did
-not name a species. That artifact moves the apparent clean threshold from 7 to 26
-without a single genuinely non-Cyclospora read being involved. The genus is the
-biologically meaningful unit for "is this Cyclospora", so it is the default;
+The default target scope comprises the 26 declared *Cyclospora* taxids in
+`cyclospora_genus_taxids.txt`, including *C. cayetanensis* taxid 88456 and
+genus-level deposits such as U40261.1 "Cyclospora sp.". The genus is the
+biologically meaningful unit for "is this Cyclospora";
 `--target-taxids 88456` reproduces the species-strict variant for comparison.
 
 Ties are held apart rather than assigned, because a tie is exactly the case where
@@ -142,7 +139,7 @@ def main() -> int:
     ceiling = max((int(k) for _, _, k, c in out_rows
                    if c in ("non_target", "top_tie")), default=0)
     print(f"highest k-mer count on a non-target or tied read: {ceiling}")
-    print(f"lowest fully specific threshold: {ceiling + 1}")
+    print(f"first threshold above the non-target/tied ceiling: {ceiling + 1}")
     print(f"Wrote {args.output}")
     return 0
 

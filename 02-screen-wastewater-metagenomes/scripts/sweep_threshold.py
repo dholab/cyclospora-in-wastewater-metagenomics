@@ -2,8 +2,9 @@
 """Re-derive the threshold sweep from committed per-read evidence.
 
 Reads `results/calibration/read_blast_deacon.tsv`, which carries one row per
-candidate read with its diagnostic 31-mer count and the independent whole-read
-BLAST classification, and rewrites the threshold table the choice rests on.
+candidate read with its diagnostic 31-mer count and the independent
+local-alignment BLAST classification, and rewrites the threshold table the
+choice rests on.
 
   threshold_read_counts.tsv   reads surviving each threshold, by class, and
                               runs with at least one surviving read
@@ -76,15 +77,15 @@ def main() -> int:
                "top_tie_reads", "no_hit_reads", "runs_with_retained_reads"),
               read_rows)
 
-    # The chosen threshold is the lowest at which neither a confidently
-    # non-target read nor an ambiguous one survives.
-    chosen = next((t for t, _, nt, tie, _, _ in read_rows
-                   if nt == 0 and tie == 0), None)
+    # The chosen threshold is the lowest supported by at least one target read
+    # and no non-target, tied, or no-hit reads.
+    chosen = next((t for t, target, nt, tie, no_hit, _ in read_rows
+                   if target > 0 and nt == 0 and tie == 0 and no_hit == 0), None)
     worst_nt = max((int(r["deacon_hits"]) for r in rows
                     if r["blast_class"] == "non_target"), default=0)
     print(f"reads: {len(rows)}  runs: {len({r['sample'] for r in rows})}")
     print(f"highest diagnostic k-mer count on a non-target read: {worst_nt}")
-    print(f"lowest threshold with no non-target and no tie reads: {chosen}")
+    print(f"lowest supported threshold: {chosen}")
     if chosen:
         row = read_rows[chosen - 1]
         print(f"at that threshold, target reads retained: {row[1]}")

@@ -14,5 +14,5 @@ sweep = "python scripts/sweep_threshold.py"
 python = ">=3.12,<3.13"
 # filters reads against the stage 01 bait index
 deacon = ">=0.15.0,<0.16"
-# only needed to repeat the whole-read core-nt search yourself
+# only needed to repeat the calibration-read core-nt search yourself
 blast = ">=2.15,<3"
