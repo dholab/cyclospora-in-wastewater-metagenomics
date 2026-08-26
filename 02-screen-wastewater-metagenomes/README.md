@@ -15,7 +15,6 @@ scripts/
   plot_heatmap.py               builds Figure 1 and the matrix behind it
   verify_published_reads.py     recounts every published read against the baits
   sweep_threshold.py            re-derives the threshold table
-  recount_diagnostic_reads.py   recounts each retained read against the bait FASTA
   prepare_read_blast_query.py   dedups candidate reads to the unique BLAST query
   classify_reads.py             assigns each read target/non-target from core-nt
 results/
@@ -152,7 +151,7 @@ deacon index build -k 31 -w 1 -e 0 \
   ../01-identify-cyclospora-specific-kmers/baits/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta \
   -o cyclospora_k31w1.idx
 
-deacon filter -m -a 24 -r 0 cyclospora_k31w1.idx reads_R1.fastq.gz reads_R2.fastq.gz
+deacon filter -a 24 -r 0 cyclospora_k31w1.idx reads_R1.fastq.gz reads_R2.fastq.gz
 ```
 
 Two things will bite you if you skip them.

@@ -47,7 +47,7 @@ deacon index build -k 31 -w 1 -e 0 \
   -o cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx
 
 # Retain reads carrying at least 24 distinct diagnostic 31-mers.
-deacon filter -m -a 24 -r 0 \
+deacon filter -a 24 -r 0 \
   cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx \
   reads_R1.fastq.gz reads_R2.fastq.gz
 ```

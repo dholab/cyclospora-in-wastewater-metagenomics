@@ -120,7 +120,7 @@ deacon index build -k 31 -w 1 -e 0 \
   baits/cyclospora_cayetanensis_rrna_core_nt_validated_baits.fasta \
   -o cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx
 
-deacon filter -m -a 24 -r 0 \
+deacon filter -a 24 -r 0 \
   cyclospora_cayetanensis_rrna_core_nt_validated_k31w1.idx \
   reads_R1.fastq.gz reads_R2.fastq.gz
 ```
@@ -133,4 +133,4 @@ Stage 02 applies the bait set to the libraries and calibrates the detection thre
 
 Two parts reproduce without the sequencing data. Every read counted in the analysis is committed under [`02-screen-wastewater-metagenomes/results/reads/`](02-screen-wastewater-metagenomes/results/reads/), and `python scripts/verify_published_reads.py` recounts all 1,156 of them against the bait set to confirm none falls below the threshold of 20. The heatmap in Figure 1, the Vega-Lite specification behind its interactive version, and the site-by-fortnight matrix regenerate with `python scripts/plot_heatmap.py` from [`sra_sample_summary.tsv`](02-screen-wastewater-metagenomes/results/sra_sample_summary.tsv). The threshold sweep behind Table 2 regenerates with `pixi run sweep` (or `python scripts/sweep_threshold.py`), which requires only Python 3, with no database or network access; it reads the 108,474 per-read classifications in [`results/calibration/`](02-screen-wastewater-metagenomes/results/calibration/).
 
-Screening the libraries themselves requires the reads. Each pair is filtered with `deacon filter -m -a 20 -r 0` against the 1,184-bait index, and every retained read is then recounted against the bait FASTA individually, because Deacon pools k-mer hits across mates while the reported counts are per-read. More than 2,200 publicly available wastewater metagenomics datasets are available as of August 2026 in [BioProject PRJNA1247874](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874).
+Screening the libraries themselves requires the reads. Each pair is filtered with `deacon filter -a 20 -r 0` against the 1,184-bait index, and every retained read is then recounted against the bait FASTA individually, because Deacon pools k-mer hits across mates while the reported counts are per-read. More than 2,200 publicly available wastewater metagenomics datasets are available as of August 2026 in [BioProject PRJNA1247874](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874).

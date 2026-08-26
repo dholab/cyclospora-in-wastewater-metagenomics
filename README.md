@@ -101,7 +101,7 @@ Non-target or tied reads remained through a bait count of 23 (Table 2). At a min
 
 ### *Cyclospora* recurs seasonally across the public wastewater record
 
-We evaluated every [CASPER](https://securebio.org/casper/) wastewater metagenome in NCBI SRA BioProject [PRJNA1247874](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874) (as of July 30, 2026) for *C. cayetanensis* using the calibrated Deacon filter (`deacon filter -m -a 20 -r 0`) against the 1,184-bait index. This includes 2,292 samples collected between 2023-12-26 and 2026-06-30. To focus our analysis on sewersheds with longitudinal data, we restricted our anlaysis to the 30 sewersheds sampled at 10 or more timepoints (2,287 samples). 73 samples (3.2%) contained *C. cayetanensis* reads. 24 of the 30 sewersheds recorded a detection in at least one sample (Figure 1).
+We evaluated every [CASPER](https://securebio.org/casper/) wastewater metagenome in NCBI SRA BioProject [PRJNA1247874](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1247874) (as of July 30, 2026) for *C. cayetanensis* using the calibrated Deacon filter (`deacon filter -a 20 -r 0`) against the 1,184-bait index. This includes 2,292 samples collected between 2023-12-26 and 2026-06-30. To focus our analysis on sewersheds with longitudinal data, we restricted our anlaysis to the 30 sewersheds sampled at 10 or more timepoints (2,287 samples). 73 samples (3.2%) contained *C. cayetanensis* reads. 24 of the 30 sewersheds recorded a detection in at least one sample (Figure 1).
 
 ![Cyclospora diagnostic reads per billion, by sewershed and fortnight](02-screen-wastewater-metagenomes/results/figures/cyclospora_heatmap.svg)
 
