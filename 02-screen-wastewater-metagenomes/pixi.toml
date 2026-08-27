@@ -9,6 +9,9 @@ version = "0.1.0"
 # Re-derive the threshold table from the committed per-read evidence.
 # Pure Python, no database, no network. Takes under a second.
 sweep = "python scripts/sweep_threshold.py"
+# Rebuild the compact bait-topology and calibration-evidence summary.
+# Pure Python over committed inputs; no database or network.
+summarize-bait-calibration = "python scripts/summarize_bait_calibration.py"
 
 [dependencies]
 python = ">=3.12,<3.13"

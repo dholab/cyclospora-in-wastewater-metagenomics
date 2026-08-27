@@ -15,6 +15,7 @@ scripts/
   plot_heatmap.py               builds Figure 1 and the matrix behind it
   verify_published_reads.py     recounts every published read against the baits
   sweep_threshold.py            re-derives the threshold table
+  summarize_bait_calibration.py derives the bait and calibration summary
   prepare_read_blast_query.py   dedups candidate reads to the unique BLAST query
   classify_reads.py             assigns each read target/non-target from core-nt
 results/
@@ -26,6 +27,7 @@ results/
   figures/cyclospora_heatmap.vl.json   Vega-Lite spec behind the interactive figure
   figures/cyclospora_heatmap.html      vega-embed wrapper around that spec
   calibration/                         threshold evidence — the -a 1 calibration and its core-nt classification
+    bait_calibration_summary.json      derived bait topology and calibration measurements
 pixi.toml, pixi.lock            Deacon and BLAST+, only needed to screen your own reads
 ```
 
@@ -108,6 +110,15 @@ The threshold table regenerates from committed evidence, with no database, clust
 ```bash
 python3 scripts/sweep_threshold.py     # -> threshold_read_counts.tsv
 ```
+
+The bait distribution, spatial runs, calibration-read and bait-utilization distributions, target-alignment support, and sensitivity to baits admitted without an exact `core_nt` match regenerate from the same committed evidence:
+
+```bash
+pixi run summarize-bait-calibration
+# -> results/calibration/bait_calibration_summary.json
+```
+
+The task independently recounts each calibration sequence against the bait FASTA and fails if that count disagrees with the committed read evidence. It uses the archived BLAST output rather than repeating the search, so it requires no database or network access. The resulting score margins compare the best reported target and non-target alignments; the archived search used `-max_target_seqs 100`, and the summary records how many threshold-passing queries reached that reporting limit. This task summarizes calibration evidence only—it does not reproduce the BioProject-wide production screen.
 
 The narrative that interprets the sweep is in the
 [Results](../README.md#setting-a-calibration-threshold-of-24-diagnostic-31-mers-before-a-read-counts-as-cyclospora) of

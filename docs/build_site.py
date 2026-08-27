@@ -11,8 +11,8 @@ The README is the single source of the manuscript text. This script renders it t
 2. **Front matter becomes the masthead.** Everything above the first `##` is the
    title, byline, and affiliations, which the README already carries in that
    order; paragraphs marked `<!-- repo-only -->` are left out.
-3. **Display items are set off** from the text by rules, and every "Table 1",
-   "Table 2", or "Figure 1" in the prose becomes a link that jumps to them.
+3. **Display items are set off** from the text by rules, and every numbered table
+   or figure mentioned in the prose becomes a link that jumps to it.
 4. **Repository links resolve.** Pages serves only `docs/`, so links to files in
    the repository are rewritten to `blob`/`tree` URLs on GitHub. Anchors and
    external links are left alone.

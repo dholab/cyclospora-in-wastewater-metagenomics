@@ -1,0 +1,344 @@
+{
+  "bait_set": {
+    "baits": 1464,
+    "by_rrna": {
+      "18S": 61,
+      "28S": 1372,
+      "5.8S": 0,
+      "5S": 31
+    },
+    "target_copy_count": {
+      "1": 1423,
+      "2": 41
+    },
+    "target_topology": [
+      {
+        "contiguous_runs": 3,
+        "distinct_baits": 60,
+        "longest_run_baits": 31,
+        "longest_run_span_nt": 61,
+        "matching_start_positions": 60,
+        "possible_150nt_windows": 1643,
+        "qualifying_150nt_window_fraction": 0.046257,
+        "qualifying_150nt_windows": 76,
+        "runs_with_at_least_threshold_baits": 1,
+        "target": "18S|AF111183.1|NW_020312507.1|24-1815|+",
+        "target_length_nt": 1792
+      },
+      {
+        "contiguous_runs": 3,
+        "distinct_baits": 42,
+        "longest_run_baits": 31,
+        "longest_run_span_nt": 61,
+        "matching_start_positions": 42,
+        "possible_150nt_windows": 1631,
+        "qualifying_150nt_window_fraction": 0.046597,
+        "qualifying_150nt_windows": 76,
+        "runs_with_at_least_threshold_baits": 1,
+        "target": "18S|AF111183.1|NW_019209939.1|1-1780|+",
+        "target_length_nt": 1780
+      },
+      {
+        "contiguous_runs": 29,
+        "distinct_baits": 1372,
+        "longest_run_baits": 301,
+        "longest_run_span_nt": 331,
+        "matching_start_positions": 1372,
+        "possible_150nt_windows": 3338,
+        "qualifying_150nt_window_fraction": 0.617436,
+        "qualifying_150nt_windows": 2061,
+        "runs_with_at_least_threshold_baits": 16,
+        "target": "28S|MPGL01000046.1|NW_019209236.1|46-3532|-",
+        "target_length_nt": 3487
+      },
+      {
+        "contiguous_runs": 0,
+        "distinct_baits": 0,
+        "longest_run_baits": 0,
+        "longest_run_span_nt": 0,
+        "matching_start_positions": 0,
+        "possible_150nt_windows": 7,
+        "qualifying_150nt_window_fraction": 0.0,
+        "qualifying_150nt_windows": 0,
+        "runs_with_at_least_threshold_baits": 0,
+        "target": "5.8S|XR_003297357.1|NW_019209236.1|4247-4402|-",
+        "target_length_nt": 156
+      },
+      {
+        "contiguous_runs": 1,
+        "distinct_baits": 31,
+        "longest_run_baits": 31,
+        "longest_run_span_nt": 61,
+        "matching_start_positions": 31,
+        "possible_150nt_windows": 0,
+        "qualifying_150nt_window_fraction": null,
+        "qualifying_150nt_windows": 0,
+        "runs_with_at_least_threshold_baits": 1,
+        "target": "5S|XR_003297348.1|NW_020312400.1|6413-6534|+",
+        "target_length_nt": 122
+      },
+      {
+        "contiguous_runs": 0,
+        "distinct_baits": 0,
+        "longest_run_baits": 0,
+        "longest_run_span_nt": 0,
+        "matching_start_positions": 0,
+        "possible_150nt_windows": 0,
+        "qualifying_150nt_window_fraction": null,
+        "qualifying_150nt_windows": 0,
+        "runs_with_at_least_threshold_baits": 0,
+        "target": "5S|XR_003297348.1|NW_019209216.1|779-900|+",
+        "target_length_nt": 122
+      },
+      {
+        "contiguous_runs": 0,
+        "distinct_baits": 0,
+        "longest_run_baits": 0,
+        "longest_run_span_nt": 0,
+        "matching_start_positions": 0,
+        "possible_150nt_windows": 0,
+        "qualifying_150nt_window_fraction": null,
+        "qualifying_150nt_windows": 0,
+        "runs_with_at_least_threshold_baits": 0,
+        "target": "5S|XR_003297348.1|NW_019210658.1|27886-28007|+",
+        "target_length_nt": 122
+      }
+    ]
+  },
+  "calibration": {
+    "bait_usage": {
+      "all_observations": {
+        "baits_used_once": 23,
+        "median_observations_per_bait": 38.0,
+        "population_gini_including_unused_baits": 0.81028,
+        "top_10_share": 0.656747,
+        "total_distinct_bait_read_incidences": 183270,
+        "unused_baits": 138
+      },
+      "all_unique_sequences": {
+        "baits_used_once": 132,
+        "median_observations_per_bait": 8.0,
+        "population_gini_including_unused_baits": 0.736264,
+        "top_10_share": 0.512705,
+        "total_distinct_bait_read_incidences": 28650,
+        "unused_baits": 138
+      },
+      "most_used_bait": {
+        "bait_id": "cc_rrna_kmer_000169|18S",
+        "largest_sample_by_observations": [
+          "NYC-Hospital-B_20250624__SRR37006677.target_enriched",
+          84807
+        ],
+        "largest_sample_by_unique_sequences": [
+          "NYC-Hospital-B_20250624__SRR37006677.target_enriched",
+          5119
+        ],
+        "observations_by_class": {
+          "no_hit": 0,
+          "non_target": 95196,
+          "target": 0,
+          "top_tie": 0
+        },
+        "samples": 36,
+        "top_non_target_alignment_support": [
+          [
+            "GQ844577.1 | Uncultured fungus clone WD4-148 18S ribosomal RNA gene, partial sequence",
+            91121
+          ],
+          [
+            "GQ844425.1 | Uncultured fungus clone WD0-40 18S ribosomal RNA gene, partial sequence",
+            3025
+          ],
+          [
+            "GQ844407.1 | Uncultured fungus clone WD0-16 18S ribosomal RNA gene, partial sequence",
+            1017
+          ]
+        ],
+        "unique_sequences_by_class": {
+          "no_hit": 0,
+          "non_target": 5654,
+          "target": 0,
+          "top_tie": 0
+        }
+      },
+      "threshold_target_observations": {
+        "baits_used_once": 15,
+        "median_observations_per_bait": 34.0,
+        "population_gini_including_unused_baits": 0.478865,
+        "top_10_share": 0.02506,
+        "total_distinct_bait_read_incidences": 55308,
+        "unused_baits": 207
+      },
+      "threshold_target_unique_sequences": {
+        "baits_used_once": 136,
+        "median_observations_per_bait": 8.0,
+        "population_gini_including_unused_baits": 0.454549,
+        "top_10_share": 0.024429,
+        "total_distinct_bait_read_incidences": 11462,
+        "unused_baits": 207
+      }
+    },
+    "exact_threshold_target_observations": 44,
+    "exact_threshold_target_unique_sequences": 3,
+    "read_bait_count": {
+      "exactly_one": 96440,
+      "exactly_one_fraction": 0.889061,
+      "maximum": 121,
+      "median": 1.0,
+      "minimum": 1,
+      "n": 108474
+    },
+    "read_bait_count_by_class": {
+      "no_hit": {
+        "exactly_one": 27,
+        "exactly_one_fraction": 1.0,
+        "maximum": 1,
+        "median": 1.0,
+        "minimum": 1,
+        "n": 27
+      },
+      "non_target": {
+        "exactly_one": 96385,
+        "exactly_one_fraction": 0.900458,
+        "maximum": 15,
+        "median": 1.0,
+        "minimum": 1,
+        "n": 107040
+      },
+      "target": {
+        "exactly_one": 26,
+        "exactly_one_fraction": 0.020249,
+        "maximum": 121,
+        "median": 42.0,
+        "minimum": 1,
+        "n": 1284
+      },
+      "top_tie": {
+        "exactly_one": 2,
+        "exactly_one_fraction": 0.01626,
+        "maximum": 23,
+        "median": 4.0,
+        "minimum": 1,
+        "n": 123
+      }
+    },
+    "read_observations": 108474,
+    "reads_with_one_bait": 96440,
+    "reads_with_one_bait_fraction": 0.889061,
+    "target_alignment_support": {
+      "exact_threshold_observations": {
+        "identity_100_fraction": 0.0,
+        "identity_at_least_99_fraction": 0.977273,
+        "maximum_identity": 99.2,
+        "maximum_query_coverage": 97.0,
+        "maximum_reported_score_margin": 67.0,
+        "median_alignment_length": 125.0,
+        "median_identity": 99.1935,
+        "median_query_coverage": 83.0,
+        "median_reported_score_margin": 36.0,
+        "minimum_identity": 98.63,
+        "minimum_query_coverage": 81.0,
+        "minimum_reported_score_margin": 36.0,
+        "n": 44,
+        "no_reported_non_target_competitor": 0,
+        "query_coverage_at_least_95_fraction": 0.022727
+      },
+      "exact_threshold_unique_sequences": {
+        "identity_100_fraction": 0.0,
+        "identity_at_least_99_fraction": 0.666667,
+        "maximum_identity": 99.2,
+        "maximum_query_coverage": 97.0,
+        "maximum_reported_score_margin": 67.0,
+        "median_alignment_length": 125.0,
+        "median_identity": 99.187,
+        "median_query_coverage": 83.0,
+        "median_reported_score_margin": 36.0,
+        "minimum_identity": 98.63,
+        "minimum_query_coverage": 81.0,
+        "minimum_reported_score_margin": 36.0,
+        "n": 3,
+        "no_reported_non_target_competitor": 0,
+        "query_coverage_at_least_95_fraction": 0.333333
+      },
+      "search_reporting_limit": "BLASTN used -max_target_seqs 100; competitor margins use the best reported HSPs",
+      "threshold_observations": {
+        "identity_100_fraction": 0.581477,
+        "identity_at_least_99_fraction": 0.87925,
+        "maximum_identity": 100.0,
+        "maximum_query_coverage": 100.0,
+        "maximum_reported_score_margin": 172.5,
+        "median_alignment_length": 150.0,
+        "median_identity": 100.0,
+        "median_query_coverage": 99.0,
+        "median_reported_score_margin": 58.0,
+        "minimum_identity": 89.286,
+        "minimum_query_coverage": 54.0,
+        "minimum_reported_score_margin": 4.0,
+        "n": 853,
+        "no_reported_non_target_competitor": 1,
+        "query_coverage_at_least_95_fraction": 0.719812
+      },
+      "threshold_queries_with_at_least_100_accessions": 128,
+      "threshold_queries_with_at_least_100_rows": 129,
+      "threshold_unique_sequences": {
+        "identity_100_fraction": 0.480874,
+        "identity_at_least_99_fraction": 0.748634,
+        "maximum_identity": 100.0,
+        "maximum_query_coverage": 100.0,
+        "maximum_reported_score_margin": 172.5,
+        "median_alignment_length": 150.0,
+        "median_identity": 99.338,
+        "median_query_coverage": 99.0,
+        "median_reported_score_margin": 58.0,
+        "minimum_identity": 89.286,
+        "minimum_query_coverage": 54.0,
+        "minimum_reported_score_margin": 4.0,
+        "n": 183,
+        "no_reported_non_target_competitor": 1,
+        "query_coverage_at_least_95_fraction": 0.710383
+      }
+    },
+    "threshold_boundary": {
+      "non_target_or_ambiguous_observations_at_threshold_minus_one": 16,
+      "samples": {
+        "MO_STL_Lemay_20250714__SRR38294149.target_enriched": 16
+      },
+      "selected_threshold_without_each_boundary_sample": {
+        "MO_STL_Lemay_20250714__SRR38294149.target_enriched": 16
+      }
+    },
+    "threshold_target_observations": 853,
+    "threshold_target_unique_sequences": 183,
+    "unique_sequences": 10894
+  },
+  "database_support": {
+    "absence_only_by_rrna": {
+      "18S": 1,
+      "28S": 129
+    },
+    "absence_only_fraction_of_baits": 0.088798,
+    "absence_only_fraction_of_threshold_target_incidences": 0.04229,
+    "absence_only_passers": 130,
+    "absence_only_threshold_target_incidences": 2339,
+    "exclude_absence_only_sensitivity": {
+      "original_threshold_targets_still_passing": 852,
+      "selected_threshold": 24,
+      "target_observations_at_selected_threshold": 852
+    },
+    "rejected_baits_without_exact_target_support": 23,
+    "rejected_baits_without_exact_target_support_by_rrna": {
+      "18S": 21,
+      "28S": 2
+    }
+  },
+  "parameters": {
+    "bait_incidence_unit": "one distinct bait identity per read observation",
+    "calibration_window_nt": 150,
+    "kmer_length": 31,
+    "quantile_method": "linear interpolation at p * (n - 1)",
+    "selected_threshold": 24,
+    "shared_intersection_of_consecutive_threshold_kmers_nt": 8,
+    "span_of_consecutive_threshold_kmers_nt": 54
+  },
+  "schema_version": 1
+}
