@@ -23,11 +23,11 @@ whenever the README changes.
 
 from __future__ import annotations
 
-import gzip
 import html
 import json
 import re
 import shutil
+import tarfile
 from pathlib import Path
 
 import markdown
@@ -40,7 +40,7 @@ BRANCH = "main"
 FIGURES = ROOT / "02-screen-wastewater-metagenomes/results/figures"
 SPEC = FIGURES / "cyclospora_heatmap.vl.json"
 SVG = FIGURES / "cyclospora_heatmap.svg"
-READS = ROOT / "02-screen-wastewater-metagenomes/results/reads"
+READS = ROOT / "02-screen-wastewater-metagenomes/results/diagnostic_reads.tar.gz"
 COMPLEMENT = str.maketrans("ACGTNacgtn", "TGCANtgcan")
 
 # Front-matter paragraphs carrying this marker are for repository readers only.
@@ -80,40 +80,55 @@ def collect_reads() -> dict[str, dict]:
     its reverse complement are one molecule and collapse together, matching how
     the screen counts distinct reads.
 
-    Every file here is one public SRA run, so the payload the page ships carries
-    nothing that is not already in the repository and in the BioProject.
+    Every archive member is one public SRA run, so the payload the page ships
+    carries nothing that is not already in the repository and in the BioProject.
     """
     payload: dict[str, dict] = {}
-    for path in sorted(READS.glob("*.diagnostic_reads.fasta.gz")):
-        sample, _, run = path.name.split(".", 1)[0].partition("__")
-        distinct: dict[str, dict] = {}
-        header = None
-        for line in gzip.open(path, "rt"):
-            line = line.strip()
-            if line.startswith(">"):
-                header = line[1:]
-            elif line and header is not None:
-                name, _, rest = header.partition(" ")
-                kmers = re.search(r"diagnostic_kmers=(\d+)", rest)
-                # A read and its reverse complement are one molecule, and that is
-                # how the screen counts distinct reads, so collapse canonically.
-                key = min(line, line.translate(COMPLEMENT)[::-1])
-                if key not in distinct:
-                    distinct[key] = {
-                        "id": name,
-                        "k": int(kmers.group(1)) if kmers else None,
-                        "s": line,
-                    }
-                header = None
-        records = list(distinct.values())
-        if records:
-            # A collection date can be deposited as more than one run, so the
-            # entry accumulates rather than replacing what an earlier file left.
-            entry = payload.setdefault(sample, {"runs": [], "reads": []})
-            entry["runs"].append(run)
-            entry["reads"].extend(records)
+    with tarfile.open(READS, "r:gz") as archive:
+        members = archive.getmembers()
+        if any(
+            not member.isfile()
+            or not member.name.startswith("reads/")
+            or not member.name.endswith(".diagnostic_reads.fasta")
+            for member in members
+        ):
+            raise ValueError("diagnostic-read archive contains an unexpected member")
+        for member in sorted(members, key=lambda item: item.name):
+            filename = Path(member.name).name.removesuffix(".diagnostic_reads.fasta")
+            sample, separator, run = filename.partition("__")
+            if not separator:
+                raise ValueError(f"diagnostic-read member has an unexpected name: {member.name}")
+            extracted = archive.extractfile(member)
+            if extracted is None:
+                raise ValueError(f"cannot read diagnostic-read member: {member.name}")
+            distinct: dict[str, dict] = {}
+            header = None
+            for line in extracted.read().decode().splitlines():
+                line = line.strip()
+                if line.startswith(">"):
+                    header = line[1:]
+                elif line and header is not None:
+                    name, _, rest = header.partition(" ")
+                    kmers = re.search(r"diagnostic_kmers=(\d+)", rest)
+                    # A read and its reverse complement are one molecule, and that is
+                    # how the screen counts distinct reads, so collapse canonically.
+                    key = min(line, line.translate(COMPLEMENT)[::-1])
+                    if key not in distinct:
+                        distinct[key] = {
+                            "id": name,
+                            "k": int(kmers.group(1)) if kmers else None,
+                            "s": line,
+                        }
+                    header = None
+            records = list(distinct.values())
+            if records:
+                # A collection date can be deposited as more than one run, so the
+                # entry accumulates rather than replacing what an earlier file left.
+                entry = payload.setdefault(sample, {"runs": [], "reads": []})
+                entry["runs"].append(run)
+                entry["reads"].extend(records)
     if not payload:
-        raise SystemExit(f"no diagnostic read files found under {READS}")
+        raise SystemExit(f"no diagnostic reads found in {READS}")
     return payload
 
 

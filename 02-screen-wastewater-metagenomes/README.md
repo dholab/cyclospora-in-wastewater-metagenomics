@@ -12,17 +12,19 @@ under in SRA — so nothing here depends on an internal sample name.
 
 ```text
 scripts/
+  import_nvd_screen.py          freezes primary public outputs from a returned NVD screen
+  summarize_nvd_screen.py       recounts the frozen screen and writes results
   plot_heatmap.py               builds Figure 1 and the matrix behind it
-  verify_published_reads.py     recounts every published read against the baits
   sweep_threshold.py            re-derives the threshold table
   summarize_bait_calibration.py derives the bait and calibration summary
   prepare_read_blast_query.py   dedups candidate reads to the unique BLAST query
   classify_reads.py             assigns each read target/non-target from core-nt
 results/
-  sra_sample_summary.tsv               per-run results, all 2,292 screened SRA runs
+  screen-source/                       lossless primary public reports and retained FASTQs
+  sra_sample_summary.tsv               per-run results, all 2,333 screened SRA runs
   casper_sites.tsv                     the SRA sewershed codes, with coordinates and role
   site_fortnight_matrix_per_billion.tsv  the matrix plotted in Figure 1
-  reads/                               one FASTA per SRA run with diagnostic reads (73 runs)
+  diagnostic_reads.tar.gz              one FASTA member per positive SRA run (81 runs)
   figures/cyclospora_heatmap.svg       static figure, embedded in the main README
   figures/cyclospora_heatmap.vl.json   Vega-Lite spec behind the interactive figure
   figures/cyclospora_heatmap.html      vega-embed wrapper around that spec
@@ -31,8 +33,8 @@ results/
 pixi.toml, pixi.lock            Deacon and BLAST+, only needed to screen your own reads
 ```
 
-`python3 scripts/plot_heatmap.py` and `python3 scripts/verify_published_reads.py` use the standard
-library only and run on a bare checkout with no environment, no network, and no database.
+The import, summary, and plotting scripts use the standard library only. Summarization and plotting
+run from committed inputs without the returned NVD directory, a network connection, or a database.
 
 ## The short version
 
@@ -43,41 +45,51 @@ the lowest threshold at which only target-classified reads remain. See
 
 ## Screening results
 
-Applying `deacon filter -a 20 -r 0` to every run in the BioProject, then recounting each retained
-read on its own, gives the results in
-[`results/sra_sample_summary.tsv`](results/sra_sample_summary.tsv) — 2,292 runs collected between
-2023-12-26 and 2026-06-30. Restricting to the 30 sewersheds sampled at 10 or more timepoints leaves
-2,287 runs and 4.20 trillion reads, of which **351 distinct diagnostic reads** (1,156 before
-collapsing duplicates) met the threshold across 73 positive runs. The signal is seasonal and recurs:
-detection rises through the summers of both 2025 and 2026.
+NVD 3.5 screened 2,333 public runs with Deacon 0.16.0 at `-a 24 -r 0`. The committed source bundle
+preserves every public Deacon report and retained FASTQ. The summary then recounts each read on its
+own, leaving 1,244 diagnostic reads across 81 positive runs. Within runs, those collapse to 379
+distinct sequences when reverse complements are treated as identical. Restricting to the 30
+sewersheds sampled at 10 or more timepoints leaves 2,328 runs and 4.32 trillion reads. The signal is
+seasonal and recurs through the summers of both 2025 and 2026.
 
 ```bash
+pixi run summarize-nvd-screen  # rebuilds the summary and published reads
 python3 scripts/plot_heatmap.py     # rebuilds the figure and the matrix
 ```
 
-The value plotted is **distinct diagnostic reads per billion reads sequenced**. Distinct here is
-Deacon's own count of unique read sequences per run, so PCR and optical copies are collapsed before
-anything is pooled; the raw retained count is in the summary alongside. A cell covering more than one
-run pools summed reads over summed depth, never a mean of per-run rates. Pass `--raw` to plot the
-undeduplicated counts and `--min-timepoints N` to vary the inclusion rule.
+The one-time import from the returned NVD directory is:
+
+```bash
+pixi run import-nvd-screen --run-dir /path/to/returned/run --replace
+```
+
+The import boundary is NVD's primary per-sample reports and retained FASTQs. The returned directory's
+`summaries/postmerge/` recounts are downstream audit work and are not imported.
+
+The value plotted is **distinct diagnostic reads per billion reads sequenced**. Distinct here is the
+summary's count of unique read sequences per run, treating reverse complements as identical, so PCR
+and optical copies are collapsed before anything is pooled; the raw retained count is in the summary
+alongside. A cell covering more than one run pools summed reads over summed depth, never a mean of
+per-run rates. Pass `--raw` to plot the undeduplicated counts and `--min-timepoints N` to vary the
+inclusion rule.
 
 ### The reads for Figure 1
 
-Every read counted in the summary and plotted in Figure 1 is committed under
-[`results/reads/`](results/reads/) as **one gzipped FASTA per run**, named
-`<CODE>_<YYYYMMDD>__<accession>` for the sewershed's SRA code and the run it came from — 1,156 reads
-across 73 runs ([index](results/reads/README.md)), each header carrying its diagnostic 31-mer count.
-Runs that were screened and yielded nothing have no file; that a run was screened and came back clean
-is recorded in [`sra_sample_summary.tsv`](results/sra_sample_summary.tsv), which covers all 2,292.
+Every read counted in the summary and plotted in Figure 1 is committed in
+[`results/diagnostic_reads.tar.gz`](results/diagnostic_reads.tar.gz) as **one FASTA member per run**,
+named `<CODE>_<YYYYMMDD>__<accession>` for the sewershed's SRA code and the run it came from — 1,244
+reads across 81 runs, each header carrying its diagnostic 31-mer count.
+Runs that were screened and yielded nothing have no archive member; that a run was screened and came
+back clean is recorded in [`sra_sample_summary.tsv`](results/sra_sample_summary.tsv), which covers all
+2,333.
 
 ```bash
-python3 scripts/verify_published_reads.py    # recount them all against the bait set
+pixi run summarize-nvd-screen
 ```
 
-This confirms that every published read reaches 20 diagnostic 31-mers on its own, that each header
-count matches an independent recount, and that per-run totals agree with the summary. It matters
-because Deacon pools k-mer hits across mates in paired mode, so a pair can clear `-a 20` without
-either read reaching 20 alone. The minimum across all 1,156 is exactly 20.
+This verifies the frozen archive against its manifest, recounts every retained read, and writes both
+the read archive and per-run summary. Deacon pools k-mer hits across mates in paired mode, so the
+summary counts only reads that reach 24 on their own.
 
 The static figure is [`results/figures/cyclospora_heatmap.svg`](results/figures/cyclospora_heatmap.svg)
 and the interactive one is a

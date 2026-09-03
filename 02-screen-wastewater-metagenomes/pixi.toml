@@ -12,10 +12,14 @@ sweep = "python scripts/sweep_threshold.py"
 # Rebuild the compact bait-topology and calibration-evidence summary.
 # Pure Python over committed inputs; no database or network.
 summarize-bait-calibration = "python scripts/summarize_bait_calibration.py"
+# Freeze the primary public outputs from a returned NVD screen.
+import-nvd-screen = "python scripts/import_nvd_screen.py"
+# Recount the frozen screen and regenerate the per-run summary and read evidence.
+summarize-nvd-screen = "python scripts/summarize_nvd_screen.py"
 
 [dependencies]
 python = ">=3.12,<3.13"
 # filters reads against the stage 01 bait index
-deacon = ">=0.15.0,<0.16"
+deacon = ">=0.15.0,<0.17"
 # only needed to repeat the calibration-read core-nt search yourself
 blast = ">=2.15,<3"
