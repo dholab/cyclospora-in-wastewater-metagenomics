@@ -17,9 +17,10 @@ Encoding decisions, in the order the choices were made.
   reads sequenced, so samples of very different depth are comparable. A cell
   covering more than one sample pools summed reads over summed depth. It is never
   a mean of rates, which would let a shallow sample dominate a deep one.
-* **Reads are already deduplicated.** The value is Deacon's count of distinct
-  diagnostic read sequences per sample, so PCR and optical copies are collapsed
-  before anything is pooled. Raw retained counts are in the summary alongside.
+* **Reads are already deduplicated.** The summary reports independently verified
+  counts of distinct diagnostic read sequences per sample, so PCR and optical
+  copies are collapsed before anything is pooled. Raw retained counts are in the
+  summary alongside.
 * **Rows are fortnights.** Most sewersheds are sampled weekly or fortnightly, so
   a two-week bin is the coarsest that still shows a rise beginning and the finest
   that stays legible across the multi-year public record. Bins are counted from a

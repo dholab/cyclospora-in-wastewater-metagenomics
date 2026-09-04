@@ -16,6 +16,10 @@ summarize-bait-calibration = "python scripts/summarize_bait_calibration.py"
 import-nvd-screen = "python scripts/import_nvd_screen.py"
 # Recount the frozen screen and regenerate the per-run summary and read evidence.
 summarize-nvd-screen = "python scripts/summarize_nvd_screen.py"
+# Render the matrix and heatmap from the committed summary evidence.
+plot-heatmap = "python scripts/plot_heatmap.py"
+# Recount first, then render the resulting summary.
+rebuild-screen-artifacts = { cmd = "python scripts/plot_heatmap.py", depends-on = ["summarize-nvd-screen"] }
 
 [dependencies]
 python = ">=3.12,<3.13"

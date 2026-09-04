@@ -3,7 +3,7 @@
  "title": {
   "text": "Cyclospora cayetanensis in public wastewater sequencing, by sewershed and fortnight",
   "subtitle": [
-   "Distinct diagnostic reads per billion reads sequenced. White is screened with nothing found; grey is no sample that fortnight.",
+   "Distinct diagnostic reads per billion reads sequenced. White is screened with nothing found; gray is no sample that fortnight.",
    "Columns are SRA codes, west to east; sewersheds sampled at 10 or more timepoints in SRA."
   ],
   "anchor": "start",
@@ -33,8 +33,8 @@
    {
     "site": "CA_Ontario",
     "fortnight": "2025-09-15",
-    "rate": 1.014,
-    "reads": 9,
+    "rate": 1.127,
+    "reads": 10,
     "depth": 8873865938,
     "samples": 4,
     "sample_ids": "CA_Ontario_20250915, CA_Ontario_20250917, CA_Ontario_20250922, CA_Ontario_20250924"
@@ -168,8 +168,8 @@
    {
     "site": "CA_Ontario",
     "fortnight": "2026-04-13",
-    "rate": 5.189,
-    "reads": 24,
+    "rate": 5.405,
+    "reads": 25,
     "depth": 4625190498,
     "samples": 2,
     "sample_ids": "CA_Ontario_20260413, CA_Ontario_20260420"
@@ -458,9 +458,9 @@
     "fortnight": "2025-01-20",
     "rate": 0.0,
     "reads": 0,
-    "depth": 2102704850,
-    "samples": 1,
-    "sample_ids": "CA_Riverside_20250120"
+    "depth": 4285893372,
+    "samples": 2,
+    "sample_ids": "CA_Riverside_20250120, CA_Riverside_20250127"
    },
    {
     "site": "CA_Riverside",
@@ -942,8 +942,8 @@
    {
     "site": "CA_Sacramento",
     "fortnight": "2026-03-30",
-    "rate": 0.0,
-    "reads": 0,
+    "rate": 1.885,
+    "reads": 6,
     "depth": 3183691444,
     "samples": 2,
     "sample_ids": "CA_Sacramento_20260402, CA_Sacramento_20260408"
@@ -1025,9 +1025,9 @@
     "fortnight": "2024-09-30",
     "rate": 0.0,
     "reads": 0,
-    "depth": 1186718078,
-    "samples": 1,
-    "sample_ids": "CHI-A_20241006"
+    "depth": 3936006414,
+    "samples": 2,
+    "sample_ids": "CHI-A_20241006, CHI-A_20241013"
    },
    {
     "site": "CHI-A",
@@ -1088,9 +1088,9 @@
     "fortnight": "2025-01-06",
     "rate": 0.0,
     "reads": 0,
-    "depth": 1440829014,
-    "samples": 1,
-    "sample_ids": "CHI-A_20250112"
+    "depth": 5421002120,
+    "samples": 2,
+    "sample_ids": "CHI-A_20250112, CHI-A_20250119"
    },
    {
     "site": "CHI-A",
@@ -1445,6 +1445,15 @@
    },
    {
     "site": "CHI-B",
+    "fortnight": "2024-09-30",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 2957148152,
+    "samples": 1,
+    "sample_ids": "CHI-B_20241013"
+   },
+   {
+    "site": "CHI-B",
     "fortnight": "2024-10-14",
     "rate": 0.0,
     "reads": 0,
@@ -1617,8 +1626,8 @@
    {
     "site": "CHI-B",
     "fortnight": "2025-07-21",
-    "rate": 0.0,
-    "reads": 0,
+    "rate": 0.565,
+    "reads": 2,
     "depth": 3541774716,
     "samples": 2,
     "sample_ids": "CHI-B_20250727, CHI-B_20250803"
@@ -1626,8 +1635,8 @@
    {
     "site": "CHI-B",
     "fortnight": "2025-08-04",
-    "rate": 1.608,
-    "reads": 6,
+    "rate": 1.34,
+    "reads": 5,
     "depth": 3731274470,
     "samples": 2,
     "sample_ids": "CHI-B_20250810, CHI-B_20250817"
@@ -1838,6 +1847,15 @@
     "depth": 1279474592,
     "samples": 1,
     "sample_ids": "CHI-B_20260628"
+   },
+   {
+    "site": "CHI-C",
+    "fortnight": "2024-10-14",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 3124906134,
+    "samples": 1,
+    "sample_ids": "CHI-C_20241014"
    },
    {
     "site": "CHI-C",
@@ -2234,6 +2252,15 @@
     "depth": 1661858726,
     "samples": 1,
     "sample_ids": "CHI-D1_20240915"
+   },
+   {
+    "site": "CHI-D1",
+    "fortnight": "2024-09-30",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 2758735828,
+    "samples": 1,
+    "sample_ids": "CHI-D1_20241013"
    },
    {
     "site": "CHI-D1",
@@ -3417,8 +3444,8 @@
    {
     "site": "IA_Ottumwa",
     "fortnight": "2025-05-12",
-    "rate": 0.0,
-    "reads": 0,
+    "rate": 0.509,
+    "reads": 2,
     "depth": 3930607956,
     "samples": 2,
     "sample_ids": "IA_Ottumwa_20250514, IA_Ottumwa_20250521"
@@ -3695,12 +3722,21 @@
    },
    {
     "site": "ID_Boise",
+    "fortnight": "2024-11-11",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 3198247514,
+    "samples": 1,
+    "sample_ids": "ID_Boise_20241118"
+   },
+   {
+    "site": "ID_Boise",
     "fortnight": "2024-11-25",
     "rate": 0.0,
     "reads": 0,
-    "depth": 1491477776,
-    "samples": 1,
-    "sample_ids": "ID_Boise_20241202"
+    "depth": 4078865496,
+    "samples": 2,
+    "sample_ids": "ID_Boise_20241125, ID_Boise_20241202"
    },
    {
     "site": "ID_Boise",
@@ -4109,6 +4145,15 @@
    },
    {
     "site": "MA_Boston_DITPN",
+    "fortnight": "2024-10-14",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 6427466534,
+    "samples": 2,
+    "sample_ids": "MA_Boston_DITPN_20241016, MA_Boston_DITPN_20241022"
+   },
+   {
+    "site": "MA_Boston_DITPN",
     "fortnight": "2024-10-28",
     "rate": 0.0,
     "reads": 0,
@@ -4272,8 +4317,8 @@
    {
     "site": "MA_Boston_DITPN",
     "fortnight": "2025-07-07",
-    "rate": 0.994,
-    "reads": 10,
+    "rate": 0.795,
+    "reads": 8,
     "depth": 10057633790,
     "samples": 6,
     "sample_ids": "MA_Boston_DITPN_20250709, MA_Boston_DITPN_20250709, MA_Boston_DITPN_20250709, MA_Boston_DITPN_20250716, MA_Boston_DITPN_20250716, MA_Boston_DITPN_20250716"
@@ -4418,9 +4463,9 @@
     "fortnight": "2026-02-16",
     "rate": 0.0,
     "reads": 0,
-    "depth": 3992356202,
-    "samples": 3,
-    "sample_ids": "MA_Boston_DITPN_20260219, MA_Boston_DITPN_20260225, MA_Boston_DITPN_20260225"
+    "depth": 12428957960,
+    "samples": 4,
+    "sample_ids": "MA_Boston_DITPN_20260218, MA_Boston_DITPN_20260219, MA_Boston_DITPN_20260225, MA_Boston_DITPN_20260225"
    },
    {
     "site": "MA_Boston_DITPN",
@@ -4538,6 +4583,15 @@
     "depth": 1143597076,
     "samples": 1,
     "sample_ids": "MA_Boston_DITPS_20241002"
+   },
+   {
+    "site": "MA_Boston_DITPS",
+    "fortnight": "2024-10-14",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 5592387150,
+    "samples": 2,
+    "sample_ids": "MA_Boston_DITPS_20241016, MA_Boston_DITPS_20241022"
    },
    {
     "site": "MA_Boston_DITPS",
@@ -4850,9 +4904,9 @@
     "fortnight": "2026-02-16",
     "rate": 0.0,
     "reads": 0,
-    "depth": 4341156990,
-    "samples": 3,
-    "sample_ids": "MA_Boston_DITPS_20260219, MA_Boston_DITPS_20260225, MA_Boston_DITPS_20260225"
+    "depth": 12482350190,
+    "samples": 4,
+    "sample_ids": "MA_Boston_DITPS_20260218, MA_Boston_DITPS_20260219, MA_Boston_DITPS_20260225, MA_Boston_DITPS_20260225"
    },
    {
     "site": "MA_Boston_DITPS",
@@ -4955,30 +5009,57 @@
    },
    {
     "site": "MO_Columbia",
+    "fortnight": "2024-01-22",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 5189591490,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20240123, MO_Columbia_20240130"
+   },
+   {
+    "site": "MO_Columbia",
     "fortnight": "2024-02-05",
     "rate": 0.0,
     "reads": 0,
-    "depth": 3085467964,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20240213"
+    "depth": 5603382476,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20240206, MO_Columbia_20240213"
    },
    {
     "site": "MO_Columbia",
     "fortnight": "2024-02-19",
     "rate": 0.0,
     "reads": 0,
-    "depth": 2869984070,
-    "samples": 2,
-    "sample_ids": "MO_Columbia_20240220, MO_Columbia_20240220"
+    "depth": 5309263888,
+    "samples": 3,
+    "sample_ids": "MO_Columbia_20240220, MO_Columbia_20240220, MO_Columbia_20240227"
    },
    {
     "site": "MO_Columbia",
     "fortnight": "2024-03-04",
     "rate": 0.0,
     "reads": 0,
-    "depth": 2710210784,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20240312"
+    "depth": 5395965910,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20240305, MO_Columbia_20240312"
+   },
+   {
+    "site": "MO_Columbia",
+    "fortnight": "2024-03-18",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 5596527238,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20240319, MO_Columbia_20240326"
+   },
+   {
+    "site": "MO_Columbia",
+    "fortnight": "2024-04-01",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 5542025992,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20240402, MO_Columbia_20240409"
    },
    {
     "site": "MO_Columbia",
@@ -5012,18 +5093,18 @@
     "fortnight": "2024-05-27",
     "rate": 0.0,
     "reads": 0,
-    "depth": 2153054910,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20240528"
+    "depth": 4697501518,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20240528, MO_Columbia_20240604"
    },
    {
     "site": "MO_Columbia",
     "fortnight": "2024-06-10",
-    "rate": 0.0,
-    "reads": 0,
-    "depth": 1821472474,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20240618"
+    "rate": 0.661,
+    "reads": 4,
+    "depth": 6055569472,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20240611, MO_Columbia_20240618"
    },
    {
     "site": "MO_Columbia",
@@ -5037,20 +5118,20 @@
    {
     "site": "MO_Columbia",
     "fortnight": "2024-07-08",
-    "rate": 0.0,
-    "reads": 0,
-    "depth": 501311756,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20240709"
+    "rate": 1.758,
+    "reads": 5,
+    "depth": 2844419070,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20240709, MO_Columbia_20240716"
    },
    {
     "site": "MO_Columbia",
     "fortnight": "2024-07-22",
-    "rate": 0.791,
-    "reads": 3,
-    "depth": 3794743644,
-    "samples": 2,
-    "sample_ids": "MO_Columbia_20240723, MO_Columbia_20240723"
+    "rate": 1.743,
+    "reads": 11,
+    "depth": 6309941602,
+    "samples": 3,
+    "sample_ids": "MO_Columbia_20240723, MO_Columbia_20240723, MO_Columbia_20240730"
    },
    {
     "site": "MO_Columbia",
@@ -5162,6 +5243,15 @@
    },
    {
     "site": "MO_Columbia",
+    "fortnight": "2025-01-20",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 3143030756,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20250121, MO_Columbia_20250128"
+   },
+   {
+    "site": "MO_Columbia",
     "fortnight": "2025-02-03",
     "rate": 0.0,
     "reads": 0,
@@ -5174,45 +5264,54 @@
     "fortnight": "2025-02-17",
     "rate": 0.0,
     "reads": 0,
-    "depth": 2074710036,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20250218"
+    "depth": 3877053354,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20250218, MO_Columbia_20250225"
    },
    {
     "site": "MO_Columbia",
     "fortnight": "2025-03-03",
     "rate": 0.0,
     "reads": 0,
-    "depth": 1943674010,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20250304"
+    "depth": 3343239880,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20250304, MO_Columbia_20250311"
    },
    {
     "site": "MO_Columbia",
     "fortnight": "2025-03-17",
     "rate": 0.0,
     "reads": 0,
-    "depth": 1355154208,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20250326"
+    "depth": 3314026428,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20250318, MO_Columbia_20250326"
+   },
+   {
+    "site": "MO_Columbia",
+    "fortnight": "2025-03-31",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 3704951740,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20250401, MO_Columbia_20250408"
    },
    {
     "site": "MO_Columbia",
     "fortnight": "2025-04-14",
     "rate": 0.0,
     "reads": 0,
-    "depth": 1290276400,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20250422"
+    "depth": 3450189188,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20250415, MO_Columbia_20250422"
    },
    {
     "site": "MO_Columbia",
     "fortnight": "2025-04-28",
     "rate": 0.0,
     "reads": 0,
-    "depth": 1387528904,
-    "samples": 1,
-    "sample_ids": "MO_Columbia_20250506"
+    "depth": 2643169916,
+    "samples": 2,
+    "sample_ids": "MO_Columbia_20250429, MO_Columbia_20250506"
    },
    {
     "site": "MO_Columbia",
@@ -6180,8 +6279,8 @@
    {
     "site": "MO_Monett",
     "fortnight": "2025-09-01",
-    "rate": 0.0,
-    "reads": 0,
+    "rate": 0.241,
+    "reads": 1,
     "depth": 4147314832,
     "samples": 2,
     "sample_ids": "MO_Monett_20250902, MO_Monett_20250908"
@@ -6999,8 +7098,8 @@
    {
     "site": "MO_STL_Lemay",
     "fortnight": "2025-10-27",
-    "rate": 0.0,
-    "reads": 0,
+    "rate": 0.169,
+    "reads": 1,
     "depth": 5928925546,
     "samples": 2,
     "sample_ids": "MO_STL_Lemay_20251027, MO_STL_Lemay_20251103"
@@ -7574,6 +7673,15 @@
    },
    {
     "site": "NYC-Hospital-B",
+    "fortnight": "2024-01-08",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 2816289962,
+    "samples": 1,
+    "sample_ids": "NYC-Hospital-B_20240116"
+   },
+   {
+    "site": "NYC-Hospital-B",
     "fortnight": "2024-10-14",
     "rate": 0.0,
     "reads": 0,
@@ -7583,12 +7691,30 @@
    },
    {
     "site": "NYC-Hospital-B",
+    "fortnight": "2024-11-11",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 2271218884,
+    "samples": 1,
+    "sample_ids": "NYC-Hospital-B_20241120"
+   },
+   {
+    "site": "NYC-Hospital-B",
     "fortnight": "2024-12-23",
     "rate": 0.0,
     "reads": 0,
     "depth": 2512913110,
     "samples": 1,
     "sample_ids": "NYC-Hospital-B_20250103"
+   },
+   {
+    "site": "NYC-Hospital-B",
+    "fortnight": "2025-01-06",
+    "rate": 0.0,
+    "reads": 0,
+    "depth": 2813331384,
+    "samples": 1,
+    "sample_ids": "NYC-Hospital-B_20250109"
    },
    {
     "site": "NYC-Hospital-B",
@@ -8720,9 +8846,9 @@
     "fortnight": "2026-02-02",
     "rate": 0.0,
     "reads": 0,
-    "depth": 25408764022,
-    "samples": 11,
-    "sample_ids": "Southern_California_20260204, Southern_California_20260204, Southern_California_20260208, Southern_California_20260208, Southern_California_20260211, Southern_California_20260215, Southern_California_20260215, Southern_California_20260215, Southern_California_20260215, Southern_California_20260215, Southern_California_20260215"
+    "depth": 33396368086,
+    "samples": 12,
+    "sample_ids": "Southern_California_20260204, Southern_California_20260204, Southern_California_20260208, Southern_California_20260208, Southern_California_20260211, Southern_California_20260211, Southern_California_20260215, Southern_California_20260215, Southern_California_20260215, Southern_California_20260215, Southern_California_20260215, Southern_California_20260215"
    },
    {
     "site": "Southern_California",
@@ -8783,9 +8909,9 @@
     "fortnight": "2026-05-11",
     "rate": 0.0,
     "reads": 0,
-    "depth": 12711542560,
-    "samples": 6,
-    "sample_ids": "Southern_California_20260513, Southern_California_20260517, Southern_California_20260520, Southern_California_20260520, Southern_California_20260524, Southern_California_20260524"
+    "depth": 17628062164,
+    "samples": 7,
+    "sample_ids": "Southern_California_20260513, Southern_California_20260513, Southern_California_20260517, Southern_California_20260520, Southern_California_20260520, Southern_California_20260524, Southern_California_20260524"
    },
    {
     "site": "Southern_California",
@@ -8870,10 +8996,12 @@
    "sort": [
     "2023-12-25",
     "2024-01-08",
+    "2024-01-22",
     "2024-02-05",
     "2024-02-19",
     "2024-03-04",
     "2024-03-18",
+    "2024-04-01",
     "2024-04-15",
     "2024-04-29",
     "2024-05-13",

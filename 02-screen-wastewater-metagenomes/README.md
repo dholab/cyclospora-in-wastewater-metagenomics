@@ -54,7 +54,8 @@ seasonal and recurs through the summers of both 2025 and 2026.
 
 ```bash
 pixi run summarize-nvd-screen  # rebuilds the summary and published reads
-python3 scripts/plot_heatmap.py     # rebuilds the figure and the matrix
+pixi run plot-heatmap           # rebuilds the figure and matrix from that summary
+pixi run rebuild-screen-artifacts  # performs both steps in order
 ```
 
 The one-time import from the returned NVD directory is:
