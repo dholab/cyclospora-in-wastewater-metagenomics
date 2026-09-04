@@ -1,10 +1,10 @@
-[project]
+[workspace]
 name = "cyclospora-manuscript-site"
 version = "0.1.0"
 description = "Builds the GitHub Pages reading version of the manuscript from README.md"
 authors = ["DHO-CHTC <dhoconno@wisc.edu>"]
 channels = ["conda-forge"]
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-arm64"]
 
 [tasks]
 build = "python build_site.py"

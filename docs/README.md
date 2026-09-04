@@ -34,5 +34,8 @@ pixi run build
 python3 -m http.server 8000   # then open http://localhost:8000/
 ```
 
+This previews the manuscript and interactive figure. The workflow adds `preprint.pdf` while
+assembling the deployed site, so the PDF download link is unavailable in this page-only preview.
+
 The chart needs `vega`, `vega-lite`, and `vega-embed` from jsDelivr. Without network access, or with
 JavaScript disabled, the page falls back to the static SVG.

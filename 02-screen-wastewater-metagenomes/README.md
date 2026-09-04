@@ -45,7 +45,7 @@ the lowest threshold at which only target-classified reads remain. See
 
 ## Screening results
 
-NVD 3.5 screened 2,333 public runs with Deacon 0.16.0 at `-a 24 -r 0`. The committed source bundle
+NVD 3.5.0 (revision `bd421147bba2a8ba22aafffb5dbf61c47d241feb`, clean) screened 2,333 public runs with Deacon 0.16.0 at `-a 24 -r 0`. The committed source bundle
 preserves every public Deacon report and retained FASTQ. The summary then recounts each read on its
 own, leaving 1,244 diagnostic reads across 81 positive runs. Within runs, those collapse to 379
 distinct sequences when reverse complements are treated as identical. Restricting to the 30
