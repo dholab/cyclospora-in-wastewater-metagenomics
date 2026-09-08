@@ -66,13 +66,14 @@ pixi run import-nvd-screen --run-dir /path/to/returned/run --replace
 
 The import boundary is NVD's primary per-sample reports and retained FASTQs. The returned directory's
 `summaries/postmerge/` recounts are downstream audit work and are not imported.
+The public samplesheet accessions must exactly match the committed cohort. Every selected report
+and FASTQ is required; local samples and files outside those selected paths are ignored.
 
 The value plotted is **distinct diagnostic reads per billion reads sequenced**. Distinct here is the
 summary's count of unique read sequences per run, treating reverse complements as identical, so PCR
 and optical copies are collapsed before anything is pooled; the raw retained count is in the summary
 alongside. A cell covering more than one run pools summed reads over summed depth, never a mean of
-per-run rates. Pass `--raw` to plot the undeduplicated counts and `--min-timepoints N` to vary the
-inclusion rule.
+per-run rates. Pass `--min-timepoints N` to vary the inclusion rule.
 
 ### The reads for Figure 1
 

@@ -84,8 +84,6 @@ def main() -> int:
     p.add_argument("--outdir", type=Path, default=STAGE_ROOT / "results")
     p.add_argument("--min-timepoints", type=int, default=10,
                    help="sewersheds sampled on fewer distinct dates are excluded")
-    p.add_argument("--raw", action="store_true",
-                   help="plot raw retained reads instead of the distinct count")
     args = p.parse_args()
 
     place: dict[str, tuple[float, float]] = {}
@@ -97,7 +95,6 @@ def main() -> int:
                 place[r["casper_code"]] = (float(r["longitude"]),
                                            float(r["latitude"]))
 
-    value_field = "diagnostic_reads" if args.raw else "distinct_diagnostic_reads"
     with args.summary.open(newline="") as handle:
         rows = [r for r in csv.DictReader(handle, delimiter="\t")
                 if r["collection_date"]
@@ -120,7 +117,7 @@ def main() -> int:
     samples: dict[tuple, list] = defaultdict(list)
     for r in kept:
         key = (r["casper_code"], fortnight_of(r["collection_date"]))
-        hits[key] += int(r[value_field] or 0)
+        hits[key] += int(r["distinct_diagnostic_reads"] or 0)
         depth[key] += int(r["input_reads"] or 0)
         samples[key].append(r["public_id"])
     fortnights = sorted({f for _, f in hits})

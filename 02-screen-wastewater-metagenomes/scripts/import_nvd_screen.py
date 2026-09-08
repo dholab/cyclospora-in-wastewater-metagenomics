@@ -9,7 +9,6 @@ import gzip
 import hashlib
 import io
 import json
-import os
 import re
 import shutil
 import tarfile
@@ -18,10 +17,10 @@ from pathlib import Path
 
 STAGE_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTDIR = STAGE_ROOT / "results/screen-source"
+COHORT = STAGE_ROOT / "config/wastewater_cohort.tsv"
 ARCHIVE_NAME = "prjna1247874_nvd_source.tar.gz"
 MANIFEST_NAME = "prjna1247874_nvd_source.manifest.tsv"
 EXPECTED_PUBLIC_RUNS = 2_333
-EXPECTED_LOCAL_RUNS = 251
 EXPECTED_CANDIDATE_READS = 1_476
 EXPECTED_SELECTED_RUNS = 81
 REPORT_SUFFIX = ".deacon_filter.json"
@@ -34,18 +33,6 @@ MANIFEST_FIELDS = (
     "sha256",
 )
 READ_ID = re.compile(r"@(SRR[0-9]+)\.[^/\s]+/([12])(?:\s|$)")
-EXPECTED_EXCLUDED = {
-    "01_target_enrichment/reads/Columbia_MO_20240220__SRR35904087.target_enriched.deacon-0.15.0-a20.fastq.gz":
-        "ac73670af3abed54ac6fb4695131f4099be9fbe39d6076c5d0264a6bbdae9d83",
-    "01_target_enrichment/reads/Columbia_MO_20240220__SRR35904087.target_enriched.superseded-a20-20260828.fastq.gz":
-        "ac73670af3abed54ac6fb4695131f4099be9fbe39d6076c5d0264a6bbdae9d83",
-    "01_target_enrichment/summaries/Columbia_MO_20240220__SRR35904087.deacon_filter.deacon-0.15.0-a20.json":
-        "263c0c7c96ec7d53ffcdf53c896e6c442340ff9363090cd5ffd93305bda6ce4f",
-    "01_target_enrichment/summaries/Columbia_MO_20240220__SRR35904087.deacon_filter.superseded-a20-20260828.json":
-        "263c0c7c96ec7d53ffcdf53c896e6c442340ff9363090cd5ffd93305bda6ce4f",
-    "01_target_enrichment/summaries/target_enrichment_summary.tsv":
-        "f0b8b17d6558065b4b7607c30a618eb04298c630ff989f0fa52691e6f4ffd67c",
-}
 
 
 def digest(content: bytes) -> str:
@@ -77,25 +64,18 @@ def read_fastq(path: Path, srr: str) -> int:
 
 
 def archive_bytes(entries: dict[str, bytes], path: Path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    descriptor, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
-    temporary = Path(temporary_name)
-    try:
-        with os.fdopen(descriptor, "wb") as raw:
-            with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as compressed:
-                with tarfile.open(fileobj=compressed, mode="w|", format=tarfile.PAX_FORMAT) as archive:
-                    for name in sorted(entries):
-                        content = entries[name]
-                        info = tarfile.TarInfo(name)
-                        info.size = len(content)
-                        info.mtime = 0
-                        info.mode = 0o644
-                        info.uid = info.gid = 0
-                        info.uname = info.gname = ""
-                        archive.addfile(info, io.BytesIO(content))
-        temporary.replace(path)
-    finally:
-        temporary.unlink(missing_ok=True)
+    with path.open("wb") as raw:
+        with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as compressed:
+            with tarfile.open(fileobj=compressed, mode="w|", format=tarfile.PAX_FORMAT) as archive:
+                for name in sorted(entries):
+                    content = entries[name]
+                    info = tarfile.TarInfo(name)
+                    info.size = len(content)
+                    info.mtime = 0
+                    info.mode = 0o644
+                    info.uid = info.gid = 0
+                    info.uname = info.gname = ""
+                    archive.addfile(info, io.BytesIO(content))
 
 
 def write_manifest(path: Path, rows: list[dict[str, object]]) -> None:
@@ -120,10 +100,14 @@ def main() -> int:
     with samplesheet.open(newline="") as handle:
         rows = list(csv.DictReader(handle))
     public = [row for row in rows if row.get("srr")]
-    local = [row for row in rows if not row.get("srr")]
-    if len(public) != EXPECTED_PUBLIC_RUNS or len(local) != EXPECTED_LOCAL_RUNS:
-        raise SystemExit(f"expected {EXPECTED_PUBLIC_RUNS} public and {EXPECTED_LOCAL_RUNS} local rows")
-    if len({row["sample_id"] for row in rows}) != len(rows):
+    with COHORT.open(newline="") as handle:
+        cohort = list(csv.DictReader(handle, delimiter="\t"))
+    accessions = {row["srr"] for row in cohort}
+    if len(cohort) != EXPECTED_PUBLIC_RUNS or len(accessions) != len(cohort):
+        raise SystemExit("cohort must contain exactly 2,333 unique public accessions")
+    if {row["srr"] for row in public} != accessions:
+        raise SystemExit("public samplesheet accessions differ from the accepted cohort")
+    if len({row["sample_id"] for row in public}) != len(public):
         raise SystemExit("samplesheet contains duplicate sample identifiers")
     if len({row["srr"] for row in public}) != len(public):
         raise SystemExit("samplesheet contains duplicate SRA accessions")
@@ -184,24 +168,6 @@ def main() -> int:
         entries[name] = source.read_bytes()
         details[name] = ("provenance", "")
 
-    expected_samples = {row["sample_id"] for row in rows}
-    expected_outputs = {
-        *(report_dir / f"{sample}{REPORT_SUFFIX}" for sample in expected_samples),
-        *(read_dir / f"{sample}{READ_SUFFIX}" for sample in expected_samples),
-    }
-    # Postmerge recounts are downstream audit work, not returned NVD output.
-    postmerge = report_dir / "postmerge"
-    outputs = set(report_dir.iterdir()) | set(read_dir.iterdir())
-    extras = sorted(outputs - expected_outputs - ({postmerge} if postmerge.is_dir() else set()))
-    if any(not path.is_file() for path in extras):
-        raise SystemExit(f"unexpected non-primary outputs: {[str(path) for path in extras]}")
-    excluded = {
-        str(path.relative_to(args.run_dir)): digest(path.read_bytes())
-        for path in extras
-    }
-    if excluded != EXPECTED_EXCLUDED:
-        raise SystemExit(f"unexpected non-primary outputs: {sorted(excluded)}")
-
     manifest = []
     for name in sorted(entries):
         kind, srr = details[name]
@@ -239,7 +205,7 @@ def main() -> int:
             shutil.rmtree(backup)
     finally:
         shutil.rmtree(temporary, ignore_errors=True)
-    print(f"public SRA runs: {len(public):,}; local rows excluded: {len(local):,}")
+    print(f"public SRA runs: {len(public):,}")
     print(f"candidate reads: {candidate_reads:,} across {selected_runs} runs")
     print(f"wrote {args.outdir / ARCHIVE_NAME} ({(args.outdir / ARCHIVE_NAME).stat().st_size:,} bytes)")
     print(f"wrote {args.outdir / MANIFEST_NAME}")

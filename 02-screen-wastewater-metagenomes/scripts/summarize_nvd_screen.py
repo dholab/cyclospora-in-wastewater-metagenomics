@@ -46,7 +46,7 @@ EXPECTED = {
 }
 EXPECTED_ARCHIVE_SHA256 = "5313940b512b9bd8010e96cd6c8f6a2448cc18f57589c55d78f9e22cb95c6cdd"
 EXPECTED_MANIFEST_SHA256 = "f72328095f2ac921bec249253b470fad1db97f1341cdc87cd025fe4b59de733f"
-EXPECTED_COHORT_SHA256 = "5f24e2cab779af54fa6ebd620a03d5af40f04a7d37fb33163dabeab97c593e3e"
+EXPECTED_COHORT_SHA256 = "1df452f80b3f8837ee45f0fcee6583b8e0f875ec8d5efbed5964b8ee969a4a61"
 
 
 def digest(content: bytes) -> str:
@@ -186,7 +186,7 @@ def main() -> int:
     if digest(DEFAULT_COHORT.read_bytes()) != EXPECTED_COHORT_SHA256:
         raise SystemExit("cohort metadata does not match the accepted screen")
     cohort = {row["srr"]: row for row in cohort_rows}
-    if len(cohort) != len(cohort_rows) or not set(report_rows) <= set(cohort):
+    if len(cohort) != len(cohort_rows) or set(report_rows) != set(cohort):
         raise SystemExit("cohort metadata does not cover each screened accession exactly once")
     for row in cohort_rows:
         public_id = f"{row['casper_code']}_{row['collection_date'].replace('-', '')}"
@@ -301,6 +301,7 @@ def main() -> int:
     previous = temporary / "previous"
     installed: list[Path] = []
     moved: list[Path] = []
+    preserve_backup = False
     try:
         generated = temporary / "generated"
         generated.mkdir()
@@ -309,38 +310,35 @@ def main() -> int:
         (generated / "diagnostic_reads.tar.gz").write_bytes(read_archive_content)
         args.outdir.mkdir(parents=True, exist_ok=True)
         previous.mkdir()
-        old_targets = (
-            "reads",
-            "diagnostic_reads.tar.gz",
-            "sra_sample_summary.tsv",
-            "nvd_screen_receipt.json",
-        )
-        new_targets = (
+        targets = (
             "diagnostic_reads.tar.gz",
             "sra_sample_summary.tsv",
             "nvd_screen_receipt.json",
         )
         try:
-            for name in old_targets:
+            for name in targets:
                 target = args.outdir / name
                 if target.exists():
                     target.replace(previous / name)
                     moved.append(previous / name)
-            for name in new_targets:
+            for name in targets:
                 target = args.outdir / name
                 (generated / name).replace(target)
                 installed.append(target)
         except BaseException:
-            for target in installed:
-                if target.is_dir():
-                    shutil.rmtree(target)
-                else:
+            try:
+                for target in installed:
                     target.unlink()
-            for old in moved:
-                old.replace(args.outdir / old.name)
+                for old in moved:
+                    old.replace(args.outdir / old.name)
+            except BaseException as error:
+                preserve_backup = True
+                error.add_note(f"Rollback failed; recovery files preserved at {temporary}")
+                raise
             raise
     finally:
-        shutil.rmtree(temporary, ignore_errors=True)
+        if not preserve_backup:
+            shutil.rmtree(temporary, ignore_errors=True)
 
     print(f"public SRA runs: {len(summary):,}")
     print(f"candidate reads: {candidate_reads:,}")
@@ -353,4 +351,4 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (OSError, ValueError, tarfile.TarError) as error:
-        raise SystemExit(str(error)) from error
+        raise SystemExit("\n".join((str(error), *getattr(error, "__notes__", ())))) from error
