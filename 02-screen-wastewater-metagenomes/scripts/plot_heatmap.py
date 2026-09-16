@@ -58,6 +58,9 @@ BINS = [(2.0, "0 to 2", "#cde2fb"), (5.0, "2 to 5", "#9ec5f4"),
         (10.0, "5 to 10", "#6da7ec"), (20.0, "10 to 20", "#3987e5"),
         (40.0, "20 to 40", "#1c5cab"), (float("inf"), "40 or more", "#0d366b")]
 ZERO, NODATA = "#ffffff", "#d5d4cd"
+# The two non-magnitude cell states, named once so the static legend, the
+# interactive legend, and the tooltips all say the same thing.
+ZERO_LABEL, NODATA_LABEL = "Screened, none found", "No sample"
 INK, MUTED, GRID = "#0b0b0b", "#52514e", "#e6e5e0"
 
 
@@ -65,6 +68,13 @@ def colour(rate: float) -> str:
     if rate <= 0:
         return ZERO
     return next(c for upper, _, c in BINS if rate < upper)
+
+
+def band(rate: float) -> str:
+    """The legend entry a screened cell falls in."""
+    if rate <= 0:
+        return ZERO_LABEL
+    return next(lab for upper, lab, _ in BINS if rate < upper)
 
 
 def fortnight_of(iso: str) -> str:
@@ -164,7 +174,7 @@ def main() -> int:
         f'font-size="10" text-anchor="end" font-family="ui-monospace,monospace">{f}</text>'
         for yi, f in enumerate(fortnights))
 
-    key_items = [("No sample", NODATA), ("Screened, none found", ZERO)]
+    key_items = [(NODATA_LABEL, NODATA), (ZERO_LABEL, ZERO)]
     key_items += [(lab, col) for _, lab, col in BINS]
     lx, ly = left, header + grid_h + 34
     legend = []
@@ -202,13 +212,29 @@ Cyclospora cayetanensis in public wastewater sequencing, by sewershed and fortni
     (args.outdir / "figures/cyclospora_heatmap.svg").write_text(svg)
 
     # --- interactive ----------------------------------------------------
-    records = [{
-        "site": s, "fortnight": f,
-        "rate": round(rate[(s, f)], 3),
-        "reads": hits[(s, f)], "depth": depth[(s, f)],
-        "samples": len(samples[(s, f)]),
-        "sample_ids": ", ".join(sorted(samples[(s, f)])),
-    } for (s, f) in sorted(hits)]
+    # One record per cell of the grid, so an unsampled fortnight is a datum with
+    # its own legend entry rather than the background showing through. Its
+    # counts are null, which keeps the site's click handler (reads > 0) inert.
+    records = []
+    for f in fortnights:
+        for s in sites:
+            key = (s, f)
+            if key in hits:
+                records.append({
+                    "site": s, "fortnight": f, "band": band(rate[key]),
+                    "rate": round(rate[key], 3),
+                    "reads": hits[key], "depth": depth[key],
+                    "samples": len(samples[key]),
+                    "sample_ids": ", ".join(sorted(samples[key])),
+                })
+            else:
+                records.append({
+                    "site": s, "fortnight": f, "band": NODATA_LABEL,
+                    "rate": None, "reads": None, "depth": None,
+                    "samples": None, "sample_ids": "",
+                })
+    band_domain = [NODATA_LABEL, ZERO_LABEL] + [lab for _, lab, _ in BINS]
+    band_range = [NODATA, ZERO] + [c for _, _, c in BINS]
 
     spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -216,16 +242,44 @@ Cyclospora cayetanensis in public wastewater sequencing, by sewershed and fortni
             "text": "Cyclospora cayetanensis in public wastewater sequencing, "
                     "by sewershed and fortnight",
             "subtitle": [
-                "Distinct diagnostic reads per billion reads sequenced. White is "
-                "screened with nothing found; gray is no sample that fortnight.",
+                "Distinct diagnostic reads per billion reads sequenced. Gray is "
+                "no sample that fortnight; white is screened with nothing found.",
                 "Columns are SRA codes, west to east; sewersheds sampled at "
                 f"{args.min_timepoints} or more timepoints in SRA.",
             ],
             "anchor": "start", "fontSize": 15, "subtitleColor": MUTED,
         },
         "data": {"values": records},
-        "mark": {"type": "rect", "stroke": "#ffffff", "strokeWidth": 1},
         "width": {"step": 18}, "height": {"step": 18},
+        # Two layers over one colour scale: the legend lists every cell state,
+        # gray and white included, and each layer carries the tooltip that
+        # makes sense for it.
+        "layer": [
+            {
+                "transform": [{"filter": f"datum.band == '{NODATA_LABEL}'"}],
+                "mark": {"type": "rect", "stroke": "#ffffff", "strokeWidth": 1},
+                "encoding": {"tooltip": [
+                    {"field": "site", "title": "sewershed (SRA code)"},
+                    {"field": "fortnight", "title": "fortnight beginning"},
+                    {"field": "band", "title": "cell"},
+                ]},
+            },
+            {
+                "transform": [{"filter": f"datum.band != '{NODATA_LABEL}'"}],
+                "mark": {"type": "rect", "stroke": "#ffffff", "strokeWidth": 1},
+                "encoding": {"tooltip": [
+                    {"field": "site", "title": "sewershed (SRA code)"},
+                    {"field": "fortnight", "title": "fortnight beginning"},
+                    {"field": "rate", "title": "distinct reads per billion",
+                     "format": ".2f"},
+                    {"field": "reads", "title": "distinct diagnostic reads",
+                     "format": ","},
+                    {"field": "depth", "title": "reads screened", "format": ","},
+                    {"field": "samples", "title": "runs pooled"},
+                    {"field": "sample_ids", "title": "run IDs"},
+                ]},
+            },
+        ],
         "encoding": {
             "x": {"field": "site", "type": "nominal", "sort": sites,
                   "axis": {"orient": "top", "labelAngle": -45, "title": None,
@@ -236,27 +290,15 @@ Cyclospora cayetanensis in public wastewater sequencing, by sewershed and fortni
                   "axis": {"title": "fortnight beginning", "labelColor": MUTED,
                            "domain": False, "ticks": False}},
             "color": {
-                "field": "rate", "type": "quantitative",
-                "scale": {"type": "threshold",
-                          "domain": [0.0001] + [u for u, _, _ in BINS[:-1]],
-                          "range": [ZERO] + [c for _, _, c in BINS]},
+                "field": "band", "type": "ordinal",
+                "scale": {"domain": band_domain, "range": band_range},
                 "legend": {"title": "distinct reads per billion",
-                           "titleColor": MUTED},
+                           "titleColor": MUTED, "symbolType": "square",
+                           "symbolStrokeColor": GRID},
             },
-            "tooltip": [
-                {"field": "site", "title": "sewershed (SRA code)"},
-                {"field": "fortnight", "title": "fortnight beginning"},
-                {"field": "rate", "title": "distinct reads per billion",
-                 "format": ".2f"},
-                {"field": "reads", "title": "distinct diagnostic reads",
-                 "format": ","},
-                {"field": "depth", "title": "reads screened", "format": ","},
-                {"field": "samples", "title": "runs pooled"},
-                {"field": "sample_ids", "title": "run IDs"},
-            ],
         },
         "config": {
-            "view": {"fill": NODATA, "stroke": None},
+            "view": {"stroke": None},
             "background": "#fcfcfb",
             "font": "ui-sans-serif,system-ui,-apple-system,sans-serif",
         },
